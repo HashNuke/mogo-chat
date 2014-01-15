@@ -1,19 +1,19 @@
-defmodule Angel.Mixfile do
+defmodule Hym.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :angel,
+    [ app: :hym,
       version: "0.0.1",
       build_per_environment: true,
-      dynamos: [Angel.Dynamo],
+      dynamos: [Hym.Dynamo],
       compilers: [:elixir, :dynamo, :app],
       deps: deps ]
   end
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo],
-      mod: { Angel, [] } ]
+    [ applications: [:cowboy, :dynamo, :irc_lib],
+      mod: { Hym, [] } ]
   end
 
   defp deps do
