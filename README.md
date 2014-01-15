@@ -1,6 +1,6 @@
-# Angel
+# Hym
 
-Web-based IRC client written using Elixir and Ember.js.
+Team chat app written using Elixir and Ember.js.
 
 
 ### Development
