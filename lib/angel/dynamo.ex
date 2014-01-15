@@ -15,12 +15,18 @@ defmodule Angel.Dynamo do
     # You can turn off static assets by setting it to false
     static_route: "/static"
 
-  # Uncomment the lines below to enable the cookie session store
   # config :dynamo,
   #   session_store: Session.CookieStore,
   #   session_options:
   #     [ key: "_angel_session",
-  #       secret: "aBBgzxuwGFn3se3KcG/4XWE2XkDVd7A7gcSJilBerqsqhgRx89/sqB4/iqeMO7TY"]
+  #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
+
+  config :dynamo,
+    session_store: Session.ETSStore,
+    session_options: [
+      table: :angel_sessions,
+      key: "_angel_session"
+    ]
 
   # Default functionality available in templates
   templates do
