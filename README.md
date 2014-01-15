@@ -1,5 +1,13 @@
 # Angel
 
+Web-based IRC client written using Elixir and Ember.js.
+
+
+### Development
+
+Run `bundle exec rake assets:watch` to start asset server.
+
+
 This is a project built with Elixir that uses Dynamo to serve web requests.
 
 Resources:
