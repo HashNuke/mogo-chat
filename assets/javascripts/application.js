@@ -22,6 +22,9 @@ App.Router.map(function() {
   // login
   this.route("login");
 
+  // login
+  this.resource("channels");
+
   // users
   // users/new
   // users/:user_id
