@@ -3,3 +3,5 @@
 /tmp/dev
 /tmp/test
 erl_crash.dump
+.bundle
+_build
