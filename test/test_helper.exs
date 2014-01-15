@@ -1,8 +1,8 @@
-Dynamo.under_test(Angel.Dynamo)
+Dynamo.under_test(Hym.Dynamo)
 Dynamo.Loader.enable
 ExUnit.start
 
-defmodule Angel.TestCase do
+defmodule Hym.TestCase do
   use ExUnit.CaseTemplate
 
   # Enable code reloading on test cases
