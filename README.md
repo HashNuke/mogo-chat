@@ -3,6 +3,11 @@
 Team chat app written using Elixir and Ember.js.
 
 
+## Usage
+
+* Start the app with `iex --erl "-config cobalt.config" -S mix server`
+
+
 ### Development
 
 Run `bundle exec rake assets:watch` to start asset server.
