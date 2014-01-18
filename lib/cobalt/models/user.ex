@@ -1,5 +1,6 @@
 defmodule User do
   use Ecto.Model
+  import Cobalt.ModelUtils
 
   queryable "users" do
     field :email,      :string
@@ -25,6 +26,18 @@ defmodule User do
     else
       []
     end
+  end
+
+
+  def valid_password?(record, password) do
+    salt = String.slice(record.encrypted_password, 0, 29)
+    {:ok, hashed_password} = :bcrypt.hashpw(password, salt)
+    "#{hashed_password}" == record.encrypted_password
+  end
+
+
+  def public_attributes(record) do
+    attributes(record, ["id", "first_name", "last_name", "role"])
   end
 
 
