@@ -1,5 +1,6 @@
 defmodule Repo do
   use Ecto.Repo, adapter: Ecto.Adapters.Postgres
+  import Cobalt.ModelUtils
 
   def url do
     case Mix.env do
