@@ -22,23 +22,23 @@ defmodule RoomsApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    #TODO
-    # params = whitelist_params(params["room"], ["name"])
-    # room = Room.new params["room"]
-    # 
-    # case Repo.create(room) do
-    #   {:ok, key} ->
-    #     json_response [room: domain.id(key)], conn
-    #   {:error, domain} ->
-    #     json_response [errors: domain.errors], conn
-    # end
+    params = whitelist_params(params["room"], ["name"])
+    room = Room.new params["room"]
+
+    case Room.validate(room) do
+      [] ->
+        json_response [room: Repo.create(room)], conn
+      errors ->
+        json_response [errors: errors], conn
+    end
   end
 
-  #TODO
-  # delete "/:domain_id" do
-  #   domain_id = conn.params["domain_id"]
-  #   Domain.destroy domain_id
-  #   json_response("", conn)
-  # end
+
+  delete "/:room_id" do
+    room_id = conn.params["room_id"]
+    query = from r in Room, where: r.id == ^room_id
+    Repo.delete_all query
+    json_response("", conn)
+  end
 
 end
