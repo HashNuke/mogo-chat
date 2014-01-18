@@ -1,11 +1,11 @@
-defmodule Hym.Mixfile do
+defmodule Cobalt.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :hym,
+    [ app: :cobalt,
       version: "0.0.1",
       build_per_environment: true,
-      dynamos: [Hym.Dynamo],
+      dynamos: [Cobalt.Dynamo],
       compilers: [:elixir, :dynamo, :app],
       deps: deps ]
   end
@@ -13,7 +13,7 @@ defmodule Hym.Mixfile do
   # Configuration for the OTP application
   def application do
     [ applications: [:cowboy, :dynamo],
-      mod: { Hym, [] } ]
+      mod: { Cobalt, [] } ]
   end
 
   defp deps do

@@ -4,16 +4,16 @@ defmodule Repo do
   def url do
     case Mix.env do
       :test ->
-        "ecto://akashmanohar:akash123@localhost/hym_test"
+        "ecto://akashmanohar:akash123@localhost/cobalt_test"
       :dev ->
-        "ecto://akashmanohar:akash123@localhost/hym_development"
+        "ecto://akashmanohar:akash123@localhost/cobalt_development"
       _ ->
-        "ecto://akashmanohar:akash123@localhost/hym_production"
+        "ecto://akashmanohar:akash123@localhost/cobalt_production"
     end
   end
 
 
   def priv do
-    app_dir(:hym, "priv/repo")
+    app_dir(:cobalt, "priv/repo")
   end
 end

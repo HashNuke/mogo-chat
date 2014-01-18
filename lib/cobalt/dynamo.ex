@@ -1,4 +1,4 @@
-defmodule Hym.Dynamo do
+defmodule Cobalt.Dynamo do
   use Dynamo
 
   config :dynamo,
@@ -6,7 +6,7 @@ defmodule Hym.Dynamo do
     env: Mix.env,
 
     # The OTP application associated with this Dynamo
-    otp_app: :hym,
+    otp_app: :cobalt,
 
     # The endpoint to dispatch requests to
     endpoint: ApplicationRouter,
@@ -18,14 +18,14 @@ defmodule Hym.Dynamo do
   # config :dynamo,
   #   session_store: Session.CookieStore,
   #   session_options:
-  #     [ key: "_hym_session",
+  #     [ key: "_cobalt_session",
   #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
 
   config :dynamo,
     session_store: Session.ETSStore,
     session_options: [
-      table: :hym_sessions,
-      key: "_hym_session"
+      table: :cobalt_sessions,
+      key: "_cobalt_session"
     ]
 
   # Default functionality available in templates

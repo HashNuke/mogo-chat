@@ -1,4 +1,4 @@
-defmodule Hym.RouterUtils do
+defmodule Cobalt.RouterUtils do
 
   import Dynamo.HTTP.Session
   import Dynamo.HTTP.Halt

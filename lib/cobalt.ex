@@ -1,4 +1,4 @@
-defmodule Hym do
+defmodule Cobalt do
   use Application.Behaviour
 
   @doc """
@@ -6,6 +6,6 @@ defmodule Hym do
   application and its Dynamos.
   """
   def start(_type, _args) do
-    Hym.Dynamo.start_link([max_restarts: 5, max_seconds: 5])
+    Cobalt.Dynamo.start_link([max_restarts: 5, max_seconds: 5])
   end
 end

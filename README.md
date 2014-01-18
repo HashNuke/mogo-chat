@@ -1,4 +1,4 @@
-# Hym
+# Cobalt
 
 Team chat app written using Elixir and Ember.js.
 
