@@ -7,7 +7,7 @@ App.CurrentUser = App.User.extend({})
 App.Room = DS.Model.extend
   name: DS.attr("string")
 
-App.Activity = DS.Model.extend
+App.Message = DS.Model.extend
   body:   DS.attr("string")
   type:   DS.attr("string")
   roomId: DS.attr("string")
