@@ -12,8 +12,10 @@ defmodule User do
 
 
   validate user,
-    first_name: present(),
+    email: present(),
     encrypted_password: present(),
+    role: member_of(%w(admin member)),
+    first_name: has_length(min: 3),
     also: validate_password
 
 
