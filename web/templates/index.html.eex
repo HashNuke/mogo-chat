@@ -1,15 +1,296 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <title><%= @title %></title>
-  <link rel="shortcut icon" href="/static/favicon.ico" />
-</head>
-<body>
-  <h3>Welcome to Dynamo!</h3>
-  <ol>
-    <li>Change this template at <code>web/templates/index.html.eex</code></li>
-    <li>Add new routes at <code>web/routers/application_router.ex</code></li>
-    <li>Deploy to production with <code>MIX_ENV=prod mix do compile, server</code></li>
-  </ol>
-</body>
-</html>
+<div class="container">
+  <div class="sidebar">
+    Sidebar
+  </div>
+
+  <div class="channel-info">
+    Demo channel
+  </div>
+
+  <div class="active-channel">
+    <div class="activities-wrapper">
+      <div class="activities">
+
+        <div class="activity">          
+          This is an activity
+        </div>
+
+      </div>
+      <div class="new-message">
+        <textarea></textarea>
+      </div>
+    </div>
+
+    <div class="active-users-wrapper">
+      <div class="active-users">
+        <ul>
+          <li>HashNuke</li>
+          <li>ericmj</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script type="text/x-handlebars" id="login">
+  <div class="login">
+
+    <div class="title">Hym login</div>
+
+    <form {{action login on="submit"}}>
+
+      <div class="field">
+        <label>Username</label><br/>
+        {{input type="text" value=username}}
+      </div>
+
+      <div class="field">
+        <label>Password</label><br/>
+        {{input type="password" value=password}}
+      </div>
+
+      <div class="actions">
+        <span class="auth-error">{{errorNotification}}</span>
+        {{input type="submit" value="Log In"}}
+      </div>
+
+    </form>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="channels">
+  <div class="detail">
+    <div class="header">
+      <div class="title">Channels</div>
+    </div>
+
+    <div class="page">
+      <div class="list">
+
+        {{#each channel in controller}}
+          <div class="item">
+            <span class="name">{{channel.name}}</span>
+            <div class="controls">
+              <span {{action remove this}}>Remove</span>
+            </div>
+          </div>
+        {{/each}}
+
+        <form class="user" {{action add on="submit"}}>
+          <div class="name">
+            New domain:
+            {{input type="text" value=newChannelName}}
+            <button class="save" {{action add}}>Add</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="user/edit">
+
+  <div class="detail">
+    <div class="header">
+      <div class="title">Edit user</div>
+    </div>
+
+    <div class="page">
+      <div class="user-form">
+        <form {{action save on="submit"}}>
+
+          <div class="field">
+            <label>First name</label><br/>
+            {{input type="text" value=user.firstName}}
+          </div>
+
+          <div class="field">
+            <label>Last name</label><br/>
+            {{input type="text" value=user.lastName}}
+          </div>
+
+          <div class="field">
+            <label>Email</label><br/>
+            {{input type="text" value=user.email}}
+          </div>
+
+          <div class="field">
+            <label>Password</label><br/>
+            {{input type="password" value=user.password}}
+          </div>
+
+          <div class="field">
+            <label>Role</label>
+            {{view Ember.Select
+                   content=validRoles
+                   value=user.role}}
+          </div>
+
+          <div class="actions">
+            <button class="save" {{action save}}>Save</button>
+            or
+            {{#link-to "users" }}cancel{{/link-to}}
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="users/new">
+
+  <div class="detail">
+    <div class="header">
+      <div class="title">New user</div>
+    </div>
+
+    <div class="page">
+      <div class="user-form">
+        <form {{action save on="submit"}}>
+
+          <div class="field">
+            <label>First name</label><br/>
+            {{input type="text" value=user.firstName}}
+          </div>
+
+          <div class="field">
+            <label>Last name</label><br/>
+            {{input type="text" value=user.lastName}}
+          </div>
+
+          <div class="field">
+            <label>Email</label><br/>
+            {{input type="text" value=user.email}}
+          </div>
+
+          <div class="field">
+            <label>Password</label><br/>
+            {{input type="password" value=user.password}}
+          </div>
+
+          <div class="field">
+            <label>Role</label>
+            {{view Ember.Select
+                   content=validRoles
+                   value=user.role}}
+          </div>
+
+          <div class="actions">
+            <button class="save" {{action save}}>Save</button>
+            or
+            {{#link-to "users" }}cancel{{/link-to}}
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="users/index">
+
+  <div class="detail">
+    <div class="header">
+      <div class="title">{{title}}</div>
+    </div>
+
+    <div class="page">
+      <div class="list">
+        {{#link-to "users.new" classNames="add"}}+ Add{{/link-to}}
+
+        {{#each user in controller}}
+          <div class="item">
+            <span class="name">{{user.firstName}} {{user.lastName}}</span>
+            (<span class="email">{{user.email}}</span>)
+            <div class="controls">
+              {{#link-to "user.edit" user.id }}Edit{{/link-to}}
+              <span {{action "remove" this }}>Remove</span>
+            </div>
+          </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</script>
+
+
+
+<script type="text/x-handlebars" id="threads/in">
+
+  <div class="detail">
+    <div class="header">
+      <div class="title">{{title}}</div>
+    </div>
+
+    <div class="threads-wrapper">
+      <div class="threads">
+
+        {{#each thread in controller}}
+
+          <div class="thread">
+            <div class="sender">
+
+            </div>
+            <div class="timestamp">{{relativeTime thread.updatedAtDt}}</div>
+
+            <div class="preview">
+              <div class="subject">{{thread.subject}}</div>
+              <div class="summary">{{thread.preview}}</div>
+            </div>
+          </div>
+
+        {{else}}
+          <h2>No mails. You feel lucky?</h2>
+        {{/each}}
+
+      </div>
+    </div>
+
+  </div>
+
+</script>
+
+
+<script type="text/x-handlebars" id="application">
+
+  {{#if currentUser}}
+    <div class="sidebar">
+      <div class="header">
+        <div class="title">{{currentUser.firstName}}</div>
+        <!-- <div class="menu-control"><img src="/static/assets/navicon.png"/></div> -->
+
+        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
+        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
+      </div>
+
+      <div class="menu-wrapper">{{render "menu"}}</div>
+    </div>
+
+    {{outlet}}
+  {{else}}
+    {{outlet}}
+  {{/if}}
+
+</script>
+
+
+<script type="text/x-handlebars" id="channels-list">
+  <div class="channels-list">
+    <ul>
+      {{#each channel in controller}}
+        <li>
+          <span class="channel" {{action "switchToChannel"}}>{{channel.name}}</span>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</script>
