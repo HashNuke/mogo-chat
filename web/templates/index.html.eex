@@ -54,7 +54,7 @@
 <script type="text/x-handlebars" id="login">
   <div class="login">
 
-    <div class="title">Hym login</div>
+    <div class="title">Cobalt login</div>
 
     <form {{action login on="submit"}}>
 
