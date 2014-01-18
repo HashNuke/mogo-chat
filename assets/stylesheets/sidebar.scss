@@ -1,16 +1,34 @@
-.sidebar {
-  padding: 1em;
+.left-panel {
+
+  .app-name {
+    font-size: 1.2em;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: bold;
+  }
+
+  .title {
+    font-size: 0.85em;
+    color: #777;
+    text-transform: uppercase;
+    border-bottom: 0.1em solid #CCC;
+    margin-bottom: 0.5em;
+  }
 
   .channels {
+    float: left;
+    width: 100%;
+    padding: 1.2em;
+
     ul {
       margin: 0em;
-      padding: 0em;
       list-style-type: none;
+      padding: 0em;
 
       li {
-        color: #999;
+        color: #BBB;
         font-size: 1.1em;
-        padding: 0.25em;
+        font-size: 1.1em;
+        padding: 0.25em 0em 0.25em 0em;
       }
 
       .joined {

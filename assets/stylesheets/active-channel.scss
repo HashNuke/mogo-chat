@@ -17,7 +17,7 @@
     position: absolute;
     width: 60%;
     top: 2em;
-    bottom: 2em;
+    bottom: 2.5em;
   }
 
   .activities {
@@ -39,10 +39,12 @@
 
     textarea {
       width: 100%;
-      height: 2em;
+      height: 2.5em;
       resize: none;
-      box-shadow: 0em 0em 0.1em 0.2em #f6f6f6 inset;
-      border: 0.1em solid #DDD;
+      border-top: 0.1em solid #DDD;
+      border-right: none;
+      border-left: none;
+      border-bottom: none;
       &:hover {
         outline: none;
       }
@@ -50,26 +52,43 @@
   }
 }
 
-.active-users {
-  float: right;
+
+.channel-details-wrapper {
   width: 20%;  // TODO make responsive
   height: 100%;
-  padding: 0.75em;
+  padding-left: 0.3em;
+  float: right;
 
-  .title {
+  .channel-details {
+    float: left;
     width: 100%;
-    border-bottom: 0.1em solid #DDD;
-    margin-bottom: 0.5em;
-    color: #06C;
+    height: 100%;
+    background: #FCFCFC;
+    box-shadow: -0.3em 0em 0.1em 0.1em #F1F1F1;
+    border-left: 0.1em solid #DDD;
+    padding: 0.5em;
   }
 
-  ul {
-    padding: 0em;
-    margin: 0em;
+  .active-users {
+    float: right;
+    width: 100%;
 
-    li {
-      list-style-type: none;
-      font-size: 0.9em;
+    .title {
+      width: 100%;
+      border-bottom: 0.1em solid #DDD;
+      margin-bottom: 0.5em;
+      color: #06C;
+    }
+
+    ul {
+      padding: 0em;
+      margin: 0em;
+
+      li {
+        list-style-type: none;
+        font-size: 0.9em;
+      }
     }
   }
+
 }

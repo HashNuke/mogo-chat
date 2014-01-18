@@ -1,10 +1,18 @@
 <div class="container">
-  <div class="sidebar-wrapper">
-    <div class="sidebar">
+
+  <div class="left-panel-wrapper">
+    <div class="left-panel">
+
+      <div class="app-name">Hym</div>
+
       <div class="channels">
+        <div class="title">Channels</div>
+
         <ul>
-          <li>development</li>
+          <li class="joined">development</li>
+          <li class="joined">demo</li>
           <li>lobby</li>
+          <li>notifications</li>
         </ul>
       </div>
     </div>
@@ -22,17 +30,22 @@
     </div>
 
     <div class="new-message">
-      <textarea></textarea>
+      <textarea placeholder="Message..."></textarea>
     </div>
   </div>
 
-  <div class="active-users">
-    <div class="title">Users in channel</div>
 
-    <ul>
-      <li>HashNuke</li>
-      <li>ericmj</li>
-    </ul>
+  <div class="channel-details-wrapper">
+    <div class="channel-details">
+      <div class="active-users">
+        <div class="title">Users in channel</div>
+
+        <ul>
+          <li>HashNuke</li>
+          <li>ericmj</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
 </div>
