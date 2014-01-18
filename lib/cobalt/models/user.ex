@@ -13,16 +13,13 @@ defmodule User do
 
   validate user,
     first_name: present(),
-    also: custom_validations
+    encrypted_password: present(),
+    also: validate_password
 
 
-  validatep custom_validations(user),
-    password: validate_password
-
-
-  def validate_password(attr, value, opts // []) do
-    if value && size(value) < 6 do
-      [{ attr, opts[:message] || "should be 6 characters or more" }]
+  def validate_password(user) do
+    if user.password && size(user.password) < 6 do
+      [{ :password, "should be 6 characters or more" }]
     else
       []
     end
