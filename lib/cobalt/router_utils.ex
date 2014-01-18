@@ -19,13 +19,12 @@ defmodule Cobalt.RouterUtils do
 
   def authenticate_user!(conn) do
     user_id = get_session(conn, :user_id)
-    #TODO fix for ecto
-    # if user_id do
-    #   user = User.find(user_id)
-    #   conn.assign(:current_user, user)
-    # else
-    #   unauthorized!(conn)
-    # end
+    if user_id do
+      user = Repo.get(User, user_id)
+      conn.assign(:current_user, user)
+    else
+      unauthorized!(conn)
+    end
   end
 
 
@@ -40,17 +39,16 @@ defmodule Cobalt.RouterUtils do
   def authorize_user!(conn, allowed_roles) do
     user_id = get_session(conn, :user_id)
 
-    #TODO fix for ecto
-    # if user_id do
-    #   user = User.find(user_id)
-    #   if :lists.member user.role, allowed_roles do
-    #     conn = conn.assign(:current_user, user)
-    #   else
-    #     unauthorized!(conn)
-    #   end
-    # else
-    #   unauthorized!(conn)
-    # end
+    if user_id do
+      user = Repo.get(User, user_id)
+      if :lists.member(user.role, allowed_roles) do
+        conn = conn.assign(:current_user, user)
+      else
+        unauthorized!(conn)
+      end
+    else
+      unauthorized!(conn)
+    end
   end
 
 
