@@ -12,7 +12,7 @@ defmodule Hym.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo, :irc_lib],
+    [ applications: [:cowboy, :dynamo],
       mod: { Hym, [] } ]
   end
 
@@ -20,8 +20,7 @@ defmodule Hym.Mixfile do
     [ { :cowboy, github: "extend/cowboy" },
       { :dynamo, "~> 0.1.0-dev", github: "elixir-lang/dynamo" },
       { :postgrex, github: "ericmj/postgrex" },
-      { :ecto, github: "elixir-lang/ecto" },
-      { :irc_lib, github: "0xAX/irc_lib" }
+      { :ecto, github: "elixir-lang/ecto" }
     ]
   end
 end
