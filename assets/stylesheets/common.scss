@@ -5,15 +5,27 @@ html, body {
   height: 100%;
   color: #333;
   font-size: 16px;
-//  background: #f6f6f6;
+  font-family: 'PT Sans', sans-serif;
 }
 
 .container {
   width: 100%;
+  height: 100%;
   float: left;
 }
 
-.sidebar {
+.sidebar-wrapper {
   float: left;
   width: 20%; // TODO make responsive
+  height: 100%;
+  padding-right: 0.3em;
+
+  .sidebar {
+    float: left;
+    width: 100%;
+    height: 100%;
+    background: #FCFCFC;
+    box-shadow: 0.3em 0em 0.1em 0.1em #F1F1F1;
+    border-right: 0.1em solid #DDD;
+  }
 }

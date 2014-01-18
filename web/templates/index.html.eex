@@ -1,34 +1,38 @@
 <div class="container">
-  <div class="sidebar">
-    Sidebar
-  </div>
-
-  <div class="channel-info">
-    Demo channel
-  </div>
-
-  <div class="active-channel">
-    <div class="activities-wrapper">
-      <div class="activities">
-
-        <div class="activity">          
-          This is an activity
-        </div>
-
-      </div>
-      <div class="new-message">
-        <textarea></textarea>
-      </div>
-    </div>
-
-    <div class="active-users-wrapper">
-      <div class="active-users">
+  <div class="sidebar-wrapper">
+    <div class="sidebar">
+      <div class="channels">
         <ul>
-          <li>HashNuke</li>
-          <li>ericmj</li>
+          <li>development</li>
+          <li>lobby</li>
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="channel-content">
+    <div class="channel-info">Demo channel</div>
+
+    <div class="activities-wrapper">
+      <div class="activities">
+        <div class="activity">          
+          This is an activity
+        </div>
+      </div>
+    </div>
+
+    <div class="new-message">
+      <textarea></textarea>
+    </div>
+  </div>
+
+  <div class="active-users">
+    <div class="title">Users in channel</div>
+
+    <ul>
+      <li>HashNuke</li>
+      <li>ericmj</li>
+    </ul>
   </div>
 
 </div>

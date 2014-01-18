@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for(:title) || "Firebrick" %></title>
+  <!-- <script type="text/javascript" src="/static/assets/application.js"></script> -->
+  <link rel="stylesheet" href="/static/assets/application.css"/>
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+</head>
+<body>
+  <%= content_for(:template) %>
+</body>
+</html>

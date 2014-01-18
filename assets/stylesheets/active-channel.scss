@@ -1,23 +1,23 @@
-.active-channel {
-  width: 80%; // TODO make responsive
-  position: absolute;
-  top: 0em;
-  right: 0em;
-  bottom: 0em;
+.channel-content {
+  float: left;
+  height: 100%;
+  width: 60%; // TODO make responsive
 
   .channel-info {
-    float: left;
-    clear: both;
-    font-size: 1.1em;
+    position: absolute;
+    width: 60%;
     height: 1.5em;
+    top: 0em;
+    font-size: 1.1em;
+    padding: 0.5em;
   }
 
 
   .activities-wrapper {
-    float: left;
-    width: 80%;
-    height: 100%;
-    background: #fff;
+    position: absolute;
+    width: 60%;
+    top: 2em;
+    bottom: 2em;
   }
 
   .activities {
@@ -33,9 +33,7 @@
   }
 
   .new-message {
-    float: left;
-    clear: both;
-    width: 100%;
+    width: 60%;
     position: absolute;
     bottom: 0em;
 
@@ -48,23 +46,30 @@
       &:hover {
         outline: none;
       }
-    }    
+    }
+  }
+}
+
+.active-users {
+  float: right;
+  width: 20%;  // TODO make responsive
+  height: 100%;
+  padding: 0.75em;
+
+  .title {
+    width: 100%;
+    border-bottom: 0.1em solid #DDD;
+    margin-bottom: 0.5em;
+    color: #06C;
   }
 
-  .active-users {
-    float: left;
-    width: 20%;  // TODO make responsive
-    height: 100%;
-    padding: 0.75em;
+  ul {
+    padding: 0em;
+    margin: 0em;
 
-    ul {
-      padding: 0em;
-      margin: 0em;
-
-      li {
-        list-style-type: none;
-        font-size: 0.85em;
-      }
+    li {
+      list-style-type: none;
+      font-size: 0.9em;
     }
   }
 }
