@@ -12,7 +12,7 @@ defmodule Cobalt.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo],
+    [ applications: [:cowboy, :dynamo, :bcrypt],
       mod: { Cobalt, [] } ]
   end
 
