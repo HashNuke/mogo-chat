@@ -18,18 +18,10 @@ html, body {
   float: left;
 }
 
-.left-panel-wrapper {
-  float: left;
-  width: 20%; // TODO make responsive
-  height: 100%;
-  padding-right: 0.3em;
-
-  .left-panel {
-    float: left;
-    width: 100%;
-    height: 100%;
-    background: #FCFCFC;
-    box-shadow: 0.1em 0em 0em 0.1em #F1F1F1;
-    border-right: 0.1em solid #DDD;
-  }
+.left-panel .title, .channel-details .title {
+  font-size: 0.85em;
+  color: #06c;
+  text-transform: uppercase;
+  border-bottom: 0.1em solid #CCC;
+  margin-bottom: 0.5em;
 }

@@ -6,10 +6,11 @@
   .channel-info {
     position: absolute;
     width: 60%;
-    height: 1.5em;
     top: 0em;
-    font-size: 1.1em;
-    padding: 0.5em;
+    padding: 0.25em;
+    font-size: 1em;
+    border-bottom: 0.1em solid #DDD;
+    color: #06c;
   }
 
 
@@ -73,20 +74,14 @@
     float: right;
     width: 100%;
 
-    .title {
-      width: 100%;
-      border-bottom: 0.1em solid #DDD;
-      margin-bottom: 0.5em;
-      color: #06C;
-    }
-
     ul {
       padding: 0em;
       margin: 0em;
 
       li {
         list-style-type: none;
-        font-size: 0.9em;
+        font-size: 1em;
+        color: #777;
       }
     }
   }
