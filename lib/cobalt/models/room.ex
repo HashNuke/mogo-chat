@@ -1,7 +1,7 @@
-defmodule Channel do
+defmodule Room do
   use Ecto.Model
 
-  queryable "channels" do
+  queryable "rooms" do
     field :name, :string
   end
 end
