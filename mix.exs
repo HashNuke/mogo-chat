@@ -7,7 +7,7 @@ defmodule Cobalt.Mixfile do
       build_per_environment: true,
       dynamos: [Cobalt.Dynamo],
       compilers: [:elixir, :dynamo, :app],
-      deps: deps ]
+      deps: deps(Mix.env) ]
   end
 
   # Configuration for the OTP application
@@ -16,7 +16,7 @@ defmodule Cobalt.Mixfile do
       mod: { Cobalt, [] } ]
   end
 
-  defp deps do
+  defp deps(:prod) do
     [ { :cowboy, github: "extend/cowboy" },
       { :dynamo, "~> 0.1.0-dev", github: "elixir-lang/dynamo" },
       { :postgrex, github: "ericmj/postgrex" },
@@ -24,5 +24,9 @@ defmodule Cobalt.Mixfile do
       { :jsex,    github: "talentdeficit/jsex" },
       { :bcrypt, github: "irccloud/erlang-bcrypt" }
     ]
+  end
+
+  defp deps(_) do
+    deps(:prod) ++ [{ :hound, github: "HashNuke/hound" }]
   end
 end
