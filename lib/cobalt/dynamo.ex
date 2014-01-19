@@ -28,6 +28,10 @@ defmodule Cobalt.Dynamo do
       key: "_cobalt_session"
     ]
 
+  if Mix.env == :test do
+    config :server, port: 4001
+  end
+
   # Default functionality available in templates
   templates do
     use Dynamo.Helpers
