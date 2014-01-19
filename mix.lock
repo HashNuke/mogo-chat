@@ -7,7 +7,7 @@
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "aecbe8cf755fc81d76e2924d69a33642b7945af9", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "7f2a0b5996313d930277786e7ff5d538e9346547", [tag: "0.10.1"]},
   "hackney_lib": {:git, "https://github.com/benoitc/hackney_lib.git", "eecdb481f1d38bfb194896bffdf9bdcdd967ae96", [tag: "0.2.2"]},
-  "hound": {:git, "git://github.com/HashNuke/hound.git", "a2d165481aaa6bac57af4392802f8583b304d8af", []},
+  "hound": {:git, "git://github.com/HashNuke/hound.git", "4f4700c551c3c2817809a6d5022550045962a8d1", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [tag: "v4.0.2"]},
   "irc_lib": {:git, "git://github.com/0xAX/irc_lib.git", "fa97716c2c2c28e76de3a56cbe3b901f698511ff", []},
   "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "1e89a76f770e14bbbd1b5bebfc05312a984f21a4", []},
