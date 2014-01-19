@@ -4,8 +4,8 @@ defmodule HomeTest do
   use Cobalt.TestCase
   use Dynamo.HTTP.Case
 
-  test "returns OK" do
-    conn = get("/")
-    assert conn.status == 200
-  end
+  # test "returns OK" do
+  #   conn = get("/")
+  #   assert conn.status == 200
+  # end
 end
