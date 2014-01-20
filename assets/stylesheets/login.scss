@@ -1,0 +1,47 @@
+.login {
+  width: 20em; //TODO change for mobile
+  margin-left: 35%;
+  font-size: 1.1em;
+  margin-top: 4em;
+  background: #FFF;
+  display: inline-block;
+  padding: 1em 2em 2em 2em;
+  border: 0.1em solid #DFDFDF;
+  border-radius: 0.3em;
+  margin-bottom: 0.1em;
+
+  .title {
+    color: #06c;
+    font-size: 1.5em;
+    border-bottom: 0.1em solid #06C;
+    margin-bottom: 1em;
+  }
+
+  .field {
+    margin-bottom: 1em;
+
+    label {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    input {
+      border: 0.1em solid #999;
+      padding: 0.2em;
+      width: 100%;
+      color: #444;
+    }
+  }
+
+
+  .actions {
+    input {
+      background: #FFF;
+      color: #06C;
+      border: 1px solid #06C;
+      border-radius: 0.15em;
+      box-shadow: 0em 0em 0.2em 0.05em #0073E6;
+      float: right;
+    }
+  }
+}
