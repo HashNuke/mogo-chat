@@ -47,8 +47,7 @@ defmodule UsersApiRouter do
     |> JSEX.decode
 
     user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
-    user = Repo.get(User, user_id)
-    user = User.assign_attributes(user, user_params).encrypt_password()
+    user = Repo.get(User, user_id).update(user_params).encrypt_password()
 
     case User.validate(user) do
       [] ->
