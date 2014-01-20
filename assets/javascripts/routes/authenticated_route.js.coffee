@@ -4,7 +4,7 @@ App.AuthenticatedRoute = Em.Route.extend
     if applicationController.get("currentUser")
       return true
 
-    Ember.$.getJSON("/api/sessions").then (response)=>
+    Em.$.getJSON("/api/sessions").then (response)=>
       if response.user
         userAttributes = {
           id: response.user.id,
@@ -12,9 +12,8 @@ App.AuthenticatedRoute = Em.Route.extend
           lastName: response.user.last_name,
           role: response.user.role
         }
-
-        user = @store.createRecord('current_user', userAttributes)
-        @controllerFor('application').set('currentUser', user)
+        user = @store.createRecord("current_user", userAttributes)
+        @controllerFor("application").set("currentUser", user)
       else
         @redirectToLogin(transition)
 

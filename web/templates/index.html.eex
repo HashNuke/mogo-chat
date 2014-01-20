@@ -4,7 +4,8 @@
       <div class="app-name">Cobalt</div>
 
       <div class="user-details">
-        Hey {{currentUser.firstName}} ~!
+        Hello {{currentUser.firstName}} ~!
+        <a class="logout" {{action "logout" target="controllers.application"}}>Logout</a>
       </div>
 
       <div class="channels">
