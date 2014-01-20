@@ -1,6 +1,6 @@
 defmodule User do
   use Ecto.Model
-  import Cobalt.ModelUtils
+  use Cobalt.ModelUtils
 
   queryable "users" do
     field :email,      :string

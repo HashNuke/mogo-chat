@@ -78,11 +78,7 @@
 </script>
 
 <script type="text/x-handlebars" id="application">
-  {{#if currentUser}}
-    {{outlet}}
-  {{else}}
-    {{outlet}}
-  {{/if}}
+  {{outlet}}
 </script>
 
 

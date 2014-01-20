@@ -8,7 +8,7 @@ defmodule SessionsApiRouter do
     user_id = get_session conn, :user_id
     if user_id do
       user = Repo.get(User, user_id)
-      attributes = Repo.attributes(user, ["email"])
+      attributes = User.attributes(user, ["email"])
       json_response [user: attributes], conn
     else
       json_response [error: "no session"], conn
