@@ -2,7 +2,7 @@
 <html>
 <head>
   <title><%= content_for(:title) || "Cobalt" %></title>
-  <!-- <script type="text/javascript" src="/static/assets/application.js"></script> -->
+  <script type="text/javascript" src="/static/assets/application.js"></script>
   <link rel="stylesheet" href="/static/assets/application.css"/>
   <link rel="shortcut icon" href="/static/favicon.ico" />
 </head>

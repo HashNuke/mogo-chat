@@ -1,9 +1,67 @@
-<div class="container">
+<script type="text/x-handlebars" id="reference">
+  <div class="container">
 
+    <div class="left-panel-wrapper">
+      <div class="left-panel">
+
+        <div class="app-name">Cobalt</div>
+
+        <div class="channels">
+          <div class="title">Channels</div>
+
+          <ul>
+            <li class="joined">development</li>
+            <li class="joined">demo</li>
+            <li>lobby</li>
+            <li>notifications</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel-content">
+      <div class="channel-info">Demo channel</div>
+
+      <div class="activities-wrapper">
+        <div class="activities">
+          <div class="activity">          
+            This is an activity
+          </div>
+        </div>
+      </div>
+
+      <div class="new-message">
+        <textarea placeholder="Message..."></textarea>
+      </div>
+    </div>
+
+
+    <div class="channel-details-wrapper">
+      <div class="channel-details">
+        <div class="active-users">
+          <div class="title">Users in channel</div>
+
+          <ul>
+            <li>HashNuke</li>
+            <li>ericmj</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="management-panel">
   <div class="left-panel-wrapper">
     <div class="left-panel">
 
       <div class="app-name">Cobalt</div>
+
+      <div class="user-details">
+        Hey {{currentUser.firstName}} ~!
+      </div>
 
       <div class="channels">
         <div class="title">Channels</div>
@@ -17,50 +75,32 @@
       </div>
     </div>
   </div>
+</script>
 
-  <div class="channel-content">
-    <div class="channel-info">Demo channel</div>
-
-    <div class="activities-wrapper">
-      <div class="activities">
-        <div class="activity">          
-          This is an activity
-        </div>
-      </div>
-    </div>
-
-    <div class="new-message">
-      <textarea placeholder="Message..."></textarea>
-    </div>
-  </div>
+<script type="text/x-handlebars" id="application">
+  {{#if currentUser}}
+    {{outlet}}
+  {{else}}
+    {{outlet}}
+  {{/if}}
+</script>
 
 
-  <div class="channel-details-wrapper">
-    <div class="channel-details">
-      <div class="active-users">
-        <div class="title">Users in channel</div>
-
-        <ul>
-          <li>HashNuke</li>
-          <li>ericmj</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-</div>
+<script type="text/x-handlebars" id="index">
+  <h1>Whoa stuff ~!</h1>
+</script>
 
 
 <script type="text/x-handlebars" id="login">
   <div class="login">
 
-    <div class="title">Cobalt login</div>
+    <div class="title">Cobalt</div>
 
     <form {{action login on="submit"}}>
 
       <div class="field">
-        <label>Username</label><br/>
-        {{input type="text" value=username}}
+        <label>Email</label><br/>
+        {{input type="text" value=email}}
       </div>
 
       <div class="field">
@@ -273,29 +313,6 @@
     </div>
 
   </div>
-
-</script>
-
-
-<script type="text/x-handlebars" id="application">
-
-  {{#if currentUser}}
-    <div class="sidebar">
-      <div class="header">
-        <div class="title">{{currentUser.firstName}}</div>
-        <!-- <div class="menu-control"><img src="/static/assets/navicon.png"/></div> -->
-
-        <!-- <div><input type="text" name="search-query" class="search-query"/></div> -->
-        <!-- <div class="logout" ng-show="is_auth()" ng-click="logout()">Logout</div> -->
-      </div>
-
-      <div class="menu-wrapper">{{render "menu"}}</div>
-    </div>
-
-    {{outlet}}
-  {{else}}
-    {{outlet}}
-  {{/if}}
 
 </script>
 

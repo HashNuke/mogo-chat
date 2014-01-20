@@ -15,15 +15,14 @@ window.App = Em.Application.create({LOG_TRANSITIONS: true})
 
 App.ApplicationSerializer = DS.ActiveModelSerializer.extend({})
 App.ApplicationAdapter    = DS.RESTAdapter.reopen({namespace: "api"})
-App.ApplicationView       = Em.View.extend(classNames: ["container"])
+App.ApplicationView       = Em.View.extend({classNames: ["container"]})
 
 
 App.Router.map(function() {
   // login
   this.route("login");
 
-  // login
-  this.resource("channels");
+  this.route("chat");
 
   // users
   // users/new
