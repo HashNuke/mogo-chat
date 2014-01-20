@@ -14,7 +14,6 @@ defmodule SessionIntegrationTest do
     navigate_to app("/")
     IO.inspect page_source()
 
-
     # conn = post("/api/sessions", [{"email", "test@example.com"}, {"password", "password"}])
     # IO.inspect conn.sent_body()
     assert true == true

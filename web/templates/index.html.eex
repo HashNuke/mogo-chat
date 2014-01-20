@@ -1,54 +1,53 @@
-<script type="text/x-handlebars" id="reference">
-  <div class="container">
+<script type="text/x-handlebars" id="index">
+  <div class="left-panel-wrapper">
+    <div class="left-panel">
+      <div class="app-name">Cobalt</div>
 
-    <div class="left-panel-wrapper">
-      <div class="left-panel">
+      <div class="user-details">
+        Hey {{currentUser.firstName}} ~!
+      </div>
 
-        <div class="app-name">Cobalt</div>
+      <div class="channels">
+        <div class="title">Channels</div>
 
-        <div class="channels">
-          <div class="title">Channels</div>
+        <ul>
+          <li class="joined">development</li>
+          <li class="joined">demo</li>
+          <li>lobby</li>
+          <li>notifications</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-          <ul>
-            <li class="joined">development</li>
-            <li class="joined">demo</li>
-            <li>lobby</li>
-            <li>notifications</li>
-          </ul>
+  <div class="channel-content">
+    <div class="channel-info">Demo channel</div>
+
+    <div class="activities-wrapper">
+      <div class="activities">
+        <div class="activity">          
+          This is an activity
         </div>
       </div>
     </div>
 
-    <div class="channel-content">
-      <div class="channel-info">Demo channel</div>
+    <div class="new-message">
+      <textarea placeholder="Message..."></textarea>
+    </div>
+  </div>
 
-      <div class="activities-wrapper">
-        <div class="activities">
-          <div class="activity">          
-            This is an activity
-          </div>
-        </div>
-      </div>
 
-      <div class="new-message">
-        <textarea placeholder="Message..."></textarea>
+  <div class="channel-details-wrapper">
+    <div class="channel-details">
+      <div class="active-users">
+        <div class="title">Users in channel</div>
+
+        <ul>
+          <li>HashNuke</li>
+          <li>ericmj</li>
+        </ul>
       </div>
     </div>
-
-
-    <div class="channel-details-wrapper">
-      <div class="channel-details">
-        <div class="active-users">
-          <div class="title">Users in channel</div>
-
-          <ul>
-            <li>HashNuke</li>
-            <li>ericmj</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
   </div>
 </script>
 
@@ -79,11 +78,6 @@
 
 <script type="text/x-handlebars" id="application">
   {{outlet}}
-</script>
-
-
-<script type="text/x-handlebars" id="index">
-  <h1>Whoa stuff ~!</h1>
 </script>
 
 
