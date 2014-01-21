@@ -9,7 +9,6 @@ App.UsersNewController = Em.Controller.extend
       userAttributes = @getProperties(["firstName", "lastName", "role", "password", "email"])
 
       user = @store.createRecord("user", userAttributes)
-      console.log userAttributes
       successCallback = =>
         @transitionToRoute("users.index")
       errorCallback = => console.log("error saving user")
