@@ -249,7 +249,7 @@
 
           <div class="field">
             <label>Name</label><br/>
-            {{input type="text" value=name}}
+            {{input type="text" value=roomName}}
           </div>
 
           <div class="actions">
@@ -277,7 +277,7 @@
 
           <div class="field">
             <label>Name</label><br/>
-            {{input type="text" value=name}}
+            {{input type="text" value=roomName}}
           </div>
 
           <div class="actions">
