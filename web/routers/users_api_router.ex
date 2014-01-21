@@ -38,7 +38,8 @@ defmodule UsersApiRouter do
   get "/:user_id" do
     user_id = conn.params["user_id"]
     user = Repo.get User, user_id
-    json_response [user: User.public_attributes(user)], conn
+    user_attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
+    json_response [user: user_attributes], conn
   end
 
 
