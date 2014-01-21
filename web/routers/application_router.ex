@@ -15,7 +15,7 @@ defmodule ApplicationRouter do
 
   forward "/api/sessions", to: SessionsApiRouter
   forward "/api/users",    to: UsersApiRouter
-  # forward "/api/channels", to: ChannelsApiRouter
+  forward "/api/rooms",    to: RoomsApiRouter
   # forward "/api/threads",  to: ThreadsApiRouter
   # forward "/api/mails",    to: MailsApiRouter
 
