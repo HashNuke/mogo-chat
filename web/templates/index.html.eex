@@ -8,7 +8,7 @@
         <a class="logout" {{action "logout" target="controllers.application"}}>Logout</a>
       </div>
 
-      <div class="channels">
+      <div class="rooms">
         <div class="title">Channels</div>
 
         <ul>
@@ -21,13 +21,13 @@
     </div>
   </div>
 
-  <div class="channel-content">
-    <div class="channel-info">Demo channel</div>
+  <div class="room-content">
+    <div class="room-info">Demo channel</div>
 
-    <div class="activities-wrapper">
-      <div class="activities">
-        <div class="activity">          
-          This is an activity
+    <div class="messages-wrapper">
+      <div class="messages">
+        <div class="message">
+          This is a message
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
   </div>
 
 
-  <div class="channel-details-wrapper">
-    <div class="channel-details">
+  <div class="room-details-wrapper">
+    <div class="room-details">
       <div class="active-users">
         <div class="title">Users in channel</div>
 
