@@ -18,16 +18,17 @@ defmodule UsersApiRouter do
 
 
   post "/" do
-    user_id = conn.params[:user_id]
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
-    user = User.new(user_params).encrypt_password()
+    user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
+    user = User.new(user_params)
+    |> User.encrypt_password()
 
     case User.validate(user) do
       [] ->
-        json_response [user: Repo.create(user)], conn
+        saved_user = Repo.create(user)
+        json_response [user: User.public_attributes(saved_user)], conn
       errors ->
         json_response [errors: errors], conn, 422
     end
@@ -46,12 +47,14 @@ defmodule UsersApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    user_params = whitelist_params(params, ["first_name", "last_name", "username", "password", "role"])
-    user = Repo.get(User, user_id).update(user_params).encrypt_password()
+    user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
+    user = Repo.get(User, user_id).update(user_params)
+    |> User.encrypt_password()
 
     case User.validate(user) do
       [] ->
-        json_response [user: Repo.update(user)], conn
+        saved_user = Repo.update(user)
+        json_response [user: User.public_attributes(saved_user)], conn
       errors ->
         json_response [errors: errors], conn, 422
     end
@@ -60,8 +63,11 @@ defmodule UsersApiRouter do
 
   delete "/:user_id" do
     user_id = conn.params["user_id"]
-    query = from u in User, where: u.id == ^user_id
-    Repo.delete query
+    current_user_id = get_session(conn, :user_id)
+    if current_user_id != user_id do
+      query = from u in User, where: u.id == ^user_id
+      Repo.delete query
+    end
     json_response([ok: user_id], conn)
   end
 
