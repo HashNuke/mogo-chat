@@ -107,38 +107,6 @@
 </script>
 
 
-<script type="text/x-handlebars" id="channels">
-  <div class="detail">
-    <div class="header">
-      <div class="title">Channels</div>
-    </div>
-
-    <div class="page">
-      <div class="list">
-
-        {{#each channel in controller}}
-          <div class="item">
-            <span class="name">{{channel.name}}</span>
-            <div class="controls">
-              <span {{action remove this}}>Remove</span>
-            </div>
-          </div>
-        {{/each}}
-
-        <form class="user" {{action add on="submit"}}>
-          <div class="name">
-            New domain:
-            {{input type="text" value=newChannelName}}
-            <button class="save" {{action add}}>Add</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>
-</script>
-
-
 <script type="text/x-handlebars" id="user/edit">
 
   <div class="detail">
@@ -180,7 +148,7 @@
           <div class="actions">
             <button class="save" {{action save}}>Save</button>
             or
-            {{#link-to "users" }}cancel{{/link-to}}
+            {{#link-to "users"}}cancel{{/link-to}}
           </div>
 
         </form>
@@ -230,7 +198,7 @@
           <div class="actions">
             <button class="save" {{action save}}>Save</button>
             or
-            {{#link-to "users" }}cancel{{/link-to}}
+            {{#link-to "users"}}cancel{{/link-to}}
           </div>
 
         </form>
@@ -243,7 +211,7 @@
 <script type="text/x-handlebars" id="users/index">
   <div class="detail">
     <div class="header">
-      <div class="title">{{title}}</div>
+      <div class="title">Users</div>
     </div>
 
     <div class="page">
@@ -255,10 +223,92 @@
             <span class="name">{{user.firstName}} {{user.lastName}}</span>
             (<span class="email">{{user.email}}</span>)
             <div class="controls">
-              {{#link-to "user.edit" user.id }}Edit{{/link-to}}
+              {{#link-to "user.edit" user.id}}Edit{{/link-to}}
               {{#unless isCurrentUser}}
-                <span {{action "remove" this }}>Remove</span>
+                <span {{action "remove" this}}>Remove</span>
               {{/unless}}
+            </div>
+          </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="rooms/new">
+  <div class="detail">
+    <div class="header">
+      <div class="title">New room</div>
+    </div>
+
+    <div class="page">
+      <div class="room-form">
+        <form {{action save on="submit"}}>
+
+          <div class="field">
+            <label>Name</label><br/>
+            {{input type="text" value=name}}
+          </div>
+
+          <div class="actions">
+            <button class="save" {{action save}}>Save</button>
+            or
+            {{#link-to "rooms"}}cancel{{/link-to}}
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="rooms/edit">
+  <div class="detail">
+    <div class="header">
+      <div class="title">Edit room</div>
+    </div>
+
+    <div class="page">
+      <div class="room-form">
+        <form {{action save on="submit"}}>
+
+          <div class="field">
+            <label>Name</label><br/>
+            {{input type="text" value=name}}
+          </div>
+
+          <div class="actions">
+            <button class="save" {{action save}}>Save</button>
+            or
+            {{#link-to "rooms"}}cancel{{/link-to}}
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="rooms/index">
+  <div class="detail">
+    <div class="header">
+      <div class="title">Rooms</div>
+    </div>
+
+    <div class="page">
+      <div class="list">
+        {{#link-to "rooms.new" classNames="add"}}+ Add{{/link-to}}
+
+        {{#each room in controller}}
+          <div class="item">
+            <span class="name">{{room.name}}</span>
+            <div class="controls">
+              {{#link-to "room.edit" room.id}}Edit{{/link-to}}
+              <span {{action "remove" this}}>Remove</span>
             </div>
           </div>
         {{/each}}
