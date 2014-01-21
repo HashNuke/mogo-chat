@@ -22,7 +22,6 @@ defmodule RoomsApiRouter do
     |> JSEX.decode
 
     room_params = whitelist_params(params["room"], ["name"])
-    IO.inspect room_params
     room = Room.new room_params
 
     case Room.validate(room) do
