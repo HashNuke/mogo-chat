@@ -10,11 +10,10 @@ defmodule RoomsApiRouter do
 
   get "/" do
     rooms = Repo.all Room
-    lc room inlist rooms do
-      room.public_attributes
+    rooms_attributes = lc room inlist rooms do
+      Room.public_attributes(room)
     end
-    |> &([rooms: &1])
-    |> json_response(conn)
+    json_response([rooms: rooms_attributes], conn)
   end
 
 
@@ -22,8 +21,9 @@ defmodule RoomsApiRouter do
     {:ok, params} = conn.req_body
     |> JSEX.decode
 
-    params = whitelist_params(params["room"], ["name"])
-    room = Room.new params["room"]
+    room_params = whitelist_params(params["room"], ["name"])
+    IO.inspect room_params
+    room = Room.new room_params
 
     case Room.validate(room) do
       [] ->
