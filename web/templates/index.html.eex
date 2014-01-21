@@ -154,29 +154,29 @@
 
           <div class="field">
             <label>First name</label><br/>
-            {{input type="text" value=user.firstName}}
+            {{input type="text" value=firstName}}
           </div>
 
           <div class="field">
             <label>Last name</label><br/>
-            {{input type="text" value=user.lastName}}
+            {{input type="text" value=lastName}}
           </div>
 
           <div class="field">
             <label>Email</label><br/>
-            {{input type="text" value=user.email}}
+            {{input type="text" value=email}}
           </div>
 
           <div class="field">
             <label>Password</label><br/>
-            {{input type="password" value=user.password}}
+            {{input type="password" value=password}}
           </div>
 
           <div class="field">
             <label>Role</label>
             {{view Ember.Select
                    content=validRoles
-                   value=user.role}}
+                   value=role}}
           </div>
 
           <div class="actions">

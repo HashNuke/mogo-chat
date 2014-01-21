@@ -43,7 +43,7 @@ defmodule UsersApiRouter do
   end
 
 
-  post "/:user_id" do
+  put "/:user_id" do
     user_id = conn.params[:user_id]
     {:ok, params} = conn.req_body
     |> JSEX.decode
@@ -54,8 +54,8 @@ defmodule UsersApiRouter do
 
     case User.validate(user) do
       [] ->
-        saved_user = Repo.update(user)
-        json_response [user: User.public_attributes(saved_user)], conn
+        :ok = Repo.update(user)
+        json_response [user: User.public_attributes(user)], conn
       errors ->
         json_response [errors: errors], conn, 422
     end
