@@ -27,9 +27,29 @@ defmodule RoomsApiRouter do
 
     case Room.validate(room) do
       [] ->
-        json_response [room: Repo.create(room)], conn
+        saved_room = Repo.create(room)
+        json_response [room: Room.public_attributes(saved_room)], conn
       errors ->
         json_response [errors: errors], conn
+    end
+  end
+
+
+  put "/:room_id" do
+    room_id = conn.params[:room_id]
+    {:ok, params} = conn.req_body
+    |> JSEX.decode
+
+    room_params = whitelist_params(params["room"], ["name"])
+    room = Repo.get(Room, room_id).update(room_params)
+    |> Room.encrypt_password()
+
+    case Room.validate(room) do
+      [] ->
+        :ok = Repo.update(room)
+        json_response [user: Room.public_attributes(room)], conn
+      errors ->
+        json_response [errors: errors], conn, 422
     end
   end
 
