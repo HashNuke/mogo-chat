@@ -24,14 +24,19 @@ App.Router.map(function() {
   this.route("login");
 
   // rooms
-  this.resource("rooms");
+  this.resource("rooms", function() {
+    this.route("new");
+    this.resource("room", {path: "/:room_id"}, function() {
+      this.route("edit");
+    });
+  });
+
 
   // users
   // users/new
   // users/:user_id
   this.resource("users", function() {
     this.route("new");
-
     this.resource("user", {path: "/:user_id"}, function() {
       this.route("edit");
     });
