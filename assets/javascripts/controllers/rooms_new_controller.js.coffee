@@ -4,10 +4,10 @@ App.RoomsNewController = Em.Controller.extend
 
   actions:
     save: ->
-      roomAttributes = @getProperties(["name"])
+      roomAttributes = @getProperties(["roomName"])
 
       room = @store.createRecord("room", roomAttributes)
       successCallback = =>
-        @transitionToRoute("users.index")
+        @transitionToRoute("rooms.index")
       errorCallback = => console.log("error saving room")
       room.save().then(successCallback, errorCallback)
