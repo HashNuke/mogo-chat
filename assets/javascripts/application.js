@@ -5,6 +5,7 @@
 //= require "lib/ember-data"
 //= require_self
 //= require "models"
+//= require "views"
 //= require "helpers"
 //= require "./routes/authenticated_route"
 //= require_tree "./controllers"

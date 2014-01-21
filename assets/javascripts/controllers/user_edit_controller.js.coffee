@@ -1,5 +1,6 @@
 App.UserEditController = Em.Controller.extend
   needs: ["application"]
+  currentUser: Ember.computed.alias("controllers.application.currentUser")
   validRoles: ["member", "admin"]
 
   actions:

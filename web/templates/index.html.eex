@@ -53,7 +53,7 @@
 </script>
 
 
-<script type="text/x-handlebars" id="management-panel">
+<script type="text/x-handlebars" id="settings">
   <div class="left-panel-wrapper">
     <div class="left-panel">
 
@@ -75,12 +75,12 @@
       </div>
     </div>
   </div>
+  {{yield}}
 </script>
 
 <script type="text/x-handlebars" id="application">
   {{outlet}}
 </script>
-
 
 <script type="text/x-handlebars" id="login">
   <div class="login">
