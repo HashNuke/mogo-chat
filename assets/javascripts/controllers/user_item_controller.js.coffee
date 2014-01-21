@@ -8,7 +8,8 @@ App.UserItemController = Em.ObjectController.extend
 
   actions:
     remove: ->
-      user = @get("model").deleteRecord()
+      user = @get("model")
+      user.deleteRecord()
       successCallback  = =>
         console.log("deleted")
       errorCallback = =>

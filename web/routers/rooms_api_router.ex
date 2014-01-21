@@ -55,8 +55,8 @@ defmodule RoomsApiRouter do
 
   delete "/:room_id" do
     room_id = conn.params["room_id"]
-    query = from r in Room, where: r.id == ^room_id
-    Repo.delete_all query
+    room = Room.new(id: room_id)
+    Repo.delete room
     json_response("", conn)
   end
 

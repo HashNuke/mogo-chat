@@ -4,7 +4,8 @@ App.RoomItemController = Em.ObjectController.extend
 
   actions:
     remove: ->
-      room = @get("model").deleteRecord()
+      room = @get("model")
+      room.deleteRecord()
       successCallback  = =>
         console.log("deleted")
       errorCallback = =>

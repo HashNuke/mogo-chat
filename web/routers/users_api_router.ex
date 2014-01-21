@@ -66,10 +66,10 @@ defmodule UsersApiRouter do
     user_id = conn.params["user_id"]
     current_user_id = get_session(conn, :user_id)
     if current_user_id != user_id do
-      query = from u in User, where: u.id == ^user_id
-      Repo.delete query
+      user = User.new(id: user_id)
+      Repo.delete user
     end
-    json_response([ok: user_id], conn)
+    json_response("", conn)
   end
 
 end
