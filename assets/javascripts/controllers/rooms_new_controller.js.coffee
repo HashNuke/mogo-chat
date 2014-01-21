@@ -4,8 +4,7 @@ App.RoomsNewController = Em.Controller.extend
 
   actions:
     save: ->
-      roomAttributes = @getProperties(["roomName"])
-
+      roomAttributes = {name: @get("roomName")}
       room = @store.createRecord("room", roomAttributes)
       successCallback = =>
         @transitionToRoute("rooms.index")
