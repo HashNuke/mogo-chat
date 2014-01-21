@@ -37,7 +37,7 @@
     padding: 0.5em 0.5em 0.5em 1.2em;
   }
 
-  .navigation, .channels {
+  .navigation, .rooms {
     float: left;
     width: 100%;
     padding: 1.2em;
@@ -53,9 +53,7 @@
         padding: 0.25em 0em 0.25em 0em;
       }
 
-      .joined {
-        color: #666;
-      }
+      .joined { color: #666; }
     }
   }
 
