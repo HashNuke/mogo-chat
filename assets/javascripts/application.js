@@ -23,7 +23,8 @@ App.Router.map(function() {
   // login
   this.route("login");
 
-  this.route("chat");
+  // rooms
+  this.resource("rooms");
 
   // users
   // users/new

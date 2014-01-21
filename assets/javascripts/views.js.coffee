@@ -9,3 +9,7 @@ App.UsersNewView = Ember.View.extend
 App.UserEditView = Ember.View.extend
   layoutName: "settings"
   classNames: ["settings"]
+
+App.RoomsView = Ember.View.extend
+  layoutName: "settings"
+  classNames: ["settings"]
