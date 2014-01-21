@@ -14,14 +14,13 @@ defmodule User do
 
   validate user,
     email: present(),
-    encrypted_password: present(),
     role: member_of(%w(admin member)),
     first_name: has_length(min: 3),
     also: validate_password
 
 
   def validate_password(user) do
-    if user.password && size(user.password) < 6 do
+    if !user.encrypted_password || (user.password && size(user.password) < 6) do
       [{ :password, "should be 6 characters or more" }]
     else
       []
