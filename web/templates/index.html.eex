@@ -193,7 +193,6 @@
 
 
 <script type="text/x-handlebars" id="users/new">
-
   <div class="detail">
     <div class="header">
       <div class="title">New user</div>
@@ -205,29 +204,29 @@
 
           <div class="field">
             <label>First name</label><br/>
-            {{input type="text" value=user.firstName}}
+            {{input type="text" value=firstName}}
           </div>
 
           <div class="field">
             <label>Last name</label><br/>
-            {{input type="text" value=user.lastName}}
+            {{input type="text" value=lastName}}
           </div>
 
           <div class="field">
             <label>Email</label><br/>
-            {{input type="text" value=user.email}}
+            {{input type="text" value=email}}
           </div>
 
           <div class="field">
             <label>Password</label><br/>
-            {{input type="password" value=user.password}}
+            {{input type="password" value=password}}
           </div>
 
           <div class="field">
             <label>Role</label>
             {{view Ember.Select
                    content=validRoles
-                   value=user.role}}
+                   value=role}}
           </div>
 
           <div class="actions">
@@ -244,7 +243,6 @@
 
 
 <script type="text/x-handlebars" id="users/index">
-
   <div class="detail">
     <div class="header">
       <div class="title">{{title}}</div>
@@ -260,7 +258,9 @@
             (<span class="email">{{user.email}}</span>)
             <div class="controls">
               {{#link-to "user.edit" user.id }}Edit{{/link-to}}
-              <span {{action "remove" this }}>Remove</span>
+              {{#unless isCurrentUser}}
+                <span {{action "remove" this }}>Remove</span>
+              {{/unless}}
             </div>
           </div>
         {{/each}}
@@ -268,43 +268,6 @@
       </div>
     </div>
   </div>
-</script>
-
-
-
-<script type="text/x-handlebars" id="threads/in">
-
-  <div class="detail">
-    <div class="header">
-      <div class="title">{{title}}</div>
-    </div>
-
-    <div class="threads-wrapper">
-      <div class="threads">
-
-        {{#each thread in controller}}
-
-          <div class="thread">
-            <div class="sender">
-
-            </div>
-            <div class="timestamp">{{relativeTime thread.updatedAtDt}}</div>
-
-            <div class="preview">
-              <div class="subject">{{thread.subject}}</div>
-              <div class="summary">{{thread.preview}}</div>
-            </div>
-          </div>
-
-        {{else}}
-          <h2>No mails. You feel lucky?</h2>
-        {{/each}}
-
-      </div>
-    </div>
-
-  </div>
-
 </script>
 
 
