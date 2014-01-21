@@ -1,3 +1,8 @@
 App.UsersNewRoute = App.AuthenticatedRoute.extend
-  setupController: (controller, model)->
-    controller.set "domains", @store.find("domain")
+  setupController: (controller)->
+    controller.setProperties
+      "firstName": null
+      "lastName": null
+      "email": null
+      "password": null
+      "role": null
