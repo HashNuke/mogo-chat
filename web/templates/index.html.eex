@@ -12,7 +12,7 @@
         <div class="title">Channels</div>
         <ul>
           {{#each room_user_state in controller}}
-            <li {{bind-attr class="room_user_state.joined:joined"}}>
+            <li {{action "join" this}} {{bind-attr class="room_user_state.joined:joined"}}>
               {{room_user_state.room.name}}
             </li>
           {{/each}}
