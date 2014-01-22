@@ -4,7 +4,8 @@ defmodule RoomsApiRouter do
   import Cheko.RouterUtils
 
   prepare do
-    authorize_user!(conn, ["admin"])
+    #TODO allow member only for GET /
+    authorize_user!(conn, ["admin", "member"])
   end
 
 
