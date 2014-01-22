@@ -22,7 +22,7 @@ defmodule RoomsApiRouter do
     room_id = conn.params[:room_id]
     room = Repo.get Room, room_id
 
-    [rooms: Room.public_attributes(room)]
+    [room: Room.public_attributes(room)]
     |> json_response(conn)
   end
 
