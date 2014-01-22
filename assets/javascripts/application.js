@@ -15,7 +15,7 @@
 window.App = Em.Application.create({LOG_TRANSITIONS: true})
 
 App.ApplicationSerializer = DS.ActiveModelSerializer.extend({})
-App.ApplicationAdapter    = DS.RESTAdapter.reopen({namespace: "api"})
+App.ApplicationAdapter    = DS.ActiveModelAdapter.reopen({namespace: "api"})
 App.ApplicationView       = Em.View.extend({classNames: ["container"]})
 
 
