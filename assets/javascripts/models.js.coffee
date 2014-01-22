@@ -16,9 +16,15 @@ App.Room = DS.Model.extend
 
 App.RoomUserState = DS.Model.extend
   user_id: DS.attr("number")
-  joined: DS.attr("boolean")
+  joined:  DS.attr("boolean")
+  room:  DS.belongsTo("room")
   last_pinged_at: DS.attr("date")
-  room: DS.belongsTo("room")
+
+#TODO move this elsewhere
+App.RoomUserStateSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsMixin, {
+  attrs: {
+    room: {embedded: "always"}
+  }
 
 
 App.Message = DS.Model.extend
