@@ -27,7 +27,7 @@ namespace :assets do
   task :compile do
     begin
       assets.each do |asset|
-        debugger if sprockets[asset].nil?
+        puts asset
         sprockets[asset].write_to "#{asset_output}/#{asset}"
       end
     rescue => e
