@@ -4,6 +4,8 @@ defmodule Room do
 
   queryable "rooms" do
     field :name, :string
+    has_many :messages, Message
+    has_many :room_pings, RoomPing
   end
 
   validate room,

@@ -5,9 +5,10 @@ defmodule Message do
   queryable "messages" do
     field :body,       :string
     field :type,       :string
-    field :room_id,    :integer
     field :user_id,    :integer
     field :created_at, :datetime
+    belongs_to :room, Room
+    belongs_to :user, User
   end
 
 end

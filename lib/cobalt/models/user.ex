@@ -9,6 +9,8 @@ defmodule User do
     field :first_name, :string
     field :last_name,  :string
     field :password,   :virtual, default: nil
+    has_many :messages, Message
+    has_many :room_pings, RoomPing
   end
 
 
