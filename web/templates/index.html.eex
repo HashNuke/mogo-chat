@@ -1,7 +1,7 @@
 <script type="text/x-handlebars" id="index">
   <div class="left-panel-wrapper">
     <div class="left-panel">
-      <div class="app-name">Cobalt</div>
+      <div class="app-name">Cheko</div>
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
@@ -56,7 +56,7 @@
 <script type="text/x-handlebars" id="settings">
   <div class="left-panel-wrapper">
     <div class="left-panel">
-      <div class="app-name">Cobalt</div>
+      <div class="app-name">Cheko</div>
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
@@ -83,7 +83,7 @@
 <script type="text/x-handlebars" id="login">
   <div class="login">
 
-    <div class="title">Cobalt</div>
+    <div class="title">Cheko</div>
 
     <form {{action login on="submit"}}>
 

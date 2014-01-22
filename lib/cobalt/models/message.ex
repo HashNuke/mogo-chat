@@ -1,6 +1,6 @@
 defmodule Message do
   use Ecto.Model
-  use Cobalt.ModelUtils
+  use Cheko.ModelUtils
 
   queryable "messages" do
     field :body,       :string

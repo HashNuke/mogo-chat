@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= content_for(:title) || "Cobalt" %></title>
+  <title><%= content_for(:title) || "Cheko" %></title>
   <script type="text/javascript" src="/static/assets/application.js"></script>
   <link rel="stylesheet" href="/static/assets/application.css"/>
   <link rel="shortcut icon" href="/static/favicon.ico" />

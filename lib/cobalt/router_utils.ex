@@ -1,4 +1,4 @@
-defmodule Cobalt.RouterUtils do
+defmodule Cheko.RouterUtils do
 
   import Dynamo.HTTP.Session
   import Dynamo.HTTP.Halt

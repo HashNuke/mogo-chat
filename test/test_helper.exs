@@ -1,9 +1,9 @@
-Dynamo.under_test(Cobalt.Dynamo)
+Dynamo.under_test(Cheko.Dynamo)
 Dynamo.Loader.enable
 ExUnit.start
 Hound.start [driver: "phantomjs"]
 
-defmodule Cobalt.TestCase do
+defmodule Cheko.TestCase do
   use ExUnit.CaseTemplate
 
   # Enable code reloading on test cases
@@ -16,7 +16,7 @@ end
 
 defmodule TestUtils do
   def app(path) do
-    "http://localhost:#{Cobalt.Dynamo.config[:server][:port]}/#{path}"
+    "http://localhost:#{Cheko.Dynamo.config[:server][:port]}/#{path}"
   end
 
 

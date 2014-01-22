@@ -1,4 +1,4 @@
-defmodule Cobalt.ModelUtils do
+defmodule Cheko.ModelUtils do
 
   defmacro __using__(_) do
     quote do

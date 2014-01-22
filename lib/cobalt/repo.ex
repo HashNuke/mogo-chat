@@ -14,6 +14,6 @@ defmodule Repo do
 
 
   def priv do
-    app_dir(:cobalt, "priv/repo")
+    app_dir(:cheko, "priv/repo")
   end
 end

@@ -1,5 +1,5 @@
 defmodule SessionIntegrationTest do
-  use Cobalt.TestCase
+  use Cheko.TestCase
   use Hound.Helpers
   import TestUtils
 

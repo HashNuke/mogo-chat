@@ -1,11 +1,11 @@
-# Cobalt
+# Cheko
 
 Team chat app written using Elixir and Ember.js.
 
 
 ## Usage
 
-* Start the app with `iex --erl "-config cobalt.config" -S mix server`
+* Start the app with `iex --erl "-config cheko.config" -S mix server`
 
 
 ### Development

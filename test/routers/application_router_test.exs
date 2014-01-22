@@ -1,5 +1,5 @@
 defmodule ApplicationRouterTest do
-  use Cobalt.TestCase
+  use Cheko.TestCase
   use Dynamo.HTTP.Case
 
   # Sometimes it may be convenient to test a specific

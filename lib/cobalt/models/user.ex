@@ -1,6 +1,6 @@
 defmodule User do
   use Ecto.Model
-  use Cobalt.ModelUtils
+  use Cheko.ModelUtils
 
   queryable "users" do
     field :email,      :string

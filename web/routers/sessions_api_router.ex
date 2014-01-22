@@ -1,7 +1,7 @@
 defmodule SessionsApiRouter do
   use Dynamo.Router
   use Ecto.Query
-  import Cobalt.RouterUtils
+  import Cheko.RouterUtils
 
 
   get "/" do

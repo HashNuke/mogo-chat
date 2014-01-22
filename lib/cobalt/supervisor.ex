@@ -1,4 +1,4 @@
-defmodule Cobalt.Supervisor do
+defmodule Cheko.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -10,7 +10,7 @@ defmodule Cobalt.Supervisor do
     dynamo_options = [max_restarts: 5, max_seconds: 5]
 
     tree = [
-      worker(Cobalt.Dynamo, [dynamo_options]),
+      worker(Cheko.Dynamo, [dynamo_options]),
       worker(Repo, [])
     ]
 

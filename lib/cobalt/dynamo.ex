@@ -1,4 +1,4 @@
-defmodule Cobalt.Dynamo do
+defmodule Cheko.Dynamo do
   use Dynamo
 
   config :dynamo,
@@ -6,7 +6,7 @@ defmodule Cobalt.Dynamo do
     env: Mix.env,
 
     # The OTP application associated with this Dynamo
-    otp_app: :cobalt,
+    otp_app: :cheko,
 
     # The endpoint to dispatch requests to
     endpoint: ApplicationRouter,
@@ -18,14 +18,14 @@ defmodule Cobalt.Dynamo do
   # config :dynamo,
   #   session_store: Session.CookieStore,
   #   session_options:
-  #     [ key: "_cobalt_session",
+  #     [ key: "_cheko_session",
   #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
 
   config :dynamo,
     session_store: Session.ETSStore,
     session_options: [
-      table: :cobalt_sessions,
-      key: "_cobalt_session"
+      table: :cheko_sessions,
+      key: "_cheko_session"
     ]
 
   if Mix.env == :test do

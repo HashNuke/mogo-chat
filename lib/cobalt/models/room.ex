@@ -1,6 +1,6 @@
 defmodule Room do
   use Ecto.Model
-  use Cobalt.ModelUtils
+  use Cheko.ModelUtils
 
   queryable "rooms" do
     field :name, :string

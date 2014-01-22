@@ -1,7 +1,7 @@
 defmodule RoomsApiRouter do
   use Dynamo.Router
   use Ecto.Query
-  import Cobalt.RouterUtils
+  import Cheko.RouterUtils
 
   prepare do
     authorize_user!(conn, ["admin"])

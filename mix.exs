@@ -2,10 +2,10 @@ defmodule Cobalt.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :cobalt,
+    [ app: :cheko,
       version: "0.0.1",
       build_per_environment: true,
-      dynamos: [Cobalt.Dynamo],
+      dynamos: [Cheko.Dynamo],
       compilers: [:elixir, :dynamo, :app],
       deps: deps(Mix.env) ]
   end
@@ -13,7 +13,7 @@ defmodule Cobalt.Mixfile do
   # Configuration for the OTP application
   def application do
     [ applications: [:cowboy, :dynamo, :bcrypt],
-      mod: { Cobalt, [] } ]
+      mod: { Cheko, [] } ]
   end
 
   defp deps(:prod) do

@@ -1,4 +1,4 @@
-defmodule Cobalt do
+defmodule Cheko do
   use Application.Behaviour
 
   @doc """
@@ -6,7 +6,7 @@ defmodule Cobalt do
   application and its Dynamos.
   """
   def start(_type, _args) do
-    :ets.new(:cobalt_sessions, [:named_table, :public, {:read_concurrency, true}])
-    Cobalt.Supervisor.start_link()
+    :ets.new(:cheko_sessions, [:named_table, :public, {:read_concurrency, true}])
+    Cheko.Supervisor.start_link()
   end
 end

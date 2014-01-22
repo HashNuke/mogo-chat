@@ -1,7 +1,6 @@
 defmodule RoomPing do
   use Ecto.Model
-  use Cobalt.ModelUtils
-
+  use Cheko.ModelUtils
 
   queryable "room_pings" do
     belongs_to :user, User
