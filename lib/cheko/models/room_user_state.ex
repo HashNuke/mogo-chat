@@ -10,6 +10,12 @@ defmodule RoomUserState do
   end
 
 
+  validate room_user_state,
+    user_id: present(),
+    room_id: present(),
+    joined: member_of([true, false])
+
+
   def public_attributes(record) do
     attributes(record, ["id", "room_id", "user_id", "joined", "last_pinged_at"])
   end
