@@ -25,7 +25,7 @@ App.RoomUserStateSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecords
   attrs: {
     room: {embedded: "always"}
   }
-
+})
 
 App.Message = DS.Model.extend
   body:   DS.attr("string")
