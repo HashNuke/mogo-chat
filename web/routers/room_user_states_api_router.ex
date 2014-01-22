@@ -37,13 +37,13 @@ defmodule RoomUserStatesApiRouter do
 
     room_user_state_params = whitelist_params(params["room_user_state"], ["joined"])
     query = from r in RoomUserState, where: r.id == ^room_user_state_id and r.user_id == ^user_id
-    [room_user_state] = Repo.get(RoomUserState, room_user_state_id)
-    room_user_state = room_user_state.update(room_user_state_params)
+    room_user_state = Repo.get(RoomUserState, room_user_state_id)
+    new_room_user_state = room_user_state.update(room_user_state_params)
 
-    case RoomUserState.validate(room_user_state) do
+    case RoomUserState.validate(new_room_user_state) do
       [] ->
-        :ok = Repo.update(room_user_state)
-        json_response [user: RoomUserState.public_attributes(room_user_state)], conn
+        :ok = Repo.update(new_room_user_state)
+        json_response [user: RoomUserState.public_attributes(new_room_user_state)], conn
       errors ->
         json_response [errors: errors], conn, 422
     end
