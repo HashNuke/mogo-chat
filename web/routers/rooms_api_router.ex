@@ -18,6 +18,15 @@ defmodule RoomsApiRouter do
   end
 
 
+  get "/:room_id" do
+    room_id = conn.params[:room_id]
+    room = Repo.get Room, room_id
+
+    [rooms: Room.public_attributes(room)]
+    |> json_response(conn)
+  end
+
+
   post "/" do
     {:ok, params} = conn.req_body
     |> JSEX.decode
