@@ -15,7 +15,7 @@ App.Room = DS.Model.extend
 
 
 App.RoomUserState = DS.Model.extend
-  user_id: DS.attr("integer")
+  user_id: DS.attr("number")
   joined: DS.attr("boolean")
   last_pinged_at: DS.attr("datetime")
   room: DS.belongsTo("room")
