@@ -1,10 +1,10 @@
-defmodule RoomPing do
+defmodule RoomUserState do
   use Ecto.Model
   use Cheko.ModelUtils
 
-  queryable "room_pings" do
+  queryable "room_user_states" do
     belongs_to :user, User
     belongs_to :room, Room
-    field :pinged_at, :datetime
+    field :last_pinged_at, :datetime
   end
 end

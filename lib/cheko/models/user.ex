@@ -10,7 +10,7 @@ defmodule User do
     field :last_name,  :string
     field :password,   :virtual, default: nil
     has_many :messages, Message
-    has_many :room_pings, RoomPing
+    has_many :room_user_states, RoomUserState
   end
 
 
