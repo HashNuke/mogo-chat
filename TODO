@@ -13,4 +13,5 @@
 * Deleting rooms
 * Style for management pages
 
-Check authorization
+* Check authorization
+* Seperate db config
