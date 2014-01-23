@@ -22,20 +22,26 @@
     </div>
   </div>
 
-  <div class="room-content">
-    <div class="room-info">Demo channel</div>
 
-    <div class="messages-wrapper">
-      <div class="messages">
-        <div class="message">
-          This is a message
+  <div class="room-content">
+    {{#unless activeState}}
+      <div>
+        [[#TODO This needs to be changed to a better message]]
+        ACTIVE CHANNEL ID NOT SET: {{activeState}}
+      </div>
+    {{else}}
+      <div class="room-info">{{activeState.room.name}}</div>
+
+      <div class="messages-wrapper">
+        <div class="messages">
+          <div class="message">
+            This is a message
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="new-message">
-      <textarea placeholder="Message..."></textarea>
-    </div>
+      {{view App.NewMessageView}}
+    {{/unless}}
   </div>
 
 
@@ -51,6 +57,11 @@
       </div>
     </div>
   </div>
+</script>
+
+
+<script type="text/x-handlebars" id="new-message">
+  <textarea placeholder="Message..."></textarea>
 </script>
 
 
