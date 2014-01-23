@@ -2,23 +2,23 @@ App.IndexRoute = App.AuthenticatedRoute.extend
   setupController: (controller, model)->
     states   = []
     stateIds = []
-    activeStateId = null
+    activeState = null
 
     model.forEach (item)->
       stateId = item.get("id")
-      unless activeStateId? && item.get("joined") == true
-        activeStateId = item.get("id")
+      if !activeState? && item.get("joined") == true
+        activeState = item
       states.push(stateId)
       states[stateId] = {}
 
-    for stateId in stateIds:
+    for stateId in stateIds
       console.log "k:", stateId, states[stateId]
 
     controller.set("stateIds", stateIds)
     controller.set("states", states)
-    controller.set("activeStateId", activeStateId)
+    controller.set("activeState", activeState)
     @_super(controller, model)
 
 
-  model: -> @store.find("room_user_state")
-
+  model: ->
+    @store.find("room_user_state")
