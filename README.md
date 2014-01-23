@@ -1,25 +1,29 @@
 # Cheko
 
-Team chat app written using Elixir and Ember.js.
-
 
 ## Usage
 
-* Start the app with `iex --erl "-config cheko.config" -S mix server`
+You'll need Erlang version R16B02 or higher, Elixir version v0.12.2 and Postgresql.
+
+* Create a postgres database called `cheko_development`
+
+* Get the dependencies: `mix deps.get`
+
+* Run migrations on the database: `mix ecto.migrate`
+
+* Setup the app with an admin user: `mix setup`
+
+* Start the app: `iex --erl "-config cheko.config" -S mix server`
 
 
-### Development
+## Development
 
-Run `bundle exec rake assets:watch` to start asset server.
+* Run `bundle exec rake assets:watch` to start asset server.
 
 
-This is a project built with Elixir that uses Dynamo to serve web requests.
+## Tests
 
-Resources:
+For running test, you'll need a database called `cheko_test`.
 
-* [Elixir website](http://elixir-lang.org/)
-* [Elixir getting started guide](http://elixir-lang.org/getting_started/1.html)
-* [Elixir docs](http://elixir-lang.org/docs)
-* [Dynamo source code](https://github.com/elixir-lang/dynamo)
-* [Dynamo guides](https://github.com/elixir-lang/dynamo#learn-more)
-* [Dynamo docs](http://elixir-lang.org/docs/dynamo)
+* Get dependencies: `MIX_ENV=test mix deps.get`
+
