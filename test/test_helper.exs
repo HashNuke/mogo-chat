@@ -12,10 +12,6 @@ defmodule Cheko.TestCase do
     Dynamo.Loader.enable
     :ok
   end
-
-  setup do
-    Repo.stop
-  end
 end
 
 
