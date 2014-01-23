@@ -12,7 +12,7 @@ defmodule Cobalt.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo, :bcrypt],
+    [ applications: [:cowboy, :dynamo, :bcrypt, :qdate],
       mod: { Cheko, [] } ]
   end
 
@@ -22,6 +22,7 @@ defmodule Cobalt.Mixfile do
       { :postgrex, github: "ericmj/postgrex" },
       { :ecto, github: "elixir-lang/ecto" },
       { :exjson, github: "guedes/exjson" },
+      { :qdate, github: "choptastic/qdate" },
       { :bcrypt, github: "irccloud/erlang-bcrypt" }
     ]
   end

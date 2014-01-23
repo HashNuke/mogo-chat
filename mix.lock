@@ -4,6 +4,8 @@
   "decimal": {:git, "git://github.com/ericmj/decimal.git", "eef08ae02496d7c9d6bed2b06342d7be0e791223", []},
   "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "a25f6701993ea7a88f2ccd3b8c40c3216305442b", []},
   "ecto": {:git, "git://github.com/elixir-lang/ecto.git", "1ce48045923d4aada22860c9c878b93d1c4da4e0", []},
+  "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [branch: "master"]},
+  "erlware_commons": {:git, "git://github.com/erlware/erlware_commons.git", "96cdc0e6237bfc834d144750e7fbef09016be084", [branch: "master"]},
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "aecbe8cf755fc81d76e2924d69a33642b7945af9", []},
   "exjson": {:git, "git://github.com/guedes/exjson.git", "bd9dcb7e78c2344bb491098405f2b81d53979dcd", []},
   "hackney": {:git, "git://github.com/benoitc/hackney.git", "7f2a0b5996313d930277786e7ff5d538e9346547", [tag: "0.10.1"]},
@@ -11,7 +13,11 @@
   "hound": {:git, "git://github.com/HashNuke/hound.git", "4f4700c551c3c2817809a6d5022550045962a8d1", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [tag: "v4.0.2"]},
   "irc_lib": {:git, "git://github.com/0xAX/irc_lib.git", "fa97716c2c2c28e76de3a56cbe3b901f698511ff", []},
+  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "1e89a76f770e14bbbd1b5bebfc05312a984f21a4", []},
+  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", []},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "d47df5df57b22eb183b0c48c8dcc5f9827fad71b", []},
   "postgrex": {:git, "git://github.com/ericmj/postgrex.git", "06e7e567e13bb3c96f6842d370556443eaf41b13", []},
-  "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]} ]
+  "qdate": {:git, "git://github.com/choptastic/qdate.git", "5139108fcc6de03b0db1b27b9431ed028510556d", []},
+  "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]},
+  "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "0d954d923275305c62a81e9c2bf60a60977a9d29", [branch: "master"]} ]
