@@ -9,7 +9,7 @@
       </div>
 
       <div class="rooms">
-        <div class="title">Channels</div>
+        <div class="title">Rooms</div>
         <ul>
           {{#each room_user_state in controller}}
             <li {{bind-attr class="room_user_state.joined:joined"}}>
@@ -48,7 +48,7 @@
   <div class="room-details-wrapper">
     <div class="room-details">
       <div class="active-users">
-        <div class="title">Users in channel</div>
+        <div class="title">Users in room</div>
 
         <ul>
           <li>HashNuke</li>
