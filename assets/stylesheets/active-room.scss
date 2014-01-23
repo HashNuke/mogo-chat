@@ -81,6 +81,10 @@
         list-style-type: none;
         font-size: 1em;
         color: #777;
+        // TODO colors should be diff for each user
+        border-left: 0.2em solid #99C;
+        padding-left: 0.2em;
+        margin-bottom: 0.5em;
       }
     }
   }
