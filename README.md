@@ -27,3 +27,4 @@ For running test, you'll need a database called `cheko_test`.
 
 * Get dependencies: `MIX_ENV=test mix deps.get`
 
+* Run tests: `mix test`
