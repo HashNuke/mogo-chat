@@ -28,8 +28,7 @@ defmodule RoomsApiRouter do
 
 
   post "/" do
-    {:ok, params} = conn.req_body
-    |> JSEX.decode
+    params = ExJSON.parse conn.req_body
 
     room_params = whitelist_params(params["room"], ["name"])
     room = Room.new room_params
@@ -46,8 +45,7 @@ defmodule RoomsApiRouter do
 
   put "/:room_id" do
     room_id = conn.params[:room_id]
-    {:ok, params} = conn.req_body
-    |> JSEX.decode
+    params = ExJSON.parse conn.req_body
 
     room_params = whitelist_params(params["room"], ["name"])
     room = Repo.get(Room, room_id).update(room_params)

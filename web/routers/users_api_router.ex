@@ -18,8 +18,7 @@ defmodule UsersApiRouter do
 
 
   post "/" do
-    {:ok, params} = conn.req_body
-    |> JSEX.decode
+    params = ExJSON.parse(conn.req_body)
 
     user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
     user = User.new(user_params)
@@ -45,8 +44,7 @@ defmodule UsersApiRouter do
 
   put "/:user_id" do
     user_id = conn.params[:user_id]
-    {:ok, params} = conn.req_body
-    |> JSEX.decode
+    params = ExJSON.parse(conn.req_body)
 
     user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
     user = Repo.get(User, user_id).update(user_params)

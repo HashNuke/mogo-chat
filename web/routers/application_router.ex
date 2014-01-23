@@ -16,8 +16,8 @@ defmodule ApplicationRouter do
   forward "/api/sessions", to: SessionsApiRouter
   forward "/api/users",    to: UsersApiRouter
   forward "/api/rooms",    to: RoomsApiRouter
+  forward "/api/messages", to: MessagesApiRouter
   forward "/api/room_user_states", to: RoomUserStatesApiRouter
-
 
   get "/" do
     conn = conn.assign(:title, "Welcome to Dynamo!")

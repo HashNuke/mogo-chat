@@ -32,8 +32,7 @@ defmodule RoomUserStatesApiRouter do
     room_user_state_id = conn.params[:room_user_state_id]
     user_id = get_session(conn, :user_id)
 
-    {:ok, params} = conn.req_body
-    |> JSEX.decode
+    params = ExJSON.parse conn.req_body
 
     room_user_state_params = whitelist_params(params["room_user_state"], ["joined"])
     query = from r in RoomUserState, where: r.id == ^room_user_state_id and r.user_id == ^user_id

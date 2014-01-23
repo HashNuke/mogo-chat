@@ -6,8 +6,7 @@ defmodule Cheko.RouterUtils do
 
 
   def json_response(data, conn, status // 200) do
-    {:ok, json} = JSEX.encode(data)
-    conn.resp_content_type("application/json").resp status, json
+    conn.resp_content_type("application/json").resp status, ExJSON.generate(data)
   end
 
 
