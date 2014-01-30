@@ -9,17 +9,17 @@ defmodule MessagesApiRouter do
 
 
   get "/:room_id" do
-    after_message_id = conn.params[:after]
+    before_message_id = conn.params[:before]
     room_id = binary_to_integer(conn.params[:room_id])
     room = Repo.get Room, room_id
 
-    query = if after_message_id do
-      after_message_id = binary_to_integer(after_message_id)
+    query = if before_message_id do
+      before_message_id = binary_to_integer(after_message_id)
       from m in Message,
-        order_by: [asc: m.created_at],
+        order_by: [desc: m.created_at],
         limit: 20,
         preload: :user,
-        where: m.room_id == ^room_id and m.id > ^after_message_id
+        where: m.room_id == ^room_id and m.id < ^before_message_id
     else
       from m in Message,
         order_by: [asc: m.created_at],
