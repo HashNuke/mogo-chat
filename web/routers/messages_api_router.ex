@@ -17,16 +17,18 @@ defmodule MessagesApiRouter do
       from m in Message,
         order_by: [asc: m.created_at],
         limit: 20,
+        preload: :user,
         where: m.room_id == ^room_id and m.id > ^after_message_id
     else
       from m in Message,
         order_by: [asc: m.created_at],
         limit: 20,
+        preload: :user,
         where: m.room_id == ^room_id
     end
 
     messages_attributes = lc message inlist Repo.all(query) do
-      Message.public_attributes(message)
+      Dict.merge Message.public_attributes(message), [user: User.public_attributes(message.user.get)]
     end
 
     [messages: messages_attributes]
