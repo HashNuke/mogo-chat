@@ -14,6 +14,7 @@ defmodule MessagesApiRouter do
     room = Repo.get Room, room_id
 
     query = if after_message_id do
+      after_message_id = binary_to_integer(after_message_id)
       from m in Message,
         order_by: [asc: m.created_at],
         limit: 20,
