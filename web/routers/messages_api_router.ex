@@ -9,10 +9,27 @@ defmodule MessagesApiRouter do
 
 
   get "/:room_id" do
-    room_id = conn.params[:room_id]
+    after_message_id = conn.params[:after]
+    room_id = binary_to_integer(conn.params[:room_id])
     room = Repo.get Room, room_id
 
-    [room: Room.public_attributes(room)]
+    query = if after_message_id do
+      from m in Message,
+        order_by: [asc: m.created_at],
+        limit: 20,
+        where: m.room_id == ^room_id and m.id > ^after_message_id
+    else
+      from m in Message,
+        order_by: [asc: m.created_at],
+        limit: 20,
+        where: m.room_id == ^room_id
+    end
+
+    messages_attributes = lc message inlist Repo.all(query) do
+      Message.public_attributes(message)
+    end
+
+    [messages: messages_attributes]
     |> json_response(conn)
   end
 
