@@ -11,6 +11,7 @@ App.CurrentUser = App.User.extend({})
 App.Room = DS.Model.extend
   name: DS.attr("string")
   roomUserState: DS.belongsTo("room_user_state")
+  messages: DS.hasMany("message")
 
 
 App.RoomUserState = DS.Model.extend
@@ -26,9 +27,16 @@ App.RoomUserStateSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecords
   }
 })
 
+
+App.MessageSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsMixin, {
+  attrs: {
+    user: {embedded: "load"}
+  }
+})
+
 App.Message = DS.Model.extend
-  body:   DS.attr("string")
-  type:   DS.attr("string")
-  roomId: DS.attr("string")
-  user:   DS.belongsTo("user")
-  createdAt: DS.attr("date")
+  body: DS.attr("string")
+  type: DS.attr("string")
+  user: DS.belongsTo("user")
+  room: DS.belongsTo("room")
+  createdAt: DS.attr("string")
