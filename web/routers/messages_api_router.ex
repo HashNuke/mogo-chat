@@ -11,8 +11,7 @@ defmodule MessagesApiRouter do
   get "/:room_id" do
     before_message_id = conn.params[:before]
     after_message_id  = conn.params[:after]
-    room_id = binary_to_integer(conn.params[:room_id])
-    room = Repo.get Room, room_id
+    room = Repo.get Room, binary_to_integer(conn.params[:room_id])
 
     query = cond do
       before_message_id ->
@@ -21,7 +20,7 @@ defmodule MessagesApiRouter do
           order_by: [desc: m.created_at],
           limit: 20,
           preload: :user,
-          where: m.room_id == ^room_id and m.id < ^before_message_id
+          where: m.room_id == ^room.id and m.id < ^before_message_id
 
       after_message_id ->
         after_message_id = binary_to_integer(after_message_id)
@@ -29,14 +28,14 @@ defmodule MessagesApiRouter do
           order_by: [desc: m.created_at],
           limit: 20,
           preload: :user,
-          where: m.room_id == ^room_id and m.id > ^after_message_id
+          where: m.room_id == ^room.id and m.id > ^after_message_id
 
       true ->
         from m in Message,
           order_by: [asc: m.created_at],
           limit: 20,
           preload: :user,
-          where: m.room_id == ^room_id
+          where: m.room_id == ^room.id
     end
 
     messages_attributes = lc message inlist Repo.all(query) do
@@ -53,7 +52,6 @@ defmodule MessagesApiRouter do
     params = json_decode conn.req_body
 
     #TODO check if room with the room_id exists
-
     message_params = whitelist_params(params["message"], ["room_id", "body"])
     {{year, month, day}, {hour, minute, seconds}} = :erlang.localtime()
     created_at = Ecto.DateTime.new(

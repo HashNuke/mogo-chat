@@ -34,9 +34,13 @@
 
       <div class="messages-wrapper">
         <div class="messages">
+        {{#each message in activeState.room.messages}}
           <div class="message">
-            This is a message
+            <div class="timestamp">{{message.createdAt}}</div>
+            <div class="user">{{message.user.firstName}}</div>
+            <div class="body">{{message.body}}</div>
           </div>
+        {{/each}}
         </div>
       </div>
 
