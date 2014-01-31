@@ -15,10 +15,9 @@ App.IndexController = Ember.ArrayController.extend
     postMessage: (msgTxt)->
       msgTxt = msgTxt.trim()
       room = @get("activeState").get("room")
-      console.log "To room #{room.get("name")}:", msgTxt
       currentUser = @get("currentUser")
       messageParams =
-        roomId: room.get("id")
+        room: room
         body: msgTxt
         type: @detectMessageType(msgTxt)
         createdAt: new Date()
