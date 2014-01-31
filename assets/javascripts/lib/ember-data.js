@@ -3,7 +3,7 @@
  * @copyright Copyright 2011-2014 Tilde Inc. and contributors.
  *            Portions Copyright 2011 LivingSocial Inc.
  * @license   Licensed under MIT license (see license.js)
- * @version   1.0.0-beta.5
+ * @version   1.0.0-beta.6
  */
 
 
@@ -62,11 +62,11 @@ if ('undefined' === typeof DS) {
   /**
     @property VERSION
     @type String
-    @default '1.0.0-beta.5'
+    @default '1.0.0-beta.6'
     @static
   */
   DS = Ember.Namespace.create({
-    VERSION: '1.0.0-beta.5'
+    VERSION: '1.0.0-beta.6'
   });
 
   if ('undefined' !== typeof window) {
@@ -77,6 +77,60 @@ if ('undefined' === typeof DS) {
     Ember.libraries.registerCoreLibrary('Ember Data', DS.VERSION);
   }
 }
+
+})();
+
+
+
+(function() {
+/**
+  This is used internally to enable deprecation of container paths and provide
+  a decent message to the user indicating how to fix the issue.
+
+  @class ContainerProxy
+  @namespace DS
+  @private
+*/
+var ContainerProxy = function (container){
+  this.container = container;
+};
+
+ContainerProxy.prototype.aliasedFactory = function(path, preLookup) {
+  var _this = this;
+
+  return {create: function(){ 
+    if (preLookup) { preLookup(); }
+
+    return _this.container.lookup(path); 
+  }};
+};
+
+ContainerProxy.prototype.registerAlias = function(source, dest, preLookup) {
+  var factory = this.aliasedFactory(dest, preLookup);
+
+  return this.container.register(source, factory);
+};
+
+ContainerProxy.prototype.registerDeprecation = function(deprecated, valid) {
+  var preLookupCallback = function(){
+    Ember.deprecate("You tried to look up '" + deprecated + "', " +
+                    "but this has been deprecated in favor of '" + valid + "'.", false);
+  };
+
+  return this.registerAlias(deprecated, valid, preLookupCallback);
+};
+
+ContainerProxy.prototype.registerDeprecations = function(proxyPairs) {
+  for (var i = proxyPairs.length; i > 0; i--) {
+    var proxyPair = proxyPairs[i - 1],
+        deprecated = proxyPair['deprecated'],
+        valid = proxyPair['valid'];
+
+    this.registerDeprecation(deprecated, valid);
+  }
+};
+
+DS.ContainerProxy = ContainerProxy;
 
 })();
 
@@ -95,11 +149,11 @@ function aliasMethod(methodName) {
 
 /**
   In Ember Data a Serializer is used to serialize and deserialize
-  records when they are transfered in and out of an external source.
+  records when they are transferred in and out of an external source.
   This process involves normalizing property names, transforming
-  attribute values and serializeing relationships.
+  attribute values and serializing relationships.
 
-  For maximum performance Ember Data recomends you use the
+  For maximum performance Ember Data recommends you use the
   [RESTSerializer](DS.RESTSerializer.html) or one of its subclasses.
 
   `JSONSerializer` is useful for simpler or legacy backends that may
@@ -111,9 +165,9 @@ function aliasMethod(methodName) {
 DS.JSONSerializer = Ember.Object.extend({
   /**
     The primaryKey is used when serializing and deserializing
-    data. Ember Data always uses the `id` propery to store the id of
+    data. Ember Data always uses the `id` property to store the id of
     the record. The external source may not always follow this
-    convention. In these cases it is usesful to override the
+    convention. In these cases it is useful to override the
     primaryKey property to match the primaryKey of your external
     store.
 
@@ -517,7 +571,7 @@ DS.JSONSerializer = Ember.Object.extend({
     such as the `RESTSerializer` may push records into the store as
     part of the extract call.
 
-    This method deletegates to a more specific extract method based on
+    This method delegates to a more specific extract method based on
     the `requestType`.
 
     Example
@@ -777,7 +831,7 @@ DS.JSONSerializer = Ember.Object.extend({
 
   /**
    `keyForRelationship` can be used to define a custom key when
-   serializeing relationship properties. By default `JSONSerializer`
+   serializing relationship properties. By default `JSONSerializer`
    does not provide an implementation of this method.
 
    Example
@@ -1095,32 +1149,12 @@ DS.DateTransform = DS.Transform.extend({
 
   serialize: function(date) {
     if (date instanceof Date) {
-      var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-      var pad = function(num) {
-        return num < 10 ? "0"+num : ""+num;
-      };
-
-      var utcYear = date.getUTCFullYear(),
-          utcMonth = date.getUTCMonth(),
-          utcDayOfMonth = date.getUTCDate(),
-          utcDay = date.getUTCDay(),
-          utcHours = date.getUTCHours(),
-          utcMinutes = date.getUTCMinutes(),
-          utcSeconds = date.getUTCSeconds();
-
-
-      var dayOfWeek = days[utcDay];
-      var dayOfMonth = pad(utcDayOfMonth);
-      var month = months[utcMonth];
-
-      return dayOfWeek + ", " + dayOfMonth + " " + month + " " + utcYear + " " +
-             pad(utcHours) + ":" + pad(utcMinutes) + ":" + pad(utcSeconds) + " GMT";
+      // Serialize it as a number to maintain millisecond precision
+      return Number(date);
     } else {
       return null;
     }
-  } 
+  }
 
 });
 
@@ -1255,9 +1289,20 @@ Ember.onLoad('Ember.Application', function(Application) {
 
     initialize: function(container, application) {
       application.register('store:main', application.Store || DS.Store);
-      application.register('serializer:_default', DS.JSONSerializer);
-      application.register('serializer:_rest', DS.RESTSerializer);
-      application.register('adapter:_rest', DS.RESTAdapter);
+
+      // allow older names to be looked up
+
+      var proxy = new DS.ContainerProxy(container);
+      proxy.registerDeprecations([
+        {deprecated: 'serializer:_default',  valid: 'serializer:-default'},
+        {deprecated: 'serializer:_rest',     valid: 'serializer:-rest'},
+        {deprecated: 'adapter:_rest',        valid: 'adapter:-rest'}
+      ]);
+
+      // new go forward paths
+      application.register('serializer:-default', DS.JSONSerializer);
+      application.register('serializer:-rest', DS.RESTSerializer);
+      application.register('adapter:-rest', DS.RESTAdapter);
 
       // Eagerly generate the store so defaultStore is populated.
       // TODO: Do this in a finisher hook
@@ -1278,11 +1323,11 @@ Ember.onLoad('Ember.Application', function(Application) {
   });
 
   Application.initializer({
-    name: "dataAdapter",
+    name: "data-adapter",
     before: "store",
 
     initialize: function(container, application) {
-      application.register('dataAdapter:main', DS.DebugAdapter);
+      application.register('data-adapter:main', DS.DebugAdapter);
     }
   });
 
@@ -1294,7 +1339,7 @@ Ember.onLoad('Ember.Application', function(Application) {
       application.inject('controller', 'store', 'store:main');
       application.inject('route', 'store', 'store:main');
       application.inject('serializer', 'store', 'store:main');
-      application.inject('dataAdapter', 'store', 'store:main');
+      application.inject('data-adapter', 'store', 'store:main');
     }
   });
 
@@ -1492,7 +1537,7 @@ DS.RecordArray = Ember.ArrayProxy.extend(Ember.Evented, {
     var store = get(this, 'store'),
         type = get(this, 'type');
 
-    store.fetchAll(type, this);
+    return store.fetchAll(type, this);
   },
 
   /**
@@ -2026,7 +2071,7 @@ DS.Store = Ember.Object.extend({
     @default DS.RESTAdapter
     @type {DS.Adapter|String}
   */
-  adapter: '_rest',
+  adapter: '-rest',
 
   /**
     Returns a JSON representation of the record using a custom
@@ -2067,7 +2112,7 @@ DS.Store = Ember.Object.extend({
     Ember.assert('You tried to set `adapter` property to an instance of `DS.Adapter`, where it should be a name or a factory', !(adapter instanceof DS.Adapter));
 
     if (typeof adapter === 'string') {
-      adapter = this.container.lookup('adapter:' + adapter) || this.container.lookup('adapter:application') || this.container.lookup('adapter:_rest');
+      adapter = this.container.lookup('adapter:' + adapter) || this.container.lookup('adapter:application') || this.container.lookup('adapter:-rest');
     }
 
     if (DS.Adapter.detect(adapter)) {
@@ -2161,7 +2206,7 @@ DS.Store = Ember.Object.extend({
       title: "Rails is omakase"
     });
 
-    store.deletedRecord(post);
+    store.deleteRecord(post);
     ```
 
     @method deleteRecord
@@ -2660,7 +2705,7 @@ DS.Store = Ember.Object.extend({
     type = this.modelFor(type);
 
     var typeMap = this.typeMapFor(type),
-        records = typeMap.records, record;
+        records = typeMap.records.splice(0), record;
 
     while(record = records.pop()) {
       record.unloadRecord();
@@ -2697,7 +2742,7 @@ DS.Store = Ember.Object.extend({
     }).then(function(unreadPosts) {
       unreadPosts.get('length'); // 5
       var unreadPost = unreadPosts.objectAt(0);
-      unreadPosts.set('unread', false);
+      unreadPost.set('unread', false);
       unreadPosts.get('length'); // 4
     });
     ```
@@ -3456,12 +3501,12 @@ function serializerFor(container, type, defaultSerializer) {
   return container.lookup('serializer:'+type) ||
                  container.lookup('serializer:application') ||
                  container.lookup('serializer:' + defaultSerializer) ||
-                 container.lookup('serializer:_default');
+                 container.lookup('serializer:-default');
 }
 
 function defaultSerializer(container) {
   return container.lookup('serializer:application') ||
-         container.lookup('serializer:_default');
+         container.lookup('serializer:-default');
 }
 
 function serializerForAdapter(adapter, type) {
@@ -4010,6 +4055,8 @@ createdState.uncommitted.rollback = function(record) {
   record.transitionTo('deleted.saved');
 };
 
+createdState.uncommitted.propertyWasReset = Ember.K;
+
 updatedState.uncommitted.deleteRecord = function(record) {
   record.transitionTo('deleted.uncommitted');
   record.clearRelationships();
@@ -4066,7 +4113,7 @@ var RootState = {
     }
   },
 
-  // A record enters this state when the store askes
+  // A record enters this state when the store asks
   // the adapter for its data. It remains in this state
   // until the adapter provides the requested data.
   //
@@ -4505,7 +4552,7 @@ DS.Errors = Ember.Object.extend(Ember.Enumerable, Ember.Evented, {
 */
 
 var get = Ember.get, set = Ember.set,
-    merge = Ember.merge, once = Ember.run.once;
+    merge = Ember.merge;
 
 var retrieveFromCurrentState = Ember.computed('currentState', function(key, value) {
   return get(get(this, 'currentState'), key);
@@ -4537,7 +4584,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
   isEmpty: retrieveFromCurrentState,
   /**
     If this property is `true` the record is in the `loading` state. A
-    record enters this state when the store askes the adapter for its
+    record enters this state when the store asks the adapter for its
     data. It remains in this state until the adapter provides the
     requested data.
 
@@ -4649,7 +4696,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
     var record = store.createRecord(App.Model);
     record.get('isNew'); // true
 
-    store.find('model', 1).then(function(model) {
+    record.save().then(function(model) {
       model.get('isNew'); // false
     });
     ```
@@ -4771,7 +4818,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
   /**
     When the record is in the `invalid` state this object will contain
     any errors returned by the adapter. When present the errors hash
-    typically contains keys coresponding to the invalid property names
+    typically contains keys corresponding to the invalid property names
     and values which are an array of error messages.
 
     ```javascript
@@ -5097,6 +5144,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
     @private
   */
   updateRecordArrays: function() {
+    this._updatingRecordArraysLater = false;
     get(this, 'store').dataWasUpdated(this.constructor, this);
   },
 
@@ -5211,7 +5259,11 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
     @private
   */
   updateRecordArraysLater: function() {
-    Ember.run.once(this, this.updateRecordArrays);
+    // quick hack (something like this could be pushed into run.once
+    if (this._updatingRecordArraysLater) { return; }
+    this._updatingRecordArraysLater = true;
+
+    Ember.run.schedule('actions', this, this.updateRecordArrays);
   },
 
   /**
@@ -5277,7 +5329,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
   },
 
   /**
-    If the model `isDirty` this function will which discard any unsaved
+    If the model `isDirty` this function will discard any unsaved
     changes
 
     Example
@@ -5478,8 +5530,8 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
   },
 
   triggerLater: function() {
-    this._deferredTriggers.push(arguments);
-    once(this, '_triggerDeferredTriggers');
+    if (this._deferredTriggers.push(arguments) !== 1) { return; }
+    Ember.run.schedule('actions', this, '_triggerDeferredTriggers');
   },
 
   _triggerDeferredTriggers: function() {
@@ -5487,7 +5539,7 @@ DS.Model = Ember.Object.extend(Ember.Evented, {
       this.trigger.apply(this, this._deferredTriggers[i]);
     }
 
-    this._deferredTriggers = [];
+    this._deferredTriggers.length = 0;
   }
 });
 
@@ -5686,7 +5738,7 @@ DS.Model.reopenClass({
     ```
 
     - `name` the name of the current property in the iteration
-    - `type` a tring contrining the name of the type of transformed
+    - `type` a string containing the name of the type of transformed
       applied to the attribute
 
     Note that in addition to a callback, you can also pass an optional target
@@ -5902,7 +5954,7 @@ var forEach = Ember.EnumerableUtils.forEach;
   @class RelationshipChange
   @namespace DS
   @private
-  @construtor
+  @constructor
 */
 DS.RelationshipChange = function(options) {
   this.parentRecord = options.parentRecord;
@@ -5923,7 +5975,7 @@ DS.RelationshipChange = function(options) {
   @class RelationshipChangeAdd
   @namespace DS
   @private
-  @construtor
+  @constructor
 */
 DS.RelationshipChangeAdd = function(options){
   DS.RelationshipChange.call(this, options);
@@ -5933,7 +5985,7 @@ DS.RelationshipChangeAdd = function(options){
   @class RelationshipChangeRemove
   @namespace DS
   @private
-  @construtor
+  @constructor
 */
 DS.RelationshipChangeRemove = function(options){
   DS.RelationshipChange.call(this, options);
@@ -6802,7 +6854,7 @@ DS.Model.reopenClass({
     var options = this.metaForProperty(name).options;
 
     if (options.inverse === null) { return null; }
-    
+
     var inverseName, inverseKind;
 
     if (options.inverse) {
@@ -7170,7 +7222,6 @@ DS.Model.reopen({
 */
 
 var get = Ember.get, set = Ember.set;
-var once = Ember.run.once;
 var forEach = Ember.EnumerableUtils.forEach;
 
 /**
@@ -7189,8 +7240,9 @@ DS.RecordArrayManager = Ember.Object.extend({
   },
 
   recordDidChange: function(record) {
-    this.changedRecords.push(record);
-    once(this, this.updateRecordArrays);
+    if (this.changedRecords.push(record) !== 1) { return; }
+
+    Ember.run.schedule('actions', this, this.updateRecordArrays);
   },
 
   recordArraysForRecord: function(record) {
@@ -7219,7 +7271,7 @@ DS.RecordArrayManager = Ember.Object.extend({
       }
     }, this);
 
-    this.changedRecords = [];
+    this.changedRecords.length = 0;
   },
 
   _recordWasDeleted: function (record) {
@@ -7498,7 +7550,7 @@ DS.InvalidError.prototype = Ember.create(Error.prototype);
 
   ```javascript
   App.store = DS.Store.create({
-    adapter: App.MyAdapter.create()
+    adapter: 'MyAdapter'
   });
   ```
 
@@ -8302,7 +8354,7 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
     The key under `normalizeHash` is usually just the original key
     that was in the original payload. However, key names will be
     impacted by any modifications done in the `normalizePayload`
-    method. The `DS.RESTSerializer`'s default implemention makes no
+    method. The `DS.RESTSerializer`'s default implementation makes no
     changes to the payload keys.
 
     @property normalizeHash
@@ -8568,15 +8620,14 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
 
     for (var prop in payload) {
       var typeName  = this.typeForRoot(prop),
-          isPrimary = typeName === primaryTypeName;
+          type = store.modelFor(typeName),
+          isPrimary = type.typeKey === primaryTypeName;
 
       // legacy support for singular resources
       if (isPrimary && Ember.typeOf(payload[prop]) !== "array" ) {
         primaryRecord = this.normalize(primaryType, payload[prop], prop);
         continue;
       }
-
-      var type = store.modelFor(typeName);
 
       /*jshint loopfunc:true*/
       forEach.call(payload[prop], function(hash) {
@@ -8725,7 +8776,7 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
       var typeName = this.typeForRoot(typeKey),
           type = store.modelFor(typeName),
           typeSerializer = store.serializerFor(type),
-          isPrimary = (!forcedSecondary && (typeName === primaryTypeName));
+          isPrimary = (!forcedSecondary && (type.typeKey === primaryTypeName));
 
       /*jshint loopfunc:true*/
       var normalizedArray = map.call(payload[prop], function(hash) {
@@ -8982,7 +9033,8 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
     @param {Object} options
   */
   serializeIntoHash: function(hash, type, record, options) {
-    hash[type.typeKey] = this.serialize(record, options);
+    var root = Ember.String.camelize(type.typeKey);
+    hash[root] = this.serialize(record, options);
   },
 
   /**
@@ -8999,7 +9051,7 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
     var key = relationship.key,
         belongsTo = get(record, key);
     key = this.keyForAttribute ? this.keyForAttribute(key) : key;
-    json[key + "Type"] = belongsTo.constructor.typeKey;
+    json[key + "Type"] = Ember.String.camelize(belongsTo.constructor.typeKey);
   }
 });
 
@@ -9114,7 +9166,7 @@ var forEach = Ember.ArrayPolyfills.forEach;
   @extends DS.Adapter
 */
 DS.RESTAdapter = DS.Adapter.extend({
-  defaultSerializer: '_rest',
+  defaultSerializer: '-rest',
 
 
   /**
@@ -9172,7 +9224,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     The `find` method makes an Ajax request to a URL computed by `buildURL`, and returns a
     promise for the resulting payload.
 
-    This method performs an HTTP `GET` request with the id provided as part of the querystring.
+    This method performs an HTTP `GET` request with the id provided as part of the query string.
 
     @method find
     @param {DS.Store} store
@@ -9502,11 +9554,12 @@ DS.RESTAdapter = DS.Adapter.extend({
     @returns {String} path
   **/
   pathForType: function(type) {
-    return Ember.String.pluralize(type);
+    var camelized = Ember.String.camelize(type);
+    return Ember.String.pluralize(camelized);
   },
 
   /**
-    Takes an ajax response, and returns a relavant error.
+    Takes an ajax response, and returns a relevant error.
 
     Returning a `DS.InvalidError` from this method will cause the
     record to transition into the `invalid` state and make the
@@ -9567,7 +9620,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     @method ajax
     @private
     @param {String} url
-    @param {String} type The request type GET, POST, PUT, DELETE ect.
+    @param {String} type The request type GET, POST, PUT, DELETE etc.
     @param {Object} hash
     @return {Promise} promise
   */
@@ -9593,7 +9646,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     @method ajaxOptions
     @private
     @param {String} url
-    @param {String} type The request type GET, POST, PUT, DELETE ect.
+    @param {String} type The request type GET, POST, PUT, DELETE etc.
     @param {Object} hash
     @return {Object} hash
   */
@@ -10073,8 +10126,13 @@ Ember.Inflector.inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
   @module ember-data
 */
 
-var get = Ember.get;
-var forEach = Ember.EnumerableUtils.forEach;
+var get = Ember.get,
+    forEach = Ember.EnumerableUtils.forEach,
+    camelize =   Ember.String.camelize,
+    capitalize = Ember.String.capitalize,
+    decamelize = Ember.String.decamelize,
+    singularize = Ember.String.singularize,
+    underscore = Ember.String.underscore;
 
 DS.ActiveModelSerializer = DS.RESTSerializer.extend({
   // SERIALIZE
@@ -10087,7 +10145,7 @@ DS.ActiveModelSerializer = DS.RESTSerializer.extend({
     @returns String
   */
   keyForAttribute: function(attr) {
-    return Ember.String.decamelize(attr);
+    return decamelize(attr);
   },
 
   /**
@@ -10100,11 +10158,11 @@ DS.ActiveModelSerializer = DS.RESTSerializer.extend({
     @returns String
   */
   keyForRelationship: function(key, kind) {
-    key = Ember.String.decamelize(key);
+    key = decamelize(key);
     if (kind === "belongsTo") {
       return key + "_id";
     } else if (kind === "hasMany") {
-      return Ember.String.singularize(key) + "_ids";
+      return singularize(key) + "_ids";
     } else {
       return key;
     }
@@ -10125,7 +10183,7 @@ DS.ActiveModelSerializer = DS.RESTSerializer.extend({
     @param {Object} options
   */
   serializeIntoHash: function(data, type, record, options) {
-    var root = Ember.String.decamelize(type.typeKey);
+    var root = underscore(decamelize(type.typeKey));
     data[root] = this.serialize(record, options);
   },
 
@@ -10141,7 +10199,7 @@ DS.ActiveModelSerializer = DS.RESTSerializer.extend({
     var key = relationship.key,
         belongsTo = get(record, key);
     key = this.keyForAttribute(key);
-    json[key + "_type"] = Ember.String.capitalize(belongsTo.constructor.typeKey);
+    json[key + "_type"] = capitalize(camelize(belongsTo.constructor.typeKey));
   },
 
   // EXTRACT
@@ -10154,8 +10212,8 @@ DS.ActiveModelSerializer = DS.RESTSerializer.extend({
     @returns String the model's typeKey
   */
   typeForRoot: function(root) {
-    var camelized = Ember.String.camelize(root);
-    return Ember.String.singularize(camelized);
+    var camelized = camelize(root);
+    return singularize(camelized);
   },
 
   /**
@@ -10210,7 +10268,7 @@ DS.ActiveModelSerializer = DS.RESTSerializer.extend({
       var links = data.links;
 
       for (var link in links) {
-        var camelizedLink = Ember.String.camelize(link);
+        var camelizedLink = camelize(link);
 
         if (camelizedLink !== link) {
           links[camelizedLink] = links[link];
@@ -10410,6 +10468,9 @@ function updatePayloadWithEmbedded(store, serializer, type, partial, payload) {
 */
 
 var forEach = Ember.EnumerableUtils.forEach;
+var decamelize = Ember.String.decamelize,
+    underscore = Ember.String.underscore,
+    pluralize  = Ember.String.pluralize;
 
 /**
   The ActiveModelAdapter is a subclass of the RESTAdapter designed to integrate
@@ -10461,7 +10522,7 @@ var forEach = Ember.EnumerableUtils.forEach;
 **/
 
 DS.ActiveModelAdapter = DS.RESTAdapter.extend({
-  defaultSerializer: '_ams',
+  defaultSerializer: '-active-model',
   /**
     The ActiveModelAdapter overrides the `pathForType` method to build
     underscored URLs by decamelizing and pluralizing the object type name.
@@ -10476,8 +10537,9 @@ DS.ActiveModelAdapter = DS.RESTAdapter.extend({
     @returns String
   */
   pathForType: function(type) {
-    var decamelized = Ember.String.decamelize(type);
-    return Ember.String.pluralize(decamelized);
+    var decamelized = decamelize(type);
+    var underscored = underscore(decamelized);
+    return pluralize(underscored);
   },
 
   /**
@@ -10500,12 +10562,16 @@ DS.ActiveModelAdapter = DS.RESTAdapter.extend({
     var error = this._super(jqXHR);
 
     if (jqXHR && jqXHR.status === 422) {
-      var jsonErrors = Ember.$.parseJSON(jqXHR.responseText)["errors"],
+      var response = Ember.$.parseJSON(jqXHR.responseText),
           errors = {};
 
-      forEach(Ember.keys(jsonErrors), function(key) {
-        errors[Ember.String.camelize(key)] = jsonErrors[key];
-      });
+      if (response.errors !== undefined) {
+        var jsonErrors = response.errors;
+
+        forEach(Ember.keys(jsonErrors), function(key) {
+          errors[Ember.String.camelize(key)] = jsonErrors[key];
+        });
+      }
 
       return new DS.InvalidError(errors);
     } else {
@@ -10530,8 +10596,14 @@ Ember.onLoad('Ember.Application', function(Application) {
     name: "activeModelAdapter",
 
     initialize: function(container, application) {
-      application.register('serializer:_ams', DS.ActiveModelSerializer);
-      application.register('adapter:_ams', DS.ActiveModelAdapter);
+      var proxy = new DS.ContainerProxy(container);
+      proxy.registerDeprecations([
+        {deprecated: 'serializer:_ams',  valid: 'serializer:-active-model'},
+        {deprecated: 'adapter:_ams',     valid: 'adapter:-active-model'}
+      ]);
+
+      application.register('serializer:-active-model', DS.ActiveModelSerializer);
+      application.register('adapter:-active-model', DS.ActiveModelAdapter);
     }
   });
 });
