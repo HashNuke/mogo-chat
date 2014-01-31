@@ -39,7 +39,7 @@ defmodule MessagesApiRouter do
 
   post "/" do
     user_id = get_session(conn, :user_id)
-    params = ExJSON.parse conn.req_body
+    params = json_decode conn.req_body
 
     #TODO check if room with the room_id exists
 

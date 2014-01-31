@@ -5,8 +5,20 @@ defmodule Cheko.RouterUtils do
   import Dynamo.HTTP.Redirect
 
 
+  def json_decode(json) do
+    {:ok, data} = JSEX.decode(json)
+    data
+  end
+
+
+  def json_encode(data) do
+    {:ok, json} = JSEX.encode(data)
+    json
+  end
+
+
   def json_response(data, conn, status // 200) do
-    conn.resp_content_type("application/json").resp status, ExJSON.generate(data)
+    conn.resp_content_type("application/json").resp status, json_encode(data)
   end
 
 
