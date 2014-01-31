@@ -21,7 +21,6 @@ defmodule Cobalt.Mixfile do
       { :dynamo, "~> 0.1.0-dev", github: "elixir-lang/dynamo" },
       { :postgrex, github: "ericmj/postgrex" },
       { :ecto, github: "elixir-lang/ecto" },
-      { :exjson, github: "guedes/exjson" },
       { :qdate, github: "choptastic/qdate" },
       { :bcrypt, github: "irccloud/erlang-bcrypt" }
     ]
