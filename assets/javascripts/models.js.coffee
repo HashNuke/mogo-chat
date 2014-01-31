@@ -35,9 +35,9 @@ App.RoomUserStateSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecords
 App.Message = DS.Model.extend
   body: DS.attr("string")
   type: DS.attr("string")
+  createdAt: DS.attr("string")
   user: DS.belongsTo("user")
   room: DS.belongsTo("room")
-  createdAt: DS.attr("string")
 
 App.MessageSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
@@ -75,6 +75,7 @@ App.Poller = Em.Object.extend
             id: message.id
             type: message.type
             body: message.body
+            createdAt: message.created_at
           messageObj = @store.createRecord("message", messageParams)
           messageObj.set("room", @room)
           @afterMessageId = message.id
