@@ -9,6 +9,23 @@ defmodule RoomsApiRouter do
   end
 
 
+  get "/:room_id/users" do
+    room_id = binary_to_integer(conn.params[:room_id])
+    room = Repo.get Room, room_id
+    now  = current_timestamp()
+    seconds_ago = now.sec(now.sec - 15)
+    query = from s in RoomUserState,
+      where: s.room_id == ^room_id and s.last_pinged_at > ^seconds_ago,
+      preload: :user
+
+    users_attributes = lc room_user_state inlist Repo.all(query) do
+      User.public_attributes(room_user_state.user.get)
+    end
+
+    json_response([users: users_attributes], conn)
+  end
+
+
   get "/" do
     rooms = Repo.all Room
     rooms_attributes = lc room inlist rooms do
