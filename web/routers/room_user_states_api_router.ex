@@ -29,14 +29,15 @@ defmodule RoomUserStatesApiRouter do
 
 
   put "/:room_user_state_id" do
-    room_user_state_id = conn.params[:room_user_state_id]
+    room_user_state_id = binary_to_integer(conn.params[:room_user_state_id])
     user_id = get_session(conn, :user_id)
-
     params = json_decode conn.req_body
 
     room_user_state_params = whitelist_params(params["room_user_state"], ["joined"])
-    query = from r in RoomUserState, where: r.id == ^room_user_state_id and r.user_id == ^user_id
-    room_user_state = Repo.get(RoomUserState, room_user_state_id)
+    query = from r in RoomUserState,
+      where: r.id == ^room_user_state_id and r.user_id == ^user_id
+
+    [room_user_state] = Repo.all query
     new_room_user_state = room_user_state.update(room_user_state_params)
 
     case RoomUserState.validate(new_room_user_state) do
