@@ -18,7 +18,7 @@ defmodule Cheko.RouterUtils do
 
 
   def current_timestamp() do
-    {{year, month, day}, {hour, minute, seconds}} = :erlang.localtime()
+    {{year, month, day}, {hour, minute, seconds}} = :calendar.universal_time()
     created_at = Ecto.DateTime.new(
       year: year,
       month: month,
