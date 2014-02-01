@@ -23,7 +23,6 @@ App.IndexController = Ember.ArrayController.extend
         createdAt: new Date()
         user: currentUser
 
-      console.log messageParams
       msg = @store.createRecord("message", messageParams)
       successCallback = ->
         console.log "message has been posted"
