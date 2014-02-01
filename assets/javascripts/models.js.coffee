@@ -5,14 +5,15 @@ App.User = DS.Model.extend
   role:   DS.attr("string")
   password: DS.attr("string")
 
-App.CurrentUser = App.User.extend({})
 
+App.CurrentUser = App.User.extend({})
 
 
 App.Room = DS.Model.extend
   name: DS.attr("string")
   roomUserState: DS.belongsTo("room_user_state")
   messages: DS.hasMany("message")
+  users: DS.hasMany("user")
 
 
 
@@ -46,12 +47,12 @@ App.MessageSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsMixin,
 })
 
 
-App.Poller = Em.Object.extend
+App.MessagePoller = Em.Object.extend
   start: ()->
     @started = true
     @messages = []
     @beforeMessageId = null
-    @timer = setInterval(@fetchMessages.bind(@), 3000)
+    @fetchMessages() && @timer = setInterval(@fetchMessages.bind(@), 3000)
 
   setRoom: (room)->
     @room = room
@@ -100,3 +101,39 @@ App.Poller = Em.Object.extend
 
     $.getJSON url, (response)=>
       Em.$.each response.messages, @onEachMessage.bind(@)
+
+
+App.UsersPoller = Em.Object.extend
+  start: ()->
+    @started = true
+    @fetchUsers() && @timer = setInterval(@fetchUsers.bind(@), 5000)
+
+  setRoom: (room)->
+    @room = room
+    @roomId = @room.get("id")
+
+  stop: ->
+    return true if !@started
+    clearInterval(@timer)
+    @started = false
+
+
+  onEachUser: (index, userAttributes)->
+    if @store.recordIsLoaded("user", userAttributes.id)
+      @store.find("user", userAttributes.id).then (user)=>
+        @room.get("users").pushObject(user)
+    else
+      user = @store.createRecord("user",
+        id: userAttributes.id
+        firstName: userAttributes.first_name
+        lastName: userAttributes.last_name
+        role: userAttributes.role
+      )
+      @room.get("users").pushObject(user)
+
+  fetchUsers: ->
+    $.getJSON "/api/rooms/#{@roomId}/users", (response)=>
+      return true if !response.users
+      #TODO normalizePayload of serializer doesn't seem to do much
+      @room.get("users").clear()
+      Em.$.each response.users, @onEachUser.bind(@)
