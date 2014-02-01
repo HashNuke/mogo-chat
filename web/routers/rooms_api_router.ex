@@ -15,7 +15,8 @@ defmodule RoomsApiRouter do
     now  = current_timestamp()
     seconds_ago = now.sec(now.sec - 15)
     query = from s in RoomUserState,
-      where: s.room_id == ^room_id and s.last_pinged_at > ^seconds_ago,
+      where: s.room_id == ^room.id and s.last_pinged_at > ^seconds_ago,
+      order_by: s.id,
       preload: :user
 
     users_attributes = lc room_user_state inlist Repo.all(query) do
