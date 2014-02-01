@@ -33,7 +33,7 @@ defmodule MessagesApiRouter do
 
       true ->
         from m in Message,
-          order_by: [asc: m.created_at],
+          order_by: [desc: m.created_at],
           limit: 20,
           preload: :user,
           where: m.room_id == ^room.id
@@ -51,6 +51,9 @@ defmodule MessagesApiRouter do
       Dict.merge Message.public_attributes(message), [user: User.public_attributes(message.user.get)]
     end
 
+    if !before_message_id && !after_message_id do
+      messages_attributes = Enum.reverse(messages_attributes)
+    end
     [messages: messages_attributes]
     |> json_response(conn)
   end
