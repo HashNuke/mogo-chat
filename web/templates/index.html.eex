@@ -36,9 +36,11 @@
         <div class="messages">
         {{#each message in activeState.room.messages}}
           <div class="message">
-            <div class="timestamp">{{message.createdAt}}</div>
-            <div class="user">{{message.user.firstName}}</div>
-            <div class="body">{{message.body}}</div>
+            <div class="content">
+              <span class="user">{{message.user.firstName}}</span>:
+              {{message.body}}
+            </div>
+            <div class="timestamp">{{readableTime message.createdAt}}</div>
           </div>
         {{/each}}
         </div>

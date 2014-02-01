@@ -30,6 +30,22 @@
     .message {
       clear: both;
       float: left;
+      width: 100%;
+      margin-top: 1em;
+
+      .timestamp {
+        font-size: 0.75em;
+        color: #888;
+        width: 100%;
+        text-align: right;
+      }
+
+      .content {
+      }
+
+      .user {
+        font-weight: bold;
+      }
     }
   }
 
