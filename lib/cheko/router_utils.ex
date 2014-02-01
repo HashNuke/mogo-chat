@@ -17,6 +17,18 @@ defmodule Cheko.RouterUtils do
   end
 
 
+  def current_timestamp() do
+    {{year, month, day}, {hour, minute, seconds}} = :erlang.localtime()
+    created_at = Ecto.DateTime.new(
+      year: year,
+      month: month,
+      day: day,
+      hour: hour,
+      min: minute,
+      sec: seconds)
+  end
+
+
   def json_response(data, conn, status // 200) do
     conn.resp_content_type("application/json").resp status, json_encode(data)
   end
