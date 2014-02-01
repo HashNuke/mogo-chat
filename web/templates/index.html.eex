@@ -57,8 +57,9 @@
         <div class="title">Users in room</div>
 
         <ul>
-          <li>HashNuke</li>
-          <li>ericmj</li>
+          {{#each user in activeState.room.users}}
+            <li>{{user.firstName}} {{user.lastName}}</li>
+          {{/each}}
         </ul>
       </div>
     </div>
