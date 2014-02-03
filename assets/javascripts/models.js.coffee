@@ -14,7 +14,7 @@ App.Room = DS.Model.extend
   roomUserState: DS.belongsTo("room_user_state")
   messages: DS.hasMany("message")
   users: DS.hasMany("user")
-  # historyAvailable: DS.attr("virtual", {defaultValue: true})
+  isHistoryAvailable: DS.attr("boolean")
 
 
 App.RoomUserState = DS.Model.extend
@@ -99,8 +99,14 @@ App.MessagePoller = Em.Object.extend
     else
       url = "/api/messages/#{@roomId}"
 
-    $.getJSON url, (response)=>
+    getJsonCallback = (response)=>
+      if (response.messages.length == 20 || response.messages.length == 0) && @room.get("messages.length") == 20
+        @room.set("isHistoryAvailable", true)
+      else
+        @room.set("isHistoryAvailable", false)
       Em.$.each response.messages, @onEachMessage.bind(@)
+
+    $.getJSON url, getJsonCallback.bind(@)
 
 
 App.UsersPoller = Em.Object.extend
