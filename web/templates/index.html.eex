@@ -34,15 +34,18 @@
 
       <div class="messages-wrapper">
         <div class="messages">
-        {{#each message in activeState.room.messages}}
-          <div class="message">
-            <div class="content">
-              <span class="user">{{message.user.firstName}}</span>:
-              {{message.body}}
+          {{#if activeState.room.isHistoryAvailable}}
+            <div class="load-messages">Load history...</div>
+          {{/if}}
+          {{#each message in activeState.room.messages}}
+            <div class="message">
+              <div class="content">
+                <span class="user">{{message.user.firstName}}</span>:
+                {{message.body}}
+              </div>
+              <div class="timestamp">{{readableTime message.createdAt}}</div>
             </div>
-            <div class="timestamp">{{readableTime message.createdAt}}</div>
-          </div>
-        {{/each}}
+          {{/each}}
         </div>
       </div>
 
