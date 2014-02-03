@@ -14,7 +14,7 @@ App.Room = DS.Model.extend
   roomUserState: DS.belongsTo("room_user_state")
   messages: DS.hasMany("message")
   users: DS.hasMany("user")
-
+  # historyAvailable: DS.attr("virtual", {defaultValue: true})
 
 
 App.RoomUserState = DS.Model.extend
@@ -77,10 +77,10 @@ App.MessagePoller = Em.Object.extend
     @afterMessageId = message.id
 
     if(@store.recordIsLoaded("user", message.user.id))
-      @store.find("user", message.user.id).then (user)=>
+      successCallback = (user)=>
         messageObj.set("user", user)
-        #TODO push or shift depending on the query
-        @room.get("messages").pushObject(messageObj)
+
+      @store.find("user", message.user.id).then successCallback
     else
       userParams =
         id: message.user.id
@@ -89,8 +89,8 @@ App.MessagePoller = Em.Object.extend
         role: message.user.role
       user = @store.createRecord("user", userParams)
       messageObj.set("user", user)
-      #TODO push or shift depending on the query
-      @room.get("messages").pushObject(messageObj)
+    #TODO push or shift depending on the query
+    @room.get("messages").pushObject(messageObj)
 
 
   fetchMessages: ->
