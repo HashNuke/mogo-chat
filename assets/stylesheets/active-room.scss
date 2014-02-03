@@ -21,6 +21,13 @@
     overflow-y: scroll;
   }
 
+  .load-messages {
+    background: #FDE893;
+    padding: 0.25em;
+    border-radius: 0.3em;
+    cursor: pointer;
+  }
+
   .messages {
     float: left;
     clear: both;
