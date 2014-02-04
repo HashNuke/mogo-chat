@@ -1,14 +1,13 @@
 .login {
-  width: 20em; //TODO change for mobile
-  margin-left: 35%;
   font-size: 1.1em;
-  margin-top: 4em;
   background: #FFF;
-  display: inline-block;
-  padding: 1em 2em 2em 2em;
-  border: 0.1em solid #DFDFDF;
-  border-radius: 0.3em;
-  margin-bottom: 0.1em;
+  padding: 0.5em;
+  margin: auto;
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  left: 0em;
+  bottom: 0em;
 
   .title {
     color: #06c;
@@ -41,7 +40,6 @@
       border: 1px solid #06C;
       border-radius: 0.15em;
       box-shadow: 0em 0em 0.2em 0.05em #0073E6;
-      float: right;
     }
   }
 }
