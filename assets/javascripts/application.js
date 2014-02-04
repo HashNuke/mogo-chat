@@ -3,6 +3,7 @@
 //= require "lib/handlebars-v1.1.2"
 //= require "lib/ember"
 //= require "lib/ember-data"
+//= require "lib/fastclick"
 //= require_self
 //= require "models"
 //= require "views"
