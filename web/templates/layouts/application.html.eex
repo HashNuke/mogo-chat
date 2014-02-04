@@ -2,6 +2,11 @@
 <html>
 <head>
   <title><%= content_for(:title) || "Cheko" %></title>
+  <meta content="True" name="HandheldFriendly"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="viewport" content="width=device-width"/>
+  <meta name="google" value="notranslate" />
+
   <script type="text/javascript" src="/static/assets/application.js"></script>
   <link rel="stylesheet" href="/static/assets/application.css"/>
   <link rel="shortcut icon" href="/static/favicon.ico" />
