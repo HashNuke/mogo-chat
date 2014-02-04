@@ -3,12 +3,67 @@
     width: 20em;
     padding: 1em 2em 2em 2em;
   }
+
+  .room-content {
+    width: 60%;
+    left: 20%;
+  }
+
+  .menu-control {
+    //display: none;
+    float: left;
+  }
 }
 
+
 @mixin mobile-styles {
-  .login {
+
+  .container {
+    position: absolute;
+    overflow-x: hidden !important;
+  }
+
+  .login { width: 100%; }
+
+  .menu-control {
+    float: left;
+    cursor: pointer;
+
+    img {
+      width: 1.25em;
+      height: 1.25em;
+      margin-right: 0.5em;
+    }
+  }
+
+  .left-panel-wrapper {
+    width: 80%;
+    margin-left: -80%;
+  }
+
+  .is-left-menu-open {
+    position: relative !important;
+    margin-left: 0% !important;
+  }
+
+  .room-content {
     width: 100%;
   }
+
+  .room-details-wrapper {
+    width: 80%;
+    margin-right: -80%;
+    display: none;
+  }
+
+  .move-content-right {
+    margin-left: 80%;
+  }
+
+  .move-content-left {
+    margin-left: -80%;
+  }
+
 }
 
 // desktop

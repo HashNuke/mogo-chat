@@ -1,22 +1,32 @@
 .room-content {
-  float: left;
+  position: absolute;
   height: 100%;
-  width: 60%; // TODO make responsive
 
   .room-info {
     position: absolute;
-    width: 60%;
+    width: 100%;
     top: 0em;
     padding: 0.25em;
-    font-size: 1em;
+    font-size: 1.25em;
     border-bottom: 0.1em solid #DDD;
     color: #06c;
   }
 
+  .menu-control {
+    float: left;
+    cursor: pointer;
+
+    img {
+      width: 1.25em;
+      height: 1.25em;
+      margin-right: 0.5em;
+    }
+  }
+
   .messages-wrapper {
     position: absolute;
-    width: 60%;
-    top: 2em;
+    width: 100%;
+    top: 2.25em;
     bottom: 2.5em;
     overflow-y: scroll;
   }
@@ -57,7 +67,7 @@
   }
 
   .new-message {
-    width: 60%;
+    width: 100%;
     position: absolute;
     bottom: 0em;
 

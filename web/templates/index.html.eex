@@ -1,7 +1,9 @@
 <script type="text/x-handlebars" id="index">
-  <div class="left-panel-wrapper">
+  <div class="left-panel-wrapper" {{bind-attr class="isLeftMenuOpen"}}>
     <div class="left-panel">
-      <div class="app-name">Cheko</div>
+      <div class="app-name">
+        Cheko
+      </div>
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
@@ -23,14 +25,17 @@
   </div>
 
 
-  <div class="room-content">
+  <div class="room-content" {{bind-attr class="isLeftMenuOpen:move-content-right"}}>
     {{#unless activeState}}
       <div>
         [[#TODO This needs to be changed to a better message]]
         ACTIVE CHANNEL ID NOT SET: {{activeState}}
       </div>
     {{else}}
-      <div class="room-info">{{activeState.room.name}}</div>
+      <div class="room-info">
+        <div class="menu-control" {{action "toggleLeftMenu"}}><img src="/static/assets/navicon.png"/></div>
+        {{activeState.room.name}}
+      </div>
 
       <div class="messages-wrapper">
         <div class="messages">

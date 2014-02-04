@@ -16,6 +16,7 @@ html, body {
   width: 100%;
   height: 100%;
   float: left;
+  overflow-x: hidden;
 }
 
 .left-panel .title, .room-details .title {
