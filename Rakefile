@@ -1,5 +1,6 @@
 require 'sprockets'
 require 'rake/sprocketstask'
+require 'uglifier'
 require 'bourbon'
 require 'filewatcher'
 
@@ -8,7 +9,9 @@ sprockets = Sprockets::Environment.new("./") do |env|
   env.append_path 'assets/javascripts'
   env.append_path 'assets/stylesheets'
   env.append_path 'assets/images'
+  env.js_compressor = Uglifier.new
 end
+
 
 assets = %w( application.js application.css )
 asset_output = "priv/static/assets"
