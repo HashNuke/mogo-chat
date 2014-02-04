@@ -12,6 +12,7 @@ GEM
     filewatcher (0.3.2)
       trollop (>= 1.16.2)
     hike (1.2.3)
+    json (1.8.1)
     multi_json (1.8.4)
     rack (1.5.2)
     rake (10.1.1)
@@ -24,6 +25,9 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     trollop (2.0)
+    uglifier (2.4.0)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
 
 PLATFORMS
   ruby
@@ -35,3 +39,4 @@ DEPENDENCIES
   rake
   sass
   sprockets
+  uglifier
