@@ -12,6 +12,12 @@
   .menu-control {
     display: none;
   }
+
+  .detail {
+    .page, .header {
+      padding: 0.25em;
+    }
+  }
 }
 
 
@@ -23,6 +29,12 @@
   }
 
   .login { width: 100%; }
+
+  .detail {
+    .page, .header {
+      padding: 0.25em;
+    }
+  }
 
   .menu-control {
     float: left;
