@@ -2,7 +2,7 @@
   <div class="left-panel-wrapper" {{bind-attr class="isLeftMenuOpen"}}>
     <div class="left-panel">
       <div class="app-name">
-        Cobalt
+        Mogo
       </div>
 
       <div class="user-details">
@@ -88,7 +88,7 @@
 <script type="text/x-handlebars" id="settings">
   <div class="left-panel-wrapper">
     <div class="left-panel">
-      <div class="app-name">Cobalt</div>
+      <div class="app-name">Mogo</div>
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
@@ -115,7 +115,7 @@
 <script type="text/x-handlebars" id="login">
   <div class="login">
 
-    <div class="title">Cobalt</div>
+    <div class="title">Mogo</div>
 
     <form {{action login on="submit"}}>
 

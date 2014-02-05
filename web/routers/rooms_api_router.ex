@@ -1,7 +1,7 @@
 defmodule RoomsApiRouter do
   use Dynamo.Router
   use Ecto.Query
-  import Cheko.RouterUtils
+  import Mogo.RouterUtils
 
   prepare do
     #TODO allow member only for GET /

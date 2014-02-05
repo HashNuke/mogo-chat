@@ -1,7 +1,7 @@
 defmodule UsersApiRouter do
   use Dynamo.Router
   use Ecto.Query
-  import Cheko.RouterUtils
+  import Mogo.RouterUtils
 
   prepare do
     authorize_user!(conn, ["admin"])

@@ -1,7 +1,7 @@
 defmodule SessionsApiRouter do
   use Dynamo.Router
   use Ecto.Query
-  import Cheko.RouterUtils
+  import Mogo.RouterUtils
 
 
   get "/" do
