@@ -9,7 +9,7 @@
     left: 20%;
   }
 
-  .menu-control {
+  .left-menu-control, .right-menu-control {
     display: none;
   }
 
@@ -36,13 +36,14 @@
     }
   }
 
-  .menu-control {
-    float: left;
+  .left-menu-control { float: left; }
+  .right-menu-control { float: right; }
+
+  .left-menu-control, .right-menu-control {
     cursor: pointer;
 
     img {
-      width: 1.25em;
-      height: 1.25em;
+      height: 1.2em;
       margin-right: 0.5em;
     }
   }
@@ -52,11 +53,6 @@
     margin-left: -80%;
   }
 
-  .is-left-menu-open {
-    position: relative !important;
-    margin-left: 0% !important;
-  }
-
   .room-content {
     width: 100%;
   }
@@ -64,7 +60,16 @@
   .room-details-wrapper {
     width: 80%;
     margin-right: -80%;
-    display: none;
+  }
+
+  .is-left-menu-open {
+    position: relative !important;
+    margin-left: 0% !important;
+  }
+
+  .is-right-menu-open {
+    position: relative !important;
+    margin-right: 0% !important;
   }
 
   .move-content-right {
