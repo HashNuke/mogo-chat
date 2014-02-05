@@ -1,6 +1,7 @@
 App.ApplicationController = Em.Controller.extend
   currentUser: false
-  isMenuLeftOpen: false
+  isLeftMenuOpen: false
+  isRightMenuOpen: false
 
   actions:
     logout: ->
