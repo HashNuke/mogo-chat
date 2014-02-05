@@ -1,5 +1,5 @@
 defmodule SessionTest do
-  use Cheko.TestCase
+  use Mogo.TestCase
   use Dynamo.HTTP.Case
   import TestUtils
 
@@ -9,8 +9,8 @@ defmodule SessionTest do
 
   # truncate_db_after_test
   #
-  # test_dynamo(Cheko.Dynamo)
-  # @endpoint Cheko.Dynamo
+  # test_dynamo(Mogo.Dynamo)
+  # @endpoint Mogo.Dynamo
   #
   # test "should return user details after successful login" do
   #   user = User.new(first_name: "Test", email: "test@example.com", password: "password")

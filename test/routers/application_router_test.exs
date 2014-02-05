@@ -1,5 +1,5 @@
 defmodule ApplicationRouterTest do
-  use Cheko.TestCase
+  use Mogo.TestCase
   use Dynamo.HTTP.Case
 
   # Sometimes it may be convenient to test a specific

@@ -1,5 +1,5 @@
 defmodule UserManagementIntegrationTest do
-  use Cheko.TestCase
+  use Mogo.TestCase
   use Hound.Helpers
   import TestUtils
 
