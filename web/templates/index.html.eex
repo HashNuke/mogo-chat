@@ -25,7 +25,7 @@
   </div>
 
 
-  <div class="room-content" {{bind-attr class="isLeftMenuOpen:move-content-right"}}>
+  <div class="room-content" {{bind-attr class="isLeftMenuOpen:move-content-right isRightMenuOpen:move-content-left"}}>
     {{#unless activeState}}
       <div>
         [[#TODO This needs to be changed to a better message]]
@@ -33,8 +33,13 @@
       </div>
     {{else}}
       <div class="room-info">
-        <div class="menu-control" {{action "toggleLeftMenu"}}><img src="/static/assets/navicon.png"/></div>
+        <div class="left-menu-control" {{action "toggleLeftMenu"}}>
+          <img src="/static/assets/navicon.png"/>
+        </div>
         {{activeState.room.name}}
+        <div class="right-menu-control" {{action "toggleRightMenu"}}>
+          <img src="/static/assets/users.png"/>
+        </div>
       </div>
 
       <div class="messages-wrapper">
@@ -59,7 +64,7 @@
   </div>
 
 
-  <div class="room-details-wrapper">
+  <div class="room-details-wrapper"  {{bind-attr class="isRightMenuOpen"}}>
     <div class="room-details">
       <div class="active-users">
         <div class="title">Users in room</div>
