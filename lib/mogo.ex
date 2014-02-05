@@ -1,4 +1,4 @@
-defmodule Cheko do
+defmodule Mogo do
   use Application.Behaviour
 
   @doc """
@@ -6,7 +6,7 @@ defmodule Cheko do
   application and its Dynamos.
   """
   def start(_type, _args) do
-    :ets.new(:cheko_sessions, [:named_table, :public, {:read_concurrency, true}])
-    Cheko.Supervisor.start_link()
+    :ets.new(:mogo_sessions, [:named_table, :public, {:read_concurrency, true}])
+    Mogo.Supervisor.start_link()
   end
 end
