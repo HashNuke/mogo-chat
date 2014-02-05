@@ -1,11 +1,11 @@
-defmodule Cobalt.Mixfile do
+defmodule Mogo.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :cheko,
+    [ app: :mogo,
       version: "0.0.1",
       build_per_environment: true,
-      dynamos: [Cheko.Dynamo],
+      dynamos: [Mogo.Dynamo],
       compilers: [:elixir, :dynamo, :app],
       deps: deps(Mix.env) ]
   end
