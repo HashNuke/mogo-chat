@@ -1,4 +1,4 @@
-defmodule Cheko.Supervisor do
+defmodule Mogo.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -10,7 +10,7 @@ defmodule Cheko.Supervisor do
     dynamo_options = [max_restarts: 5, max_seconds: 5]
 
     tree = [
-      worker(Cheko.Dynamo, [dynamo_options]),
+      worker(Mogo.Dynamo, [dynamo_options]),
       worker(Repo, [])
     ]
 

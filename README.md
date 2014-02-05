@@ -1,11 +1,11 @@
-# Cheko
+# Mogo
 
 
 ## Usage
 
 You'll need Erlang version R16B02 or higher, Elixir version v0.12.2 and Postgresql.
 
-* Create a postgres database called `cheko_development`
+* Create a postgres database called `mogo_development`
 
 * Get the dependencies: `mix deps.get`
 
@@ -13,7 +13,7 @@ You'll need Erlang version R16B02 or higher, Elixir version v0.12.2 and Postgres
 
 * Setup the app with an admin user: `mix setup`
 
-* Start the app: `iex --erl "-config cheko.config" -S mix server`
+* Start the app: `iex --erl "-config mogo.config" -S mix server`
 
 
 ## Development

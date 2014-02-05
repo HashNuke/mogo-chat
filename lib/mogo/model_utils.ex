@@ -1,4 +1,4 @@
-defmodule Cheko.ModelUtils do
+defmodule Mogo.ModelUtils do
 
   defmacro __using__(_) do
     quote do

@@ -1,6 +1,6 @@
 defmodule Message do
   use Ecto.Model
-  use Cheko.ModelUtils
+  use Mogo.ModelUtils
 
   queryable "messages" do
     field :body,       :string

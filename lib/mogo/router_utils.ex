@@ -1,4 +1,4 @@
-defmodule Cheko.RouterUtils do
+defmodule Mogo.RouterUtils do
 
   import Dynamo.HTTP.Session
   import Dynamo.HTTP.Halt

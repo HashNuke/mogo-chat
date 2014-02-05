@@ -1,6 +1,6 @@
 defmodule Room do
   use Ecto.Model
-  use Cheko.ModelUtils
+  use Mogo.ModelUtils
 
   queryable "rooms" do
     field :name, :string

@@ -13,7 +13,7 @@ defmodule Mogo.Mixfile do
   # Configuration for the OTP application
   def application do
     [ applications: [:cowboy, :dynamo, :bcrypt, :qdate],
-      mod: { Cheko, [] } ]
+      mod: { Mogo, [] } ]
   end
 
   defp deps(:prod) do

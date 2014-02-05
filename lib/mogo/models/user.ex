@@ -1,6 +1,6 @@
 defmodule User do
   use Ecto.Model
-  use Cheko.ModelUtils
+  use Mogo.ModelUtils
 
   queryable "users" do
     field :email,      :string

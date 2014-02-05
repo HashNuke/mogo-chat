@@ -1,4 +1,4 @@
-defmodule Cheko.Dynamo do
+defmodule Mogo.Dynamo do
   use Dynamo
 
   config :dynamo,
@@ -6,7 +6,7 @@ defmodule Cheko.Dynamo do
     env: Mix.env,
 
     # The OTP application associated with this Dynamo
-    otp_app: :cheko,
+    otp_app: :mogo,
 
     # The endpoint to dispatch requests to
     endpoint: ApplicationRouter,
@@ -18,14 +18,14 @@ defmodule Cheko.Dynamo do
   # config :dynamo,
   #   session_store: Session.CookieStore,
   #   session_options:
-  #     [ key: "_cheko_session",
+  #     [ key: "_mogo_session",
   #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
 
   config :dynamo,
     session_store: Session.ETSStore,
     session_options: [
-      table: :cheko_sessions,
-      key: "_cheko_session"
+      table: :mogo_sessions,
+      key: "_mogo_session"
     ]
 
   if Mix.env == :test do

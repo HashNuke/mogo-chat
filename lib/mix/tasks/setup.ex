@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Setup do
   A test task.
   """
   def run(_) do
-    :application.ensure_all_started(:cheko)
+    :application.ensure_all_started(:mogo)
     admin_user = User.new(
         email: "admin@example.com",
         password: "password",
