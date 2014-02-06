@@ -5,8 +5,13 @@ App.User = DS.Model.extend
   role:   DS.attr("string")
   password: DS.attr("string")
   color: DS.attr("string")
+
   borderStyle: (->
     "border-left: 0.2em solid #{@get("color")};"
+  ).property("color")
+
+  fontColor: (->
+    "color: #{@get("color")};"
   ).property("color")
 
 

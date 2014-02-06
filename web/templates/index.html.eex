@@ -50,7 +50,9 @@
           {{#each message in activeState.room.messages}}
             <div class="message">
               <div class="content">
-                <span class="user">{{message.user.firstName}}</span>:
+                <span class="user" {{bind-attr style="message.user.fontColor"}}>
+                  {{message.user.firstName}}
+                </span>:
                 {{message.body}}
               </div>
               <div class="timestamp">{{readableTime message.createdAt}}</div>
