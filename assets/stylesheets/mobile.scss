@@ -4,6 +4,12 @@
     padding: 1em 2em 2em 2em;
   }
 
+  .detail {
+    .page, .header {
+      padding: 0.25em;
+    }
+  }
+
   .room-content {
     width: 60%;
     left: 20%;
@@ -11,12 +17,6 @@
 
   .left-menu-control, .right-menu-control {
     display: none;
-  }
-
-  .detail {
-    .page, .header {
-      padding: 0.25em;
-    }
   }
 }
 
@@ -53,9 +53,9 @@
     margin-left: -80%;
   }
 
-  .room-content {
-    width: 100%;
-  }
+  .room-content { width: 100%; }
+  .move-content-right { margin-left: 80%; }
+  .move-content-left  { margin-left: -80%; }
 
   .room-details-wrapper {
     width: 80%;
@@ -71,15 +71,6 @@
     position: relative !important;
     margin-right: 0% !important;
   }
-
-  .move-content-right {
-    margin-left: 80%;
-  }
-
-  .move-content-left {
-    margin-left: -80%;
-  }
-
 }
 
 // desktop
@@ -125,4 +116,5 @@ and (max-device-width : 480px) {
 
 // Desktop
 @media screen and (min-width: 1024px) {
+  @include desktop-styles;
 }

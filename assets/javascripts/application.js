@@ -5,13 +5,14 @@
 //= require "lib/ember-data"
 //= require "lib/fastclick"
 //= require_self
+//= require "serializers"
 //= require "models"
 //= require "views"
 //= require "helpers"
-//= require "./routes/authenticated_route"
 //= require_tree "./controllers"
+//= require "./routes/authenticated_route"
 //= require_tree "./routes"
-
+//= require_tree "./pollers"
 
 window.App = Em.Application.create({LOG_TRANSITIONS: true})
 
