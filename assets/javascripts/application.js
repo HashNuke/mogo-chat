@@ -25,6 +25,9 @@ App.Router.map(function() {
   // login
   this.route("login");
 
+  // logout
+  this.route("logout");
+
   // rooms
   this.resource("rooms", function() {
     this.route("new");

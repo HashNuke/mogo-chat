@@ -7,7 +7,7 @@
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
-        <a class="logout" {{action "logout" target="controllers.application"}}>Logout</a>
+        {{#link-to "logout" classNames="logout"}}Logout{{/link-to}}
       </div>
 
       <div class="rooms">
@@ -92,7 +92,7 @@
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
-        <a class="logout" {{action "logout" target="controllers.application"}}>Logout</a>
+        {{#link-to "logout" classNames="logout"}}Logout{{/link-to}}
       </div>
 
       <div class="navigation">
