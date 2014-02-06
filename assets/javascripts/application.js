@@ -5,6 +5,7 @@
 //= require "lib/ember-data"
 //= require "lib/fastclick"
 //= require_self
+//= require "paint_box"
 //= require "serializers"
 //= require "models"
 //= require "views"

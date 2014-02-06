@@ -4,6 +4,7 @@ App.User = DS.Model.extend
   email:  DS.attr("string")
   role:   DS.attr("string")
   password: DS.attr("string")
+  color: DS.attr("string")
 
 
 App.CurrentUser = App.User.extend({})
