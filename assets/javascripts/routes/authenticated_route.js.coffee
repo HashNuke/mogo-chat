@@ -16,7 +16,7 @@ App.AuthenticatedRoute = Em.Route.extend
           @store.find("user", userAttributes.id).then (user)=>
             @controllerFor("application").set("currentUser", user)
         else
-          userAttributes["color"] = @controllerFor("application").get("paintBox").getColor()
+          userAttributes["color"] = App.paintBox.getColor()
           user = @store.createRecord("user", userAttributes)
           @controllerFor("application").set("currentUser", user)
       else

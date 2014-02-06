@@ -38,6 +38,8 @@ App.MessagePoller = Em.Object.extend
         firstName: message.user.first_name
         lastName: message.user.last_name
         role: message.user.role
+        color: App.paintBox.getColor()
+
       user = @store.createRecord("user", userParams)
       messageObj.set("user", user)
     #TODO push or shift depending on the query

@@ -1,4 +1,5 @@
-class App.PaintBox
+class window.MogoPaintBox
+  nextColor: 0
   colors: [
     "E35D5C"
     "829DE7"
@@ -13,8 +14,6 @@ class App.PaintBox
     "71CCD3"
     "417505"
   ]
-
-  nextColor: 0
 
   getColor: ->
     color = @colors[@nextColor]

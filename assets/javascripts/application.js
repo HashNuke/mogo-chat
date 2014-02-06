@@ -4,8 +4,8 @@
 //= require "lib/ember"
 //= require "lib/ember-data"
 //= require "lib/fastclick"
-//= require_self
 //= require "paint_box"
+//= require_self
 //= require "serializers"
 //= require "models"
 //= require "views"
@@ -20,7 +20,7 @@ window.App = Em.Application.create({LOG_TRANSITIONS: true})
 App.ApplicationSerializer = DS.ActiveModelSerializer.extend({})
 App.ApplicationAdapter    = DS.ActiveModelAdapter.reopen({namespace: "api"})
 App.ApplicationView       = Em.View.extend({classNames: ["container"]})
-
+App.paintBox = new MogoPaintBox()
 
 App.Router.map(function() {
   // login

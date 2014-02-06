@@ -2,7 +2,6 @@ App.LoginController = Em.Controller.extend
   needs: ["application"]
   email: "admin@example.com"
   password: "password"
-  paintBox: Ember.computed.alias("controllers.application.paintBox")
 
   actions:
     login: ->
@@ -16,7 +15,7 @@ App.LoginController = Em.Controller.extend
             firstName: response.user.first_name,
             lastName: response.user.last_name,
             role: response.user.role,
-            color: @get("paintBox").getColor()
+            color: App.paintBox.getColor()
           }
 
           if @store.recordIsLoaded("user", userAttributes.id)

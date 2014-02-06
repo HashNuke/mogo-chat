@@ -23,6 +23,7 @@ App.UsersPoller = Em.Object.extend
         firstName: userAttributes.first_name
         lastName: userAttributes.last_name
         role: userAttributes.role
+        color: App.paintBox.getColor()
       )
       @room.get("users").pushObject(user)
 
