@@ -14,6 +14,6 @@ defmodule Repo do
 
 
   def priv do
-    app_dir(:mogo, "priv/repo")
+    app_dir(:mogo_chat, "priv/repo")
   end
 end

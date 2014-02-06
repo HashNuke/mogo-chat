@@ -1,5 +1,5 @@
 defmodule RoomManagementIntegrationTest do
-  use Mogo.TestCase
+  use MogoChat.TestCase
   use Hound.Helpers
   import TestUtils
 

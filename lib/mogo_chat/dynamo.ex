@@ -1,4 +1,4 @@
-defmodule Mogo.Dynamo do
+defmodule MogoChat.Dynamo do
   use Dynamo
 
   config :dynamo,
@@ -6,7 +6,7 @@ defmodule Mogo.Dynamo do
     env: Mix.env,
 
     # The OTP application associated with this Dynamo
-    otp_app: :mogo,
+    otp_app: :mogo_chat,
 
     # The endpoint to dispatch requests to
     endpoint: ApplicationRouter,
@@ -18,14 +18,14 @@ defmodule Mogo.Dynamo do
   # config :dynamo,
   #   session_store: Session.CookieStore,
   #   session_options:
-  #     [ key: "_mogo_session",
+  #     [ key: "_mogo_chat_session",
   #       secret: "dPFxY9JxtCRtXUpWOEd0+YRIUwlnG4tcuYbUza5AIKXxhFhiCAyR4NYCDD1C5YLt"]
 
   config :dynamo,
     session_store: Session.ETSStore,
     session_options: [
-      table: :mogo_sessions,
-      key: "_mogo_session"
+      table: :mogo_chat_sessions,
+      key: "_mogo_chat_session"
     ]
 
   if Mix.env == :test do

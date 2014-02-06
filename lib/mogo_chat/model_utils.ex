@@ -1,4 +1,4 @@
-defmodule Mogo.ModelUtils do
+defmodule MogoChat.ModelUtils do
 
   defmacro __using__(_) do
     quote do

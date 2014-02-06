@@ -1,7 +1,7 @@
 defmodule RoomUserStatesApiRouter do
   use Dynamo.Router
   use Ecto.Query
-  import Mogo.RouterUtils
+  import MogoChat.RouterUtils
 
   prepare do
     authenticate_user!(conn)

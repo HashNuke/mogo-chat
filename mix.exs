@@ -1,11 +1,11 @@
-defmodule Mogo.Mixfile do
+defmodule MogoChat.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :mogo,
+    [ app: :mogo_chat,
       version: "0.0.1",
       build_per_environment: true,
-      dynamos: [Mogo.Dynamo],
+      dynamos: [MogoChat.Dynamo],
       compilers: [:elixir, :dynamo, :app],
       deps: deps(Mix.env) ]
   end
@@ -13,7 +13,7 @@ defmodule Mogo.Mixfile do
   # Configuration for the OTP application
   def application do
     [ applications: [:cowboy, :dynamo, :bcrypt, :qdate],
-      mod: { Mogo, [] } ]
+      mod: { MogoChat, [] } ]
   end
 
   defp deps(:prod) do

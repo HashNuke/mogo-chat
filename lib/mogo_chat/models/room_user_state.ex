@@ -1,6 +1,6 @@
 defmodule RoomUserState do
   use Ecto.Model
-  use Mogo.ModelUtils
+  use MogoChat.ModelUtils
 
   queryable "room_user_states" do
     belongs_to :user, User

@@ -1,6 +1,6 @@
 defmodule Message do
   use Ecto.Model
-  use Mogo.ModelUtils
+  use MogoChat.ModelUtils
 
   queryable "messages" do
     field :body,       :string

@@ -1,4 +1,4 @@
-defmodule Mogo.Supervisor do
+defmodule MogoChat.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
@@ -10,7 +10,7 @@ defmodule Mogo.Supervisor do
     dynamo_options = [max_restarts: 5, max_seconds: 5]
 
     tree = [
-      worker(Mogo.Dynamo, [dynamo_options]),
+      worker(MogoChat.Dynamo, [dynamo_options]),
       worker(Repo, [])
     ]
 

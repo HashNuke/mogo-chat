@@ -1,4 +1,4 @@
-defmodule Mogo do
+defmodule MogoChat do
   use Application.Behaviour
 
   @doc """
@@ -6,7 +6,7 @@ defmodule Mogo do
   application and its Dynamos.
   """
   def start(_type, _args) do
-    :ets.new(:mogo_sessions, [:named_table, :public, {:read_concurrency, true}])
-    Mogo.Supervisor.start_link()
+    :ets.new(:mogo_chat_sessions, [:named_table, :public, {:read_concurrency, true}])
+    MogoChat.Supervisor.start_link()
   end
 end

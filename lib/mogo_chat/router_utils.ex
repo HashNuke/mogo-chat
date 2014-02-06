@@ -1,4 +1,4 @@
-defmodule Mogo.RouterUtils do
+defmodule MogoChat.RouterUtils do
 
   import Dynamo.HTTP.Session
   import Dynamo.HTTP.Halt

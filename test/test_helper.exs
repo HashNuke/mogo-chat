@@ -1,10 +1,10 @@
-Dynamo.under_test(Mogo.Dynamo)
+Dynamo.under_test(MogoChat.Dynamo)
 Dynamo.Loader.enable
 ExUnit.start
 Hound.start [driver: "phantomjs"]
 Repo.start_link
 
-defmodule Mogo.TestCase do
+defmodule MogoChat.TestCase do
   use ExUnit.CaseTemplate
 
   # Enable code reloading on test cases
@@ -17,7 +17,7 @@ end
 
 defmodule TestUtils do
   def app(path) do
-    "http://localhost:#{Mogo.Dynamo.config[:server][:port]}/#{path}"
+    "http://localhost:#{MogoChat.Dynamo.config[:server][:port]}/#{path}"
   end
 
 

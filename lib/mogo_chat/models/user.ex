@@ -1,6 +1,6 @@
 defmodule User do
   use Ecto.Model
-  use Mogo.ModelUtils
+  use MogoChat.ModelUtils
 
   queryable "users" do
     field :email,      :string

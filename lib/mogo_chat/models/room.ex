@@ -1,6 +1,6 @@
 defmodule Room do
   use Ecto.Model
-  use Mogo.ModelUtils
+  use MogoChat.ModelUtils
 
   queryable "rooms" do
     field :name, :string
