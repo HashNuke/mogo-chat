@@ -5,9 +5,8 @@
   }
 
   .detail {
-    .page, .header {
-      padding: 0.25em;
-    }
+    width: 80%;
+    padding: 2.3em 1em 1em 1em;
   }
 
   .room-content {
@@ -31,9 +30,8 @@
   .login { width: 100%; }
 
   .detail {
-    .page, .header {
-      padding: 0.25em;
-    }
+    width: 100%;
+    padding-top: 2.3em;
   }
 
   .left-menu-control { float: left; }

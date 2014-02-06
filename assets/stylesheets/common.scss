@@ -33,26 +33,21 @@ html, body {
   float: left;
 
   .detail {
-    width: 80%;
     position: absolute;
     top: 0em;
     right: 0em;
     bottom: 0em;
-    padding-top: 2.3em;
     overflow-y: scroll;
 
     .header {
       width: 100%;
       position: fixed;
       top: 0em;
-      padding: 0.25em;
-      margin-left: 0.25em;
       color: #06c;
 
       .title {
         float: left;
         font-size: 1.5em;
-        margin-left: 0.25em;
         text-transform: capitalize;
       }
     }

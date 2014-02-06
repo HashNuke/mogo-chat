@@ -21,6 +21,14 @@
         </ul>
       </div>
 
+      <div class="navigation">
+        <div class="title">Manage</div>
+        <ul>
+          <li>{{#link-to "rooms"}}Rooms{{/link-to}}</li>
+          <li>{{#link-to "users"}}Users{{/link-to}}</li>
+        </ul>
+      </div>
+
     </div>
   </div>
 
@@ -96,6 +104,8 @@
         Hello {{currentUser.firstName}} ~!
         {{#link-to "logout" classNames="logout"}}Logout{{/link-to}}
       </div>
+
+      <div class="back-to-chat">{{#link-to "index"}}Back to chat{{/link-to}}</div>
 
       <div class="navigation">
         <div class="title">Settings</div>

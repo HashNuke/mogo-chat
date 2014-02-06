@@ -36,6 +36,7 @@
     width: 100%;
     padding: 0.5em 0.5em 0.5em 1.2em;
   }
+ 
 
   .navigation, .rooms {
     float: left;
@@ -49,7 +50,6 @@
 
       li {
         color: #BBB;
-        font-size: 1.1em;
         padding: 0.25em 0em 0.25em 0em;
 
         a {
@@ -68,9 +68,29 @@
     }
   }
 
+  .rooms li { font-size: 1.1em; }
   .navigation {
     li {
-      a { color: #666; }
+      a {
+        text-decoration: none;
+        color: #666;
+      }
     }
   }
+
+  .back-to-chat {
+    padding: 1.25em;
+    width: 100%;
+    float: left;
+
+    a {
+      text-decoration: none;
+      background: #444;
+      color: #FFF;
+      border-radius: 0.2em;
+      padding: 0.25em;
+      float: left;
+    }
+  }
+
 }
