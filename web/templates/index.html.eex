@@ -3,11 +3,15 @@
     <div class="left-panel">
       <div class="app-name">
         Mogo Chat
+        <div class="logout">
+          {{#link-to "logout"}}
+            <img src="/static/assets/logout.png" alt="Logout" title="Logout"/>
+          {{/link-to}}
+        </div>
       </div>
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
-        {{#link-to "logout" classNames="logout"}}Logout{{/link-to}}
       </div>
 
       <div class="rooms">
@@ -58,9 +62,7 @@
           {{#each message in activeState.room.messages}}
             <div class="message">
               <div class="content">
-                <span class="user" {{bind-attr style="message.user.fontColor"}}>
-                  {{message.user.firstName}}
-                </span>:
+                <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
                 {{message.body}}
               </div>
               <div class="timestamp">{{readableTime message.createdAt}}</div>
@@ -98,11 +100,17 @@
 <script type="text/x-handlebars" id="settings">
   <div class="left-panel-wrapper">
     <div class="left-panel">
-      <div class="app-name">Mogo Chat</div>
+      <div class="app-name">
+        Mogo Chat
+        <div class="logout">
+          {{#link-to "logout"}}
+            <img src="/static/assets/logout.png" alt="Logout" title="Logout"/>
+          {{/link-to}}
+        </div>
+      </div>
 
       <div class="user-details">
         Hello {{currentUser.firstName}} ~!
-        {{#link-to "logout" classNames="logout"}}Logout{{/link-to}}
       </div>
 
       <div class="back-to-chat">{{#link-to "index"}}Back to chat{{/link-to}}</div>

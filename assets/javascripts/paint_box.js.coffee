@@ -1,7 +1,7 @@
 class window.MogoPaintBox
   nextColor: 0
   colors: [
-    "E35D5C"
+    "F57DBA"
     "829DE7"
     "77B546"
     "FFCC20"
