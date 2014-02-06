@@ -15,35 +15,38 @@ App.MessagePoller = Em.Object.extend
     @started = false
 
 
-  onEachMessage: (index, message)->
-    return true if (@store.recordIsLoaded("message", message.id))
-    messageParams =
-      id: message.id
-      type: message.type
-      body: message.body
-      createdAt: message.created_at
+  onEachMessage: (index, messageAttrs)->
+    if (@store.recordIsLoaded("message", messageAttrs.id))
+      @store.find("message", messageAttrs.id).then (message)=>
+        @room.get("messages").pushObject(message)
+      return
 
-    messageObj = @store.createRecord("message", messageParams)
-    messageObj.set("room", @room)
-    @afterMessageId = message.id
+    message = @store.createRecord("message", {
+      id: messageAttrs.id,
+      type: messageAttrs.type,
+      body: messageAttrs.body,
+      createdAt: messageAttrs.created_at
+    })
 
-    if(@store.recordIsLoaded("user", message.user.id))
+    message.set("room", @room)
+    @afterMessageId = messageAttrs.id
+
+    if(@store.recordIsLoaded("user", messageAttrs.user.id))
       successCallback = (user)=>
-        messageObj.set("user", user)
-
-      @store.find("user", message.user.id).then successCallback
+        message.set("user", user)
+      @store.find("user", messageAttrs.user.id).then successCallback
     else
       userParams =
-        id: message.user.id
-        firstName: message.user.first_name
-        lastName: message.user.last_name
-        role: message.user.role
+        id: messageAttrs.user.id
+        firstName: messageAttrs.user.first_name
+        lastName: messageAttrs.user.last_name
+        role: messageAttrs.user.role
         color: App.paintBox.getColor()
 
       user = @store.createRecord("user", userParams)
       messageObj.set("user", user)
     #TODO push or shift depending on the query
-    @room.get("messages").pushObject(messageObj)
+    @room.get("messages").pushObject(message)
 
 
   fetchMessages: ->
