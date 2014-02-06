@@ -6,14 +6,19 @@ App.AuthenticatedRoute = Em.Route.extend
 
     Em.$.getJSON("/api/sessions").then (response)=>
       if response.user
-        userAttributes = {
+        userAttributes =
           id: response.user.id,
           firstName: response.user.first_name,
           lastName: response.user.last_name,
           role: response.user.role
-        }
-        user = @store.createRecord("current_user", userAttributes)
-        @controllerFor("application").set("currentUser", user)
+
+        if @store.recordIsLoaded("user", userAttributes.id)
+          @store.find("user", userAttributes.id).then (user)=>
+            @controllerFor("application").set("currentUser", user)
+        else
+          userAttributes["color"] = @controllerFor("application").get("paintBox").getColor()
+          user = @store.createRecord("user", userAttributes)
+          @controllerFor("application").set("currentUser", user)
       else
         @redirectToLogin(transition)
 

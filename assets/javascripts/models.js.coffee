@@ -7,9 +7,6 @@ App.User = DS.Model.extend
   color: DS.attr("string")
 
 
-App.CurrentUser = App.User.extend({})
-
-
 App.Room = DS.Model.extend
   name: DS.attr("string")
   roomUserState: DS.belongsTo("room_user_state")

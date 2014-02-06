@@ -17,8 +17,8 @@ class App.PaintBox
   nextColor: 0
 
   getColor: ->
-    color = colors[@nextColor]
+    color = @colors[@nextColor]
     @nextColor = @nextColor + 1
     if @nextColor >= @colors.length
       @nextColor = 0
-    color
+    "##{color}"
