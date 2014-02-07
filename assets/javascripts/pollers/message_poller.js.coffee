@@ -34,6 +34,8 @@ App.MessagePoller = Em.Object.extend
     if(@store.recordIsLoaded("user", messageAttrs.user.id))
       successCallback = (user)=>
         message.set("user", user)
+        #TODO push or shift depending on the query
+        @room.get("messages").pushObject(message)
       @store.find("user", messageAttrs.user.id).then successCallback
     else
       userParams =
@@ -44,9 +46,9 @@ App.MessagePoller = Em.Object.extend
         color: App.paintBox.getColor()
 
       user = @store.createRecord("user", userParams)
-      messageObj.set("user", user)
-    #TODO push or shift depending on the query
-    @room.get("messages").pushObject(message)
+      message.set("user", user)
+      #TODO push or shift depending on the query
+      @room.get("messages").pushObject(message)
 
 
   fetchMessages: ->
