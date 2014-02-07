@@ -15,53 +15,55 @@ App.MessagePoller = Em.Object.extend
     @started = false
 
 
-  onEachMessage: (index, messageAttrs)->
-    if (@store.recordIsLoaded("message", messageAttrs.id))
-      @store.find("message", messageAttrs.id).then (message)=>
-        @room.get("messages").pushObject(message)
-      return
+  onEachMessage: (before = false)->
+    addAction = if before then "unshiftObject" else "pushObject"
 
-    message = @store.createRecord("message", {
-      id: messageAttrs.id,
-      type: messageAttrs.type,
-      body: messageAttrs.body,
-      createdAt: messageAttrs.created_at
-    })
+    (index, messageAttrs)=>
+      if (@store.recordIsLoaded("message", messageAttrs.id))
+        @store.find("message", messageAttrs.id).then (message)=>
+          @room.get("messages").pushObject(message)
+        return
 
-    message.set("room", @room)
-    @afterMessageId = messageAttrs.id
+      message = @store.createRecord("message", {
+        id: messageAttrs.id,
+        type: messageAttrs.type,
+        body: messageAttrs.body,
+        createdAt: messageAttrs.created_at
+      })
 
-    if(@store.recordIsLoaded("user", messageAttrs.user.id))
-      successCallback = (user)=>
-        message.set("user", user)
-        #TODO push or shift depending on the query
-        @room.get("messages").pushObject(message)
-      @store.find("user", messageAttrs.user.id).then successCallback
-    else
-      userParams =
-        id: messageAttrs.user.id
-        firstName: messageAttrs.user.first_name
-        lastName: messageAttrs.user.last_name
-        role: messageAttrs.user.role
-        color: App.paintBox.getColor()
+      message.set("room", @room)
+      @afterMessageId = messageAttrs.id
 
-      user = @store.createRecord("user", userParams)
+      if @store.recordIsLoaded("user", messageAttrs.user.id)
+        user = @store.getById("user", messageAttrs.user.id)
+      else
+        userParams =
+          id: messageAttrs.user.id
+          firstName: messageAttrs.user.first_name
+          lastName: messageAttrs.user.last_name
+          role: messageAttrs.user.role
+          color: App.paintBox.getColor()
+
+        user = @store.createRecord("user", userParams)
+
       message.set("user", user)
-      #TODO push or shift depending on the query
-      @room.get("messages").pushObject(message)
+      @room.get("messages")[addAction](message)
+      if @room.get("messages.length") == 21 && addAction == "pushObject"
+        @room.get("messages").shiftObject()
 
 
-  fetchMessages: ->
-    if @afterMessageId
-      url = "/api/messages/#{@roomId}?after=#{@afterMessageId}"
-    else
-      url = "/api/messages/#{@roomId}"
+  fetchMessages: (before = false)->
+    url = "/api/messages/#{@roomId}"
+    if before
+      url = "#{url}?before=#{before}"
+    else if @afterMessageId
+      url = "#{url}?after=#{@afterMessageId}"
 
     getJsonCallback = (response)=>
-      if (response.messages.length == 20 || response.messages.length == 0) && @room.get("messages.length") == 20
+      if (response.messages.length == 20 || response.messages.length == 0) && @room.get("messages.length") >= 20
         @room.set("isHistoryAvailable", true)
       else
         @room.set("isHistoryAvailable", false)
-      Em.$.each response.messages, @onEachMessage.bind(@)
+      Em.$.each response.messages, @onEachMessage(before).bind(@)
 
     $.getJSON url, getJsonCallback.bind(@)

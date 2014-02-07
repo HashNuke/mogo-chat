@@ -15,8 +15,7 @@ App.UsersPoller = Em.Object.extend
 
   onEachUser: (index, userAttributes)->
     if @store.recordIsLoaded("user", userAttributes.id)
-      @store.find("user", userAttributes.id).then (user)=>
-        @room.get("users").pushObject(user)
+      user = @store.getById("user", userAttributes.id)
     else
       user = @store.createRecord("user",
         id: userAttributes.id
@@ -25,7 +24,7 @@ App.UsersPoller = Em.Object.extend
         role: userAttributes.role
         color: App.paintBox.getColor()
       )
-      @room.get("users").pushObject(user)
+    @room.get("users").pushObject(user)
 
   fetchUsers: ->
     $.getJSON "/api/rooms/#{@roomId}/users", (response)=>

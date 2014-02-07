@@ -27,6 +27,8 @@ App.IndexController = Ember.ArrayController.extend
         user: currentUser
 
       msg = @store.createRecord("message", messageParams)
+      if room.get("messages.length") == 21
+        room.get("messages").shiftObject()
       successCallback = ->
         console.log "message has been posted"
       errorCallback   = ->
