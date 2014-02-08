@@ -3,7 +3,7 @@
   "cowlib": {:git, "git://github.com/extend/cowlib.git", "63298e8e160031a70efff86a1acde7e7db1fcda6", [ref: "0.4.0"]},
   "decimal": {:git, "git://github.com/ericmj/decimal.git", "eef08ae02496d7c9d6bed2b06342d7be0e791223", []},
   "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "a25f6701993ea7a88f2ccd3b8c40c3216305442b", []},
-  "ecto": {:git, "git://github.com/elixir-lang/ecto.git", "1ce48045923d4aada22860c9c878b93d1c4da4e0", []},
+  "ecto": {:git, "git://github.com/elixir-lang/ecto.git", "2710795aef61b39b190b4077d75794174e0f450a", []},
   "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [branch: "master"]},
   "erlware_commons": {:git, "git://github.com/erlware/erlware_commons.git", "96cdc0e6237bfc834d144750e7fbef09016be084", [branch: "master"]},
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "aecbe8cf755fc81d76e2924d69a33642b7945af9", []},

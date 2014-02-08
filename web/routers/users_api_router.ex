@@ -1,6 +1,6 @@
 defmodule UsersApiRouter do
   use Dynamo.Router
-  use Ecto.Query
+  import Ecto.Query
   import MogoChat.RouterUtils
 
   prepare do

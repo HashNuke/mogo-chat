@@ -97,6 +97,10 @@
 </script>
 
 
+<script type="text/x-handlebars" id="room-messages">
+TODO
+</script>
+
 <script type="text/x-handlebars" id="settings">
   <div class="left-panel-wrapper">
     <div class="left-panel">
