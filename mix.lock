@@ -16,7 +16,7 @@
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
   "mimetypes": {:git, "git://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", []},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "d47df5df57b22eb183b0c48c8dcc5f9827fad71b", []},
-  "postgrex": {:git, "git://github.com/ericmj/postgrex.git", "06e7e567e13bb3c96f6842d370556443eaf41b13", []},
+  "postgrex": {:git, "git://github.com/ericmj/postgrex.git", "c6fbb72d6f0678efd02e58b38cf2308397f0566a", []},
   "qdate": {:git, "git://github.com/choptastic/qdate.git", "5139108fcc6de03b0db1b27b9431ed028510556d", []},
   "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]},
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "0d954d923275305c62a81e9c2bf60a60977a9d29", [branch: "master"]} ]
