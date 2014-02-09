@@ -15,6 +15,14 @@ App.IndexController = Ember.ArrayController.extend
 
 
   actions:
+    loadHistory: ->
+      console.log "clicked"
+      activeState = @get("activeState")
+      room = activeState.get("room")
+      beforeId = room.get("messages").get("content")[0].get("id")
+      activeState.messagePoller.fetchMessages(beforeId)
+
+
     postMessage: (msgTxt)->
       msgTxt = msgTxt.trim()
       room = @get("activeState").get("room")

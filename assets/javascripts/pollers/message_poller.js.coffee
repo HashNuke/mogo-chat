@@ -16,12 +16,17 @@ App.MessagePoller = Em.Object.extend
 
 
   onEachMessage: (before = false)->
-    addAction = if before then "unshiftObject" else "pushObject"
+    if before
+      addAction = "unshiftObject"
+    else
+      addAction = "pushObject"
 
     (index, messageAttrs)=>
-      if (@store.recordIsLoaded("message", messageAttrs.id))
-        @store.find("message", messageAttrs.id).then (message)=>
-          @room.get("messages").pushObject(message)
+      @afterMessageId = messageAttrs.id
+      if @store.recordIsLoaded("message", messageAttrs.id)
+        message = @store.getById("message", messageAttrs.id)
+        if !@room.get("messages").contains(message)
+          @room.get("messages")[addAction](message)
         return
 
       message = @store.createRecord("message", {
@@ -32,7 +37,6 @@ App.MessagePoller = Em.Object.extend
       })
 
       message.set("room", @room)
-      @afterMessageId = messageAttrs.id
 
       if @store.recordIsLoaded("user", messageAttrs.user.id)
         user = @store.getById("user", messageAttrs.user.id)
@@ -43,11 +47,11 @@ App.MessagePoller = Em.Object.extend
           lastName: messageAttrs.user.last_name
           role: messageAttrs.user.role
           color: App.paintBox.getColor()
-
         user = @store.createRecord("user", userParams)
 
       message.set("user", user)
       @room.get("messages")[addAction](message)
+      console.log "#{addAction}: #{message.get("id")}, #{@room.get("messages").content[0].get("id")}"
       if @room.get("messages.length") == 21 && addAction == "pushObject"
         @room.get("messages").shiftObject()
 
@@ -64,6 +68,7 @@ App.MessagePoller = Em.Object.extend
         @room.set("isHistoryAvailable", true)
       else
         @room.set("isHistoryAvailable", false)
+      console.log @room.get("messages")
       Em.$.each response.messages, @onEachMessage(before).bind(@)
 
     $.getJSON url, getJsonCallback.bind(@)
