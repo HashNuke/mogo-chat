@@ -5,7 +5,7 @@
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   1.4.0-beta.5+pre.640b9114
+ * @version   1.4.0-beta.6
  */
 
 
@@ -180,10 +180,21 @@ Ember.deprecateFunc = function(message, func) {
 
 // Inform the developer about the Ember Inspector if not installed.
 if (!Ember.testing) {
-  if (typeof window !== 'undefined' && window.chrome && window.addEventListener) {
+  var isFirefox = typeof InstallTrigger !== 'undefined';
+  var isChrome = !!window.chrome && !window.opera;
+
+  if (typeof window !== 'undefined' && (isFirefox || isChrome) && window.addEventListener) {
     window.addEventListener("load", function() {
       if (document.body && document.body.dataset && !document.body.dataset.emberExtension) {
-        Ember.debug('For more advanced debugging, install the Ember Inspector from https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi');
+        var downloadURL;
+
+        if(isChrome) {
+          downloadURL = 'https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi';
+        } else if(isFirefox) {
+          downloadURL = 'https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/'
+        }
+
+        Ember.debug('For more advanced debugging, install the Ember Inspector from ' + downloadURL);
       }
     }, false);
   }
@@ -198,7 +209,7 @@ if (!Ember.testing) {
  *            Portions Copyright 2008-2011 Apple Inc. All rights reserved.
  * @license   Licensed under MIT license
  *            See https://raw.github.com/emberjs/ember.js/master/LICENSE
- * @version   1.4.0-beta.5+pre.640b9114
+ * @version   1.4.0-beta.6
  */
 
 
@@ -281,7 +292,7 @@ var define, requireModule, require, requirejs;
 
   @class Ember
   @static
-  @version 1.4.0-beta.5+pre.640b9114
+  @version 1.4.0-beta.6
 */
 
 if ('undefined' === typeof Ember) {
@@ -308,10 +319,10 @@ Ember.toString = function() { return "Ember"; };
 /**
   @property VERSION
   @type String
-  @default '1.4.0-beta.5+pre.640b9114'
+  @default '1.4.0-beta.6'
   @static
 */
-Ember.VERSION = '1.4.0-beta.5+pre.640b9114';
+Ember.VERSION = '1.4.0-beta.6';
 
 /**
   Standard environmental variables. You can define these in a global `EmberENV`
@@ -20825,7 +20836,7 @@ var get = Ember.get, set = Ember.set, forEach = Ember.EnumerableUtils.forEach,
   ```
 
   The itemController instances will have a `parentController` property set to
-  to the `ArrayController` instance.
+  the `ArrayController` instance.
 
   @class ArrayController
   @namespace Ember
@@ -21276,7 +21287,7 @@ function escapeAttribute(value) {
   return string.replace(BAD_CHARS_REGEXP, escapeChar);
 }
 
-// IE 6/7 have bugs arond setting names on inputs during creation.
+// IE 6/7 have bugs around setting names on inputs during creation.
 // From http://msdn.microsoft.com/en-us/library/ie/ms536389(v=vs.85).aspx:
 // "To include the NAME attribute at run time on objects created with the createElement method, use the eTag."
 var canSetNameOnInputs = (function() {
@@ -21454,7 +21465,11 @@ Ember._RenderBuffer.prototype = {
   },
 
   setClasses: function(classNames) {
-    this.classes = classNames;
+    this.elementClasses = null;
+    var len = classNames.length, i;
+    for (i = 0; i < len; i++) {
+      this.addClass(classNames[i]);
+    }
   },
 
   /**
@@ -21508,7 +21523,7 @@ Ember._RenderBuffer.prototype = {
   },
 
   /**
-    Adds an property which will be rendered to the element.
+    Adds a property which will be rendered to the element.
 
     @method prop
     @param {String} name The name of the property
@@ -21588,6 +21603,7 @@ Ember._RenderBuffer.prototype = {
     if (classes) {
       buffer += ' class="' + escapeAttribute(classes.join(' ')) + '"';
       this.classes = null;
+      this.elementClasses = null;
     }
 
     if (style) {
@@ -21670,6 +21686,7 @@ Ember._RenderBuffer.prototype = {
     if (classes) {
       $element.attr('class', classes.join(' '));
       this.classes = null;
+      this.elementClasses = null;
     }
 
     if (style) {
@@ -25835,11 +25852,11 @@ var get = Ember.get, set = Ember.set, isNone = Ember.isNone,
   `{{my-foo}}` in other templates, which will make
   an instance of the isolated component.
 
-  ```html
+  ```handlebars
   {{app-profile person=currentUser}}
   ```
 
-  ```html
+  ```handlebars
   <!-- app-profile template -->
   <h1>{{person.title}}</h1>
   <img {{bind-attr src=person.avatar}}>
@@ -25886,7 +25903,7 @@ var get = Ember.get, set = Ember.set, isNone = Ember.isNone,
 
   And then use it in the component's template:
 
-  ```html
+  ```handlebars
   <!-- app-profile template -->
 
   <h1>{{person.title}}</h1>
@@ -27059,6 +27076,33 @@ var handlebarsGet = Ember.Handlebars.get = function(root, path, options) {
   return value;
 };
 
+/**
+  This method uses `Ember.Handlebars.get` to lookup a value, then ensures
+  that the value is escaped properly.
+
+  If `unescaped` is a truthy value then the escaping will not be performed.
+
+  @method getEscaped
+  @for Ember.Handlebars
+  @param {Object} root The object to look up the property on
+  @param {String} path The path to be lookedup
+  @param {Object} options The template's option hash
+*/
+Ember.Handlebars.getEscaped = function(root, path, options) {
+  var result = handlebarsGet(root, path, options);
+
+  if (result === null || result === undefined) {
+    result = "";
+  } else if (!(result instanceof Handlebars.SafeString)) {
+    result = String(result);
+  }
+  if (!options.hash.unescaped){
+    result = Handlebars.Utils.escapeExpression(result);
+  }
+
+  return result;
+};
+
 Ember.Handlebars.resolveParams = function(context, params, options) {
   var resolvedParams = [], types = options.types, param, type;
 
@@ -28028,6 +28072,7 @@ Ember._HandlebarsBoundView = Ember._MetamorphView.extend({
 
 var get = Ember.get, set = Ember.set, fmt = Ember.String.fmt;
 var handlebarsGet = Ember.Handlebars.get, normalizePath = Ember.Handlebars.normalizePath;
+var handlebarsGetEscaped = Ember.Handlebars.getEscaped;
 var forEach = Ember.ArrayPolyfills.forEach;
 var o_create = Ember.create;
 
@@ -28035,20 +28080,6 @@ var EmberHandlebars = Ember.Handlebars, helpers = EmberHandlebars.helpers;
 
 function exists(value) {
   return !Ember.isNone(value);
-}
-
-function sanitizedHandlebarsGet(currentContext, property, options) {
-  var result = handlebarsGet(currentContext, property, options);
-  if (result === null || result === undefined) {
-    result = "";
-  } else if (!(result instanceof Handlebars.SafeString)) {
-    result = String(result);
-  }
-  if (!options.hash.unescaped){
-    result = Handlebars.Utils.escapeExpression(result);
-  }
-
-  return result;
 }
 
 // Binds a property into the DOM. This will create a hook in DOM that the
@@ -28131,7 +28162,7 @@ function bind(property, options, preserveContext, shouldDisplay, valueNormalizer
   } else {
     // The object is not observable, so just render it out and
     // be done with it.
-    data.buffer.push(handlebarsGet(currentContext, property, options));
+    data.buffer.push(handlebarsGetEscaped(currentContext, property, options));
   }
 }
 
@@ -28152,7 +28183,7 @@ function simpleBind(currentContext, property, options) {
         Ember.run.once(view, 'rerender');
       };
 
-      output = sanitizedHandlebarsGet(currentContext, property, options);
+      output = handlebarsGetEscaped(currentContext, property, options);
 
       data.buffer.push(output);
     } else {
@@ -28178,8 +28209,7 @@ function simpleBind(currentContext, property, options) {
   } else {
     // The object is not observable, so just render it out and
     // be done with it.
-    output = sanitizedHandlebarsGet(currentContext, property, options);
-
+    output = handlebarsGetEscaped(currentContext, property, options);
     data.buffer.push(output);
   }
 }
@@ -31507,6 +31537,7 @@ Ember.Handlebars.registerHelper('input', function(options) {
   delete hash.on;
 
   if (inputType === 'checkbox') {
+    Ember.assert("{{input type='checkbox'}} does not support setting `value=someBooleanValue`; you must use `checked=someBooleanValue` instead.", options.hashTypes.value !== 'ID');
     return Ember.Handlebars.helpers.view.call(this, Ember.Checkbox, options);
   } else {
     if (inputType) { hash.type = inputType; }
@@ -37308,7 +37339,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
       if (linkType === 'ID') {
         options.linkTextPath = linkTitle;
         options.fn = function() {
-          return Ember.Handlebars.get(context, linkTitle, options);
+          return Ember.Handlebars.getEscaped(context, linkTitle, options);
         };
       } else {
         options.fn = function() {
@@ -37721,6 +37752,10 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
           target = target.root;
         }
 
+        if (options.boundProperty) {
+          Ember.deprecate("Using a quoteless parameter with {{action}} is deprecated. Please update to quoted usage '{{action \"" + actionName + "\"}}.", false);
+        }
+
         Ember.run(function runRegisteredAction() {
           if (target.send) {
             target.send.apply(target, args(options.parameters, actionName));
@@ -37939,6 +37974,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     action.target = { root: root, target: target, options: options };
     action.bubbles = hash.bubbles;
     action.preventDefault = hash.preventDefault;
+    action.boundProperty =  options.types[0] === "ID";
 
     var actionId = ActionHelper.registerAction(actionName, action, hash.allowedKeys);
     return new SafeString('data-ember-action="' + actionId + '"');
@@ -38393,7 +38429,27 @@ Ember.Location = {
     this.implementations[name] = implementation;
   },
 
-  implementations: {}
+  implementations: {},
+
+  /**
+    Returns the current `location.hash` by parsing location.href since browsers
+    inconsistently URL-decode `location.hash`.
+  
+    https://bugzilla.mozilla.org/show_bug.cgi?id=483304
+
+    @private
+    @method getHash
+  */
+  getHash: function () {
+    var href = window.location.href,
+        hashIndex = href.indexOf('#');
+
+    if (hashIndex === -1) {
+      return '';
+    } else {
+      return href.substr(hashIndex);
+    }
+  }
 };
 
 })();
@@ -38500,7 +38556,8 @@ Ember.NoneLocation = Ember.Object.extend({
 @submodule ember-routing
 */
 
-var get = Ember.get, set = Ember.set;
+var get = Ember.get, set = Ember.set,
+    getHash = Ember.Location.getHash;
 
 /**
   `Ember.HashLocation` implements the location API using the browser's
@@ -38525,8 +38582,7 @@ Ember.HashLocation = Ember.Object.extend({
     @method getURL
   */
   getURL: function() {
-        // Default implementation without feature flag enabled
-    return get(this, 'location').hash.substr(1);
+    return getHash().substr(1);
   },
 
   /**
@@ -38571,7 +38627,7 @@ Ember.HashLocation = Ember.Object.extend({
 
     Ember.$(window).on('hashchange.ember-location-'+guid, function() {
       Ember.run(function() {
-        var path = location.hash.substr(1);
+        var path = self.getURL();
         if (get(self, 'lastSetURL') === path) { return; }
 
         set(self, 'lastSetURL', null);
@@ -39935,6 +39991,8 @@ var Application = Ember.Application = Ember.Namespace.extend(Ember.DeferredMixin
 
   willDestroy: function() {
     Ember.BOOTED = false;
+    // Ensure deactivation of routes before objects are destroyed
+    this.__container__.lookup('router:main').reset();
 
     this.__container__.destroy();
   },
