@@ -19,7 +19,7 @@ App.IndexController = Ember.ArrayController.extend
       console.log "clicked"
       activeState = @get("activeState")
       room = activeState.get("room")
-      beforeId = room.get("messages").get("content")[0].get("id")
+      beforeId = room.get("messages")[0].get("id")
       activeState.messagePoller.fetchMessages(beforeId)
 
 

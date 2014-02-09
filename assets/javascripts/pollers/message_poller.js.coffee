@@ -51,7 +51,6 @@ App.MessagePoller = Em.Object.extend
 
       message.set("user", user)
       @room.get("messages")[addAction](message)
-      console.log "#{addAction}: #{message.get("id")}, #{@room.get("messages").content[0].get("id")}"
       if @room.get("messages.length") == 21 && addAction == "pushObject"
         @room.get("messages").shiftObject()
 
@@ -68,7 +67,6 @@ App.MessagePoller = Em.Object.extend
         @room.set("isHistoryAvailable", true)
       else
         @room.set("isHistoryAvailable", false)
-      console.log @room.get("messages")
       Em.$.each response.messages, @onEachMessage(before).bind(@)
 
     $.getJSON url, getJsonCallback.bind(@)

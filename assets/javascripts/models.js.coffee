@@ -15,12 +15,19 @@ App.User = DS.Model.extend
   ).property("color")
 
 
+DS.ArrayTransform = DS.Transform.extend
+  deserialize: (serialized)-> []
+  serialize: (deserialized)-> []
+
+App.register("transform:array", DS.ArrayTransform)
+
 App.Room = DS.Model.extend
   name: DS.attr("string")
   roomUserState: DS.belongsTo("room_user_state")
-  messages: DS.hasMany("message")
+  messages: DS.attr("array")
   users: DS.hasMany("user")
   isHistoryAvailable: DS.attr("boolean")
+
 
 
 App.RoomUserState = DS.Model.extend
@@ -36,3 +43,4 @@ App.Message = DS.Model.extend
   createdAt: DS.attr("string")
   user: DS.belongsTo("user")
   room: DS.belongsTo("room")
+
