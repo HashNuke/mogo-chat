@@ -16,7 +16,6 @@ App.IndexController = Ember.ArrayController.extend
 
   actions:
     loadHistory: ->
-      console.log "clicked"
       activeState = @get("activeState")
       room = activeState.get("room")
       beforeId = room.get("messages")[0].get("id")
@@ -42,3 +41,4 @@ App.IndexController = Ember.ArrayController.extend
       errorCallback   = ->
         console.log "error posting message"
       msg.save().then(successCallback, errorCallback)
+
