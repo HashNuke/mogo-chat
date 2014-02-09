@@ -57,7 +57,7 @@
       <div class="messages-wrapper">
         <div class="messages">
           {{#if activeState.room.isHistoryAvailable}}
-            <div class="load-messages">Load history...</div>
+            <div class="load-messages" {{action "loadHistory"}}>Load history...</div>
           {{/if}}
           {{#each message in activeState.room.messages}}
             <div class="message">
