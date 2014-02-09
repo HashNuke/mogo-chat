@@ -63,10 +63,11 @@ App.MessagePoller = Em.Object.extend
       url = "#{url}?after=#{@afterMessageId}"
 
     getJsonCallback = (response)=>
-      if (response.messages.length == 20 || response.messages.length == 0) && @room.get("messages.length") >= 20
+      if response.messages.length >= 20 && (before != false || !@afterMessageId)
         @room.set("isHistoryAvailable", true)
-      else
+      else if before != false && response.messages.length < 20
         @room.set("isHistoryAvailable", false)
+
       Em.$.each response.messages, @onEachMessage(before).bind(@)
 
     $.getJSON url, getJsonCallback.bind(@)
