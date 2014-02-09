@@ -51,7 +51,7 @@ defmodule MessagesApiRouter do
       Dict.merge Message.public_attributes(message), [user: User.public_attributes(message.user.get)]
     end
 
-    if !before_message_id && !after_message_id do
+    if !before_message_id do
       messages_attributes = Enum.reverse(messages_attributes)
     end
     [messages: messages_attributes]
