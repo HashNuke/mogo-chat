@@ -55,6 +55,13 @@
         color: #888;
         width: 100%;
         text-align: right;
+
+        span {
+          background: #f1f1f1;
+          color: #888;
+          padding: 0.25em;
+          border-radius: 0.25em;
+        }
       }
 
       .content {
