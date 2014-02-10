@@ -48,7 +48,6 @@ App.RoomMessagesView = Ember.View.extend
 
     if (bottomHiddenContentSize / 16) < 4
       Ember.run.scheduleOnce "afterRender", @, =>
-        # $(".messages-wrapper").scrollTop( $(".messages-wrapper").prop("scrollHeight") )
         @$().scrollTop(
           @$().find(".messages").prop("scrollHeight") + 100
         )
