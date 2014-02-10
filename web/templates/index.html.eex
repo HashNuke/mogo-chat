@@ -54,22 +54,7 @@
         </div>
       </div>
 
-      <div class="messages-wrapper">
-        <div class="messages">
-          {{#if activeState.room.isHistoryAvailable}}
-            <div class="load-messages" {{action "loadHistory"}}>Load history...</div>
-          {{/if}}
-          {{#each message in activeState.room.messages}}
-            <div class="message">
-              <div class="content">
-                <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
-                {{message.body}}
-              </div>
-              <div class="timestamp">{{readableTime message.createdAt}}</div>
-            </div>
-          {{/each}}
-        </div>
-      </div>
+      {{view App.RoomMessagesView}}
 
       {{view App.NewMessageView}}
     {{/unless}}
@@ -92,13 +77,26 @@
 </script>
 
 
-<script type="text/x-handlebars" id="new-message">
-  <textarea placeholder="Message..."></textarea>
+<script type="text/x-handlebars" id="room-messages">
+<div class="messages">
+  {{#if activeState.room.isHistoryAvailable}}
+    <div class="load-messages" {{action "loadHistory"}}>Load history...</div>
+  {{/if}}
+  {{#each message in activeState.room.messages}}
+    <div class="message">
+      <div class="content">
+        <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
+        {{message.body}}
+      </div>
+      <div class="timestamp">{{readableTime message.createdAt}}</div>
+    </div>
+  {{/each}}
+</div>
 </script>
 
 
-<script type="text/x-handlebars" id="room-messages">
-TODO
+<script type="text/x-handlebars" id="new-message">
+  <textarea placeholder="Message..."></textarea>
 </script>
 
 <script type="text/x-handlebars" id="settings">
