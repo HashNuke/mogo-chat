@@ -6,3 +6,4 @@ erl_crash.dump
 .bundle
 _build
 .#*
+config/database.json
