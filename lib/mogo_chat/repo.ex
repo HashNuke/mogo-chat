@@ -1,17 +1,8 @@
 defmodule Repo do
   use Ecto.Repo, adapter: Ecto.Adapters.Postgres
+  import AppConfig
 
-  def url do
-    case Mix.env do
-      :test ->
-        "ecto://akashmanohar:akash123@localhost/cheko_test"
-      :dev ->
-        "ecto://akashmanohar:akash123@localhost/cheko_development"
-      _ ->
-        "ecto://akashmanohar:akash123@localhost/cheko_production"
-    end
-  end
-
+  read_db_config
 
   def priv do
     app_dir(:mogo_chat, "priv/repo")
