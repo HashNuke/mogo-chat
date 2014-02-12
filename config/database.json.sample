@@ -1,5 +1,5 @@
 {
   "dev": "ecto://postgres_username:password@localhost/mogo_chat_development",
-  "production": "<%= System.get_env("DATABASE_URL") %>",
+  "production": "ecto://postgres_username:password@localhost/mogo_chat_production",
   "test": "ecto://postgres_username:password@localhost/mogo_chat_development"
 }
