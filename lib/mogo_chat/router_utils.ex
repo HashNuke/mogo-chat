@@ -29,7 +29,7 @@ defmodule MogoChat.RouterUtils do
   end
 
 
-  def json_response(data, conn, status // 200) do
+  def json_response(data, conn, status \\ 200) do
     conn.resp_content_type("application/json").resp status, json_encode(data)
   end
 
