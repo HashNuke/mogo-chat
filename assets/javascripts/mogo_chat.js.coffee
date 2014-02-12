@@ -1,4 +1,8 @@
-window.MogoChat = {}
+MogoChat = {}
+
+#TODO This config should go in the db
+MogoChat.config =
+  messagesPerLoad: 20
 
 class MogoChat.Plugins
   plugins: []
@@ -43,3 +47,6 @@ class MogoChat.PaintBox
     if @nextColor >= @colors.length
       @nextColor = 0
     "##{color}"
+
+
+window.MogoChat = MogoChat
