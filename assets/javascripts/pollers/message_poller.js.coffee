@@ -51,7 +51,7 @@ App.MessagePoller = Em.Object.extend
 
       message.set("user", user)
       @room.get("messages")[addAction](message)
-      if @room.get("messages.length") == 21 && addAction == "pushObject"
+      if @room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
         @room.get("messages").shiftObject()
 
 
@@ -63,9 +63,9 @@ App.MessagePoller = Em.Object.extend
       url = "#{url}?after=#{@afterMessageId}"
 
     getJsonCallback = (response)=>
-      if response.messages.length >= 20 && (before != false || !@afterMessageId)
+      if response.messages.length >= MogoChat.config.messagesPerLoad && (before != false || !@afterMessageId)
         @room.set("isHistoryAvailable", true)
-      else if before != false && response.messages.length < 20
+      else if before != false && response.messages.length < MogoChat.config.messagesPerLoad
         @room.set("isHistoryAvailable", false)
 
       Em.$.each response.messages, @onEachMessage(before).bind(@)

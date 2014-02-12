@@ -34,7 +34,7 @@ App.IndexController = Ember.ArrayController.extend
         user: currentUser
 
       msg = @store.createRecord("message", messageParams)
-      if room.get("messages.length") == 21
+      if room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1)
         room.get("messages").shiftObject()
       successCallback = ->
         console.log "message has been posted"
