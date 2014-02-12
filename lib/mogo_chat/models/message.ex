@@ -12,10 +12,15 @@ defmodule Message do
 
 
   def assign_message_type(record) do
-    if Regex.match?(%r/\n/, record.body) do
-      record.type("paste")
-    else
-      record.type("text")
+    cond do
+      Regex.match?(%r/\n/g, message) ->
+        record.type("paste")
+      matches = Regex.named_captures(%r/\/play (?<sound>\w+)/g, message) ->
+        record.type("sound").body(sound)
+      matches = Regex.named_captures(%r/\/me (?<announcement>.+)/g, message) ->
+        record.type("me").body(announcement)
+      true ->
+        record.type("text")
     end
   end
 
@@ -32,5 +37,6 @@ defmodule Message do
     attrs = attributes(record, ["id", "room_id", "user_id", "body", "type"])
     attrs ++ [created_at: timestamp(record.created_at)]
   end
+
 
 end
