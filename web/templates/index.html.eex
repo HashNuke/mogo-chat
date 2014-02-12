@@ -139,7 +139,7 @@
 
     <div class="title">Mogo Chat</div>
 
-    <form {{action login on="submit"}}>
+    <form {{action "login" on="submit"}}>
 
       <div class="field">
         <label>Email</label><br/>
