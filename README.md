@@ -1,4 +1,4 @@
-# Mogo
+# MogoChat
 
 
 ## Usage
