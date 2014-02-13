@@ -11,6 +11,7 @@ App.AuthenticatedRoute = Em.Route.extend
           firstName: response.user.first_name,
           lastName: response.user.last_name,
           role: response.user.role
+          email: response.user.email
 
         if @store.recordIsLoaded("user", userAttributes.id)
           @store.find("user", userAttributes.id).then (user)=>
