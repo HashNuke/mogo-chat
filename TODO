@@ -2,17 +2,8 @@
   * create/edit/delete rooms
 * Manage Users
   * create/edit/delete users
-  * Should not be able to delete self
 * Room listing
 * Joining and leaving rooms
   * create notifications on joining and leaving
   * controls to join and leave room
-* Display messages
-* Posting messages to rooms
-* Message scrolling
-* Deleting rooms
-* Style for management pages
-
-* Check authorization
-* Seperate db config
 * API docs
