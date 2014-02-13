@@ -67,8 +67,13 @@ defmodule UsersApiRouter do
 
     user_id = conn.params[:user_id]
     params = json_decode(conn.req_body)
+    current_user = conn.assigns[:current_user]
+    whitelist = ["first_name", "last_name", "email", "password"]
+    if current_user.role == "admin" do
+      whitelist = whitelist ++ ["role"]
+    end
 
-    user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
+    user_params = whitelist_params(params["user"], whitelist)
     user = Repo.get(User, user_id).update(user_params)
     |> User.encrypt_password()
 
