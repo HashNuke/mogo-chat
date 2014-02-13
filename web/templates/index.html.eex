@@ -192,12 +192,14 @@
             {{input type="password" value=password}}
           </div>
 
-          <div class="field">
-            <label>Role</label>
-            {{view Ember.Select
-                   content=validRoles
-                   value=role}}
-          </div>
+          {{#if isAdmin}}
+            <div class="field">
+              <label>Role</label>
+              {{view Ember.Select
+                     content=validRoles
+                     value=role}}
+            </div>
+          {{/if}}
 
           <div class="actions">
             <button class="save" {{action save}}>Save</button>
