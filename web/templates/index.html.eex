@@ -41,9 +41,15 @@
 
   <div class="room-content" {{bind-attr class="isLeftMenuOpen:move-content-right isRightMenuOpen:move-content-left"}}>
     {{#unless activeState}}
-      <div>
-        [[#TODO This needs to be changed to a better message]]
-        ACTIVE CHANNEL ID NOT SET: {{activeState}}
+      <div class="room-info">
+        <div class="left-menu-control" {{action "toggleLeftMenu"}}>
+          <img src="/static/assets/navicon.png"/>
+        </div>
+        Join a room
+      </div>
+
+      <div class="messages-wrapper">
+        <h2 align="center">Select a room in the navigation menu to join</h2>
       </div>
     {{else}}
       <div class="room-info">
