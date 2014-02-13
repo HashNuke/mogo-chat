@@ -17,7 +17,8 @@ defmodule RoomUserState do
 
 
   def public_attributes(record) do
-    attributes(record, ["id", "room_id", "user_id", "joined", "last_pinged_at"])
+    attrs = attributes(record, ["id", "room_id", "user_id", "joined"])
+    attrs ++ [last_pinged_at: timestamp(record.last_pinged_at)]
   end
 
 end
