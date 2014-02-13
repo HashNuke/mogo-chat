@@ -5,9 +5,9 @@
 
 You'll need Erlang version R16B02 or higher, Elixir version v0.12.4 and Postgresql.
 
-* Create a postgres database called `mogo_development`
+* Create a postgres database called `mogo_chat_development`
 
-* Then copy-paste the following:
+* Then copy-paste the following into your terminal:
 
 ```
 mix deps.get
@@ -29,7 +29,7 @@ bash scripts/start
 
 ## Tests
 
-For running test, you'll need a database called `cheko_test`.
+For running test, you'll need a database called `mogo_chat_test`.
 
 * Get dependencies: `MIX_ENV=test mix deps.get`
 
