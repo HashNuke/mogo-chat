@@ -5,7 +5,8 @@ defmodule RoomsApiRouter do
 
 
   get "/:room_id/users" do
-    authorize_user!(conn, ["admin", "member"])
+    authenticate_user!(conn)
+
     room_id = binary_to_integer(conn.params[:room_id])
     room = Repo.get Room, room_id
     now  = current_timestamp()
@@ -24,7 +25,8 @@ defmodule RoomsApiRouter do
 
 
   get "/" do
-    authorize_user!(conn, ["admin", "member"])
+    authenticate_user!(conn)
+
     rooms = Repo.all Room
     rooms_attributes = lc room inlist rooms do
       Room.public_attributes(room)
@@ -34,7 +36,7 @@ defmodule RoomsApiRouter do
 
 
   get "/:room_id" do
-    authorize_user!(conn, ["admin", "member"])
+    authenticate_user!(conn)
 
     room_id = conn.params[:room_id]
     room = Repo.get Room, room_id
