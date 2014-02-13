@@ -5,6 +5,7 @@ App.User = DS.Model.extend
   role:   DS.attr("string")
   password: DS.attr("string")
   color: DS.attr("string")
+  authToken: DS.attr("string")
 
   isAdmin: (->
     @get("role") == "admin"
