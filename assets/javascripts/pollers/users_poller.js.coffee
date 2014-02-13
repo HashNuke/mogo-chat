@@ -1,4 +1,5 @@
 App.UsersPoller = Em.Object.extend
+
   start: ()->
     @started = true
     @fetchUsers() && @timer = setInterval(@fetchUsers.bind(@), 5000)
@@ -25,6 +26,7 @@ App.UsersPoller = Em.Object.extend
         color: App.paintBox.getColor()
       )
     @room.get("users").pushObject(user)
+
 
   fetchUsers: ->
     $.getJSON "/api/rooms/#{@roomId}/users", (response)=>
