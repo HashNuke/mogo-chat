@@ -166,6 +166,10 @@
         {{input type="submit" value="Log In"}}
       </div>
 
+      {{# if error}}
+        <div class="error">{{error}}</div>
+      {{/if}}
+
     </form>
   </div>
 </script>
