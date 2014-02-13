@@ -6,9 +6,7 @@ App.RoomEditController = Em.Controller.extend
 
   actions:
     save: ->
-      roomAttributes = @getProperties(["roomName"])
-      room = @get("model").setProperties(userAttributes)
       successCallback = =>
         @transitionToRoute("rooms.index")
       errorCallback = => console.log("error saving room")
-      room.save().then(successCallback, errorCallback)
+      @get("model").save().then(successCallback, errorCallback)
