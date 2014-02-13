@@ -13,7 +13,8 @@ defmodule Mix.Tasks.Setup do
         password: "password",
         "first_name": "Admin",
         role: "admin")
-    |> User.encrypt_password
+    |> User.encrypt_password()
+    |> User.assign_auth_token()
 
     case User.validate(admin_user) do
       [] ->

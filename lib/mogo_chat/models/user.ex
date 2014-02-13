@@ -43,8 +43,7 @@ defmodule User do
   end
 
   def assign_auth_token(record) do
-    :uuid.get_v4()
-    |> :uuid.uuid_to_string
+    "#{:uuid.get_v4() |> :uuid.uuid_to_string()}"
     |> record.auth_token()
   end
 
