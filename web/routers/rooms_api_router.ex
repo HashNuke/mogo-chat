@@ -10,7 +10,7 @@ defmodule RoomsApiRouter do
     room_id = binary_to_integer(conn.params[:room_id])
     room = Repo.get Room, room_id
     now  = current_timestamp()
-    seconds_ago = now.sec(now.sec - 15)
+    seconds_ago = now.sec(now.sec - 7)
     query = from s in RoomUserState,
       where: s.room_id == ^room.id and s.last_pinged_at > ^seconds_ago,
       order_by: s.id,
