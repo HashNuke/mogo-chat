@@ -35,8 +35,16 @@ defmodule UsersApiRouter do
 
 
   get "/:user_id" do
-    #TODO depends on the user_id
-    authorize_user!(conn, ["admin", "member"])
+    authorize_if! conn, fn(conn, user)->
+      user_id = binary_to_integer(conn.params["user_id"])
+
+      cond do
+        user.id == user_id || user.role == "admin" ->
+          true
+        true ->
+          false
+      end
+    end
 
     user_id = conn.params["user_id"]
     user = Repo.get User, user_id
@@ -46,8 +54,16 @@ defmodule UsersApiRouter do
 
 
   put "/:user_id" do
-    #TODO depends on the user_id
-    authorize_user!(conn, ["admin", "member"])
+    authorize_if! conn, fn(conn, user)->
+      user_id = binary_to_integer(conn.params["user_id"])
+
+      cond do
+        user.id == user_id || user.role == "admin" ->
+          true
+        true ->
+          false
+      end
+    end
 
     user_id = conn.params[:user_id]
     params = json_decode(conn.req_body)

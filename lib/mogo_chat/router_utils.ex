@@ -59,6 +59,21 @@ defmodule MogoChat.RouterUtils do
     end
   end
 
+  @spec authorize_if!(any, (any, any ->  :true | :false)) :: any
+  def authorize_if!(conn, condition) do
+    conn = authenticate_user!(conn)
+    user = conn.assigns[:current_user]
+    is_authorized = apply(condition, [conn, user])
+
+    if !is_authorized do
+      unauthorized!(conn)
+    end
+  end
+
+
+  #TODO This looks like duplication. Maybe can use authenticate_user!
+  # to fetch the user
+  @spec authorize_user!(any, List.t) :: any
   def authorize_user!(conn, allowed_roles) do
     user_id = get_session(conn, :user_id)
 
