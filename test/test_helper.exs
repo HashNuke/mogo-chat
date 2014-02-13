@@ -22,7 +22,7 @@ defmodule TestUtils do
 
 
   def truncate_db_after_test do
-    table_names = ["users", "messages", "rooms"]
+    table_names = ["users", "messages", "rooms", "room_user_states"]
     sql = "TRUNCATE TABLE #{Enum.join(table_names, ", ")} RESTART IDENTITY CASCADE;"
     Repo.adapter.query(Repo, sql)
   end
