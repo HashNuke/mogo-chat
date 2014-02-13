@@ -32,5 +32,5 @@ App.UsersPoller = Em.Object.extend
     $.getJSON "/api/rooms/#{@roomId}/users", (response)=>
       return true if !response.users
       #TODO normalizePayload of serializer doesn't seem to do much
-      @room.get("users").clear()
+      @room.set("users", [])
       Em.$.each response.users, @onEachUser.bind(@)
