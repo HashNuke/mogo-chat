@@ -23,7 +23,8 @@ defmodule MogoChat.Mixfile do
       { :ecto, github: "elixir-lang/ecto" },
       { :jsex, github: "talentdeficit/jsex" },
       { :qdate, github: "choptastic/qdate" },
-      { :bcrypt, github: "irccloud/erlang-bcrypt" }
+      { :bcrypt, github: "irccloud/erlang-bcrypt" },
+      { :uuid, github: "okeuday/uuid" }
     ]
   end
 
