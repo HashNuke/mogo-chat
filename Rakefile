@@ -9,7 +9,7 @@ sprockets = Sprockets::Environment.new("./") do |env|
   env.append_path 'assets/javascripts'
   env.append_path 'assets/stylesheets'
   env.append_path 'assets/images'
-  if ENV["MIX_ENV"] == "production"
+  if ENV["MIX_ENV"] == "prod"
     env.js_compressor = Uglifier.new
   end
 end
