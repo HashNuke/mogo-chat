@@ -3,7 +3,7 @@ App.MessagePoller = Em.Object.extend
     @started = true
     @messages = []
     @beforeMessageId = null
-    @fetchMessages() && @timer = setInterval(@fetchMessages.bind(@), 3000)
+    @fetchMessages() && @timer = setInterval(@fetchMessages.bind(@), 2500)
 
   setRoom: (room)->
     @room = room
