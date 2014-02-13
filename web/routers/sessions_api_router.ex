@@ -8,7 +8,7 @@ defmodule SessionsApiRouter do
     user_id = get_session conn, :user_id
     if user_id do
       user = Repo.get(User, user_id)
-      attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
+      attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email", "auth_token"])
       json_response [user: attributes], conn
     else
       json_response [error: "no session"], conn
@@ -40,7 +40,7 @@ defmodule SessionsApiRouter do
         user = users |> hd
         if User.valid_password?(user, password) do
           conn = put_session(conn, :user_id, user.id)
-          user_attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
+          user_attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email", "auth_token"])
           json_response [user: user_attributes], conn
         else
           json_response [error: "Please check your login credentials."], conn, 401

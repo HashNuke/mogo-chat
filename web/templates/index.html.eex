@@ -225,6 +225,13 @@
         </div>
       {{/if}}
 
+      {{#unless ownerOrAdmin}}
+        <div class="field">
+          <label>Auth token</label><br/>
+          {{input type="text" value=model.authToken disabled=true}}
+        </div>
+      {{/unless}}
+
       <div class="actions">
         <button class="save" {{action "save"}}>Save</button>
         or
