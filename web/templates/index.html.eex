@@ -96,7 +96,13 @@
         <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
         {{message.body}}
       </div>
-      <div class="timestamp"><span>{{readableTime message.createdAt}}</span></div>
+      <div class="message-meta">
+        {{#if message.errorPosting}}
+          <span class="post-error">error posting ~!</span>
+        {{else}}
+          <span class="timestamp">{{readableTime message.createdAt}}</span>
+        {{/if}}
+      </div>
     </div>
   {{/each}}
 </div>

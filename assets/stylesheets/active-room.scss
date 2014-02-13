@@ -50,17 +50,25 @@
       width: 100%;
       margin-top: 1em;
 
-      .timestamp {
+      .message-meta {
         font-size: 0.75em;
         color: #888;
         width: 100%;
         text-align: right;
 
-        span {
-          background: #f1f1f1;
-          color: #888;
+        .timestamp, .post-error {
           padding: 0.25em;
           border-radius: 0.25em;
+        }
+
+        .timestamp {
+          background: #f1f1f1;
+          color: #888;
+        }
+
+        .post-error {
+          background: #dd0000;
+          color: #fff;
         }
       }
 

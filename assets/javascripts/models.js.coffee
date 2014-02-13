@@ -35,7 +35,6 @@ App.Room = DS.Model.extend
   isHistoryAvailable: DS.attr("boolean")
 
 
-
 App.RoomUserState = DS.Model.extend
   userId: DS.attr("number")
   joined:  DS.attr("boolean")
@@ -47,6 +46,6 @@ App.Message = DS.Model.extend
   body: DS.attr("string")
   type: DS.attr("string")
   createdAt: DS.attr("string")
+  errorPosting: DS.attr("boolean", defaultValue: false)
   user: DS.belongsTo("user")
   room: DS.belongsTo("room")
-
