@@ -12,7 +12,7 @@ App.IndexRoute = App.AuthenticatedRoute.extend
         activeState = item if !activeState?
 
         item.messagePoller = new App.MessagePoller()
-        item.messagePoller.store  = @store
+        item.messagePoller.store = @store
         item.messagePoller.setRoom item.get("room")
         item.messagePoller.start()
 
