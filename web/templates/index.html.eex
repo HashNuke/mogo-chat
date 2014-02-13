@@ -226,8 +226,10 @@
       {{/if}}
 
       <div class="field">
-        <label>Auth token</label><br/>
-        {{input type="text" value=model.authToken disabled=true}}
+        <p>
+          <label>Auth token</label>:
+          <code>{{model.authToken}}</code>
+        </p>
       </div>
 
       <div class="actions">
