@@ -3,13 +3,9 @@ defmodule RoomsApiRouter do
   import Ecto.Query
   import MogoChat.RouterUtils
 
-  prepare do
-    #TODO allow member only for GET /
-    authorize_user!(conn, ["admin", "member"])
-  end
-
 
   get "/:room_id/users" do
+    authorize_user!(conn, ["admin", "member"])
     room_id = binary_to_integer(conn.params[:room_id])
     room = Repo.get Room, room_id
     now  = current_timestamp()
@@ -28,15 +24,18 @@ defmodule RoomsApiRouter do
 
 
   get "/" do
+    authorize_user!(conn, ["admin", "member"])
     rooms = Repo.all Room
     rooms_attributes = lc room inlist rooms do
       Room.public_attributes(room)
-    end
+      end
     json_response([rooms: rooms_attributes], conn)
   end
 
 
   get "/:room_id" do
+    authorize_user!(conn, ["admin", "member"])
+
     room_id = conn.params[:room_id]
     room = Repo.get Room, room_id
 
@@ -46,6 +45,8 @@ defmodule RoomsApiRouter do
 
 
   post "/" do
+    authorize_user!(conn, ["admin"])
+
     params = json_decode conn.req_body
 
     room_params = whitelist_params(params["room"], ["name"])
@@ -62,6 +63,8 @@ defmodule RoomsApiRouter do
 
 
   put "/:room_id" do
+    authorize_user!(conn, ["admin"])
+
     room_id = conn.params[:room_id]
     params = json_decode conn.req_body
 
@@ -80,6 +83,8 @@ defmodule RoomsApiRouter do
 
 
   delete "/:room_id" do
+    authorize_user!(conn, ["admin"])
+
     room_id = conn.params["room_id"]
     room = Room.new(id: room_id)
     Repo.delete room

@@ -63,12 +63,12 @@ defmodule MessagesApiRouter do
     user_id = get_session(conn, :user_id)
     params = json_decode conn.req_body
 
-    #TODO check if room with the room_id exists
     message_params = whitelist_params(params["message"], ["room_id", "body"])
+    room = Repo.get Room, message_params["room_id"]
 
     message = Message.new(
       body: message_params["body"],
-      room_id: binary_to_integer(message_params["room_id"]),
+      room_id: room.id,
       user_id: user_id,
       created_at: current_timestamp()
     ) |> Message.assign_message_type()

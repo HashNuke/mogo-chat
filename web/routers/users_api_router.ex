@@ -3,12 +3,10 @@ defmodule UsersApiRouter do
   import Ecto.Query
   import MogoChat.RouterUtils
 
-  prepare do
-    authorize_user!(conn, ["admin"])
-  end
-
 
   get "/" do
+    authorize_user!(conn, ["admin"])
+
     users = Repo.all User
     users_attributes = lc user inlist users do
       User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
@@ -18,6 +16,8 @@ defmodule UsersApiRouter do
 
 
   post "/" do
+    authorize_user!(conn, ["admin"])
+
     params = json_decode(conn.req_body)
 
     user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
@@ -35,6 +35,9 @@ defmodule UsersApiRouter do
 
 
   get "/:user_id" do
+    #TODO depends on the user_id
+    authorize_user!(conn, ["admin", "member"])
+
     user_id = conn.params["user_id"]
     user = Repo.get User, user_id
     user_attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
@@ -43,6 +46,9 @@ defmodule UsersApiRouter do
 
 
   put "/:user_id" do
+    #TODO depends on the user_id
+    authorize_user!(conn, ["admin", "member"])
+
     user_id = conn.params[:user_id]
     params = json_decode(conn.req_body)
 
@@ -61,6 +67,8 @@ defmodule UsersApiRouter do
 
 
   delete "/:user_id" do
+    authorize_user!(conn, ["admin"])
+
     user_id = conn.params["user_id"]
     current_user_id = get_session(conn, :user_id)
     if current_user_id != user_id do
