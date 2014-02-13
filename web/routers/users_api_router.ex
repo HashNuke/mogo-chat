@@ -23,6 +23,7 @@ defmodule UsersApiRouter do
     user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
     user = User.new(user_params)
     |> User.encrypt_password()
+    |> User.assign_auth_token()
 
     case User.validate(user) do
       [] ->
