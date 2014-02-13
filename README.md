@@ -1,5 +1,6 @@
 # MogoChat
 
+Team chat appication
 
 ## Usage
 
