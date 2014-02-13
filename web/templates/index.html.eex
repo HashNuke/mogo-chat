@@ -321,7 +321,7 @@
 </script>
 
 
-<script type="text/x-handlebars" id="rooms/edit">
+<script type="text/x-handlebars" id="room/edit">
   <div class="detail">
     <div class="header">
       <div class="title">Edit room</div>
@@ -333,7 +333,7 @@
 
           <div class="field">
             <label>Name</label><br/>
-            {{input type="text" value=roomName}}
+            {{input type="text" value=model.name}}
           </div>
 
           <div class="actions">
@@ -371,18 +371,5 @@
 
       </div>
     </div>
-  </div>
-</script>
-
-
-<script type="text/x-handlebars" id="channels-list">
-  <div class="channels-list">
-    <ul>
-      {{#each channel in controller}}
-        <li>
-          <span class="channel" {{action "switchToChannel"}}>{{channel.name}}</span>
-        </li>
-      {{/each}}
-    </ul>
   </div>
 </script>
