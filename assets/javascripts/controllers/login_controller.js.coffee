@@ -25,7 +25,7 @@ App.LoginController = Em.Controller.extend
             @set("controllers.application.currentUser", user)
             @transitionToRoute("index")
         else
-          user = @store.createRecord("user", userAttributes)
+          user = @store.push("user", userAttributes)
           @set("controllers.application.currentUser", user)
           @transitionToRoute("index")
       Em.$.post("/api/sessions", data).then successCallback, errorCallback

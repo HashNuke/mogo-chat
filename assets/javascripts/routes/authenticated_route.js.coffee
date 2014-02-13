@@ -20,7 +20,7 @@ App.AuthenticatedRoute = Em.Route.extend
             @controllerFor("application").set("currentUser", user)
         else
           userAttributes["color"] = App.paintBox.getColor()
-          user = @store.createRecord("user", userAttributes)
+          user = @store.push("user", userAttributes)
           @controllerFor("application").set("currentUser", user)
       else
         @redirectToLogin(transition)

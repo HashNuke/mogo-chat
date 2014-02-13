@@ -18,7 +18,7 @@ App.UsersPoller = Em.Object.extend
     if @store.recordIsLoaded("user", userAttributes.id)
       user = @store.getById("user", userAttributes.id)
     else
-      user = @store.createRecord("user",
+      user = @store.push("user",
         id: userAttributes.id
         firstName: userAttributes.first_name
         lastName: userAttributes.last_name

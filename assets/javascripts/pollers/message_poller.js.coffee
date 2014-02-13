@@ -29,7 +29,7 @@ App.MessagePoller = Em.Object.extend
           @room.get("messages")[addAction](message)
         return
 
-      message = @store.createRecord("message", {
+      message = @store.push("message", {
         id: messageAttrs.id,
         type: messageAttrs.type,
         body: messageAttrs.body,
@@ -47,7 +47,7 @@ App.MessagePoller = Em.Object.extend
           lastName: messageAttrs.user.last_name
           role: messageAttrs.user.role
           color: App.paintBox.getColor()
-        user = @store.createRecord("user", userParams)
+        user = @store.push("user", userParams)
 
       message.set("user", user)
       @room.get("messages")[addAction](message)
