@@ -9,6 +9,7 @@ defmodule User do
     field :first_name, :string
     field :last_name,  :string
     field :password,   :virtual, default: nil
+    field :auth_token, :string
     has_many :messages, Message
     has_many :room_user_states, RoomUserState
   end
@@ -41,6 +42,11 @@ defmodule User do
     attributes(record, ["id", "first_name", "last_name", "role"])
   end
 
+  def assign_auth_token(record) do
+    :uuid.get_v4()
+    |> :uuid.uuid_to_string
+    |> record.auth_token()
+  end
 
   def encrypt_password(record) do
     if record.password != nil do
