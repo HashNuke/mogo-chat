@@ -24,7 +24,15 @@ bash scripts/start
 
 ## Development
 
+#### Building assets
+
+* Run `bundle exec rake assets:compile` to compile assets once.
+
 * Run `bundle exec rake assets:watch` to start asset server.
+
+To compress javascript when building assets, use the env var `MIX_ENV=prod`.
+
+#### Start app with console
 
 * To start the app with an iex shell, run `bash scripts/start_with_shell`
 
