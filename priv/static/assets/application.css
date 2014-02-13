@@ -484,6 +484,10 @@ html, body {
     border: 1px solid #06C;
     border-radius: 0.15em;
     box-shadow: 0em 0em 0.2em 0.05em #0073E6; }
+  .login .error {
+    width: 100%;
+    color: #C00;
+    margin-top: 1em; }
 
 .room-content {
   position: absolute;
