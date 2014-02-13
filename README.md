@@ -3,23 +3,29 @@
 
 ## Usage
 
-You'll need Erlang version R16B02 or higher, Elixir version v0.12.2 and Postgresql.
+You'll need Erlang version R16B02 or higher, Elixir version v0.12.4 and Postgresql.
 
 * Create a postgres database called `mogo_development`
 
-* Get the dependencies: `mix deps.get`
+* Then copy-paste the following:
 
-* Run migrations on the database: `mix ecto.migrate`
+```
+mix deps.get
+bash scripts/migrate
+bash scripts/setup
+```
 
-* Setup the app with an admin user: `mix setup`
+## Start the app
 
-* Start the app: `iex --erl "-config mogo.config" -S mix server`
-
+```
+bash scripts/start
+```
 
 ## Development
 
 * Run `bundle exec rake assets:watch` to start asset server.
 
+* To start the app with an iex shell, run `bash scripts/start_with_shell`
 
 ## Tests
 

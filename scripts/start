@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+
+ELIXIR_ERL_OPTS="-config mogo_chat.config" mix server
