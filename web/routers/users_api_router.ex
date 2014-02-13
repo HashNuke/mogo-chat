@@ -19,8 +19,8 @@ defmodule UsersApiRouter do
     authorize_user!(conn, ["admin"])
 
     params = json_decode(conn.req_body)
-
     user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
+
     user = User.new(user_params)
     |> User.encrypt_password()
     |> User.assign_auth_token()

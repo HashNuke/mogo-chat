@@ -72,7 +72,6 @@ defmodule RoomsApiRouter do
 
     room_params = whitelist_params(params["room"], ["name"])
     room = Repo.get(Room, room_id).update(room_params)
-    |> Room.encrypt_password()
 
     case Room.validate(room) do
       [] ->
