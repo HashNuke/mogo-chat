@@ -8,11 +8,9 @@ App.UsersNewController = Em.Controller.extend
 
   actions:
     save: ->
-      userAttributes = @getProperties(["firstName", "lastName", "role", "password", "email"])
-      userAttributes["color"] = App.paintBox.getColor()
+      @get("model").set("color", App.paintBox.getColor())
 
-      user = @store.createRecord("user", userAttributes)
       successCallback = =>
         @transitionToRoute("users.index")
       errorCallback = => console.log("error saving user")
-      user.save().then(successCallback, errorCallback)
+      @get("model").save().then(successCallback, errorCallback)

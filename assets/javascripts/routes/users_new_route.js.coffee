@@ -1,8 +1,7 @@
 App.UsersNewRoute = App.AuthenticatedRoute.extend
-  setupController: (controller)->
-    controller.setProperties
-      "firstName": null
-      "lastName": null
-      "email": null
-      "password": null
-      "role": null
+  setupController: (controller, model)->
+    controller.set("model", @store.createRecord("user", {role: "member"}))
+
+
+  deactivate: ->
+    @controller.get("model").rollback()

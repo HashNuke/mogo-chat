@@ -12,6 +12,7 @@ App.AuthenticatedRoute = Em.Route.extend
           lastName: response.user.last_name,
           role: response.user.role
           email: response.user.email
+          color: App.paintBox.getColor()
 
         if @store.recordIsLoaded("user", userAttributes.id)
           @store.find("user", userAttributes.id).then (user)=>

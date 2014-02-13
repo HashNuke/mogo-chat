@@ -23,6 +23,11 @@ App.RoomEditView = Ember.View.extend
   classNames: ["settings"]
 
 
+App.UserFormView = Ember.View.extend
+  templateName: "user-form"
+  classNames: "page"
+
+
 App.NewMessageView = Ember.View.extend
   templateName: "new-message"
   classNames:   ["new-message"]

@@ -65,7 +65,9 @@ defmodule MogoChat.RouterUtils do
     user = conn.assigns[:current_user]
     is_authorized = apply(condition, [conn, user])
 
-    if !is_authorized do
+    if is_authorized do
+      conn
+    else
       unauthorized!(conn)
     end
   end

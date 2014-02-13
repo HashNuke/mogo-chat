@@ -11,7 +11,7 @@
       </div>
 
       <div class="user-details">
-        Hello {{currentUser.firstName}} ~!
+        Hello {{#link-to "user.edit" currentUser class}}{{currentUser.firstName}}{{/link-to}} ~!
       </div>
 
       <div class="rooms">
@@ -25,13 +25,15 @@
         </ul>
       </div>
 
-      <div class="navigation">
-        <div class="title">Manage</div>
-        <ul>
-          <li>{{#link-to "rooms"}}Rooms{{/link-to}}</li>
-          <li>{{#link-to "users"}}Users{{/link-to}}</li>
-        </ul>
-      </div>
+      {{#if currentUser.isAdmin}}
+        <div class="navigation">
+          <div class="title">Manage</div>
+          <ul>
+            <li>{{#link-to "rooms"}}Rooms{{/link-to}}</li>
+            <li>{{#link-to "users"}}Users{{/link-to}}</li>
+          </ul>
+        </div>
+      {{/if}}
 
     </div>
   </div>
@@ -112,19 +114,21 @@
       </div>
 
       <div class="user-details">
-        Hello {{currentUser.firstName}} ~!
+        Hello {{#link-to "user.edit" currentUser class}}{{currentUser.firstName}}{{/link-to}} ~!
       </div>
 
       <div class="back-to-chat">{{#link-to "index"}}Back to chat{{/link-to}}</div>
 
-      <div class="navigation">
-        <div class="title">Settings</div>
+      {{#if currentUser.isAdmin}}
+        <div class="navigation">
+          <div class="title">Manage</div>
+          <ul>
+            <li>{{#link-to "rooms"}}Rooms{{/link-to}}</li>
+            <li>{{#link-to "users"}}Users{{/link-to}}</li>
+          </ul>
+        </div>
+      {{/if}}
 
-        <ul>
-          <li>{{#link-to "rooms"}}Rooms{{/link-to}}</li>
-          <li>{{#link-to "users"}}Users{{/link-to}}</li>
-        </ul>
-      </div>
     </div>
   </div>
   {{yield}}
@@ -168,50 +172,12 @@
       <div class="title">Edit user</div>
     </div>
 
-    <div class="page">
-      <div class="user-form">
-        <form {{action save on="submit"}}>
+    {{view App.UserFormView}}
 
-          <div class="field">
-            <label>First name</label><br/>
-            {{input type="text" value=firstName}}
-          </div>
-
-          <div class="field">
-            <label>Last name</label><br/>
-            {{input type="text" value=lastName}}
-          </div>
-
-          <div class="field">
-            <label>Email</label><br/>
-            {{input type="text" value=email}}
-          </div>
-
-          <div class="field">
-            <label>Password</label><br/>
-            {{input type="password" value=password}}
-          </div>
-
-          {{#if isAdmin}}
-            <div class="field">
-              <label>Role</label>
-              {{view Ember.Select
-                     content=validRoles
-                     value=role}}
-            </div>
-          {{/if}}
-
-          <div class="actions">
-            <button class="save" {{action save}}>Save</button>
-            or
-            {{#link-to "users"}}cancel{{/link-to}}
-          </div>
-
-        </form>
-      </div>
-    </div>
   </div>
 </script>
+
+
 
 
 <script type="text/x-handlebars" id="users/new">
@@ -220,46 +186,52 @@
       <div class="title">New user</div>
     </div>
 
-    <div class="page">
-      <div class="user-form">
-        <form {{action save on="submit"}}>
+    {{view App.UserFormView}}
 
-          <div class="field">
-            <label>First name</label><br/>
-            {{input type="text" value=firstName}}
-          </div>
+  </div>
+</script>
 
-          <div class="field">
-            <label>Last name</label><br/>
-            {{input type="text" value=lastName}}
-          </div>
 
-          <div class="field">
-            <label>Email</label><br/>
-            {{input type="text" value=email}}
-          </div>
+<script type="text/x-handlebars" id="user-form">
+  <div class="user-form">
+    <form {{action save on="submit"}}>
 
-          <div class="field">
-            <label>Password</label><br/>
-            {{input type="password" value=password}}
-          </div>
-
-          <div class="field">
-            <label>Role</label>
-            {{view Ember.Select
-                   content=validRoles
-                   value=role}}
-          </div>
-
-          <div class="actions">
-            <button class="save" {{action save}}>Save</button>
-            or
-            {{#link-to "users"}}cancel{{/link-to}}
-          </div>
-
-        </form>
+      <div class="field">
+        <label>First name</label><br/>
+        {{input type="text" value=model.firstName}}
       </div>
-    </div>
+
+      <div class="field">
+        <label>Last name</label><br/>
+        {{input type="text" value=model.lastName}}
+      </div>
+
+      <div class="field">
+        <label>Email</label><br/>
+        {{input type="text" value=model.email}}
+      </div>
+
+      <div class="field">
+        <label>Password</label><br/>
+        {{input type="password" value=model.password}}
+      </div>
+
+      {{#if currentUser.isAdmin}}
+        <div class="field">
+          <label>Role</label>
+          {{view Ember.Select
+                 content=validRoles
+                 value=model.role}}
+        </div>
+      {{/if}}
+
+      <div class="actions">
+        <button class="save" {{action "save"}}>Save</button>
+        or
+        {{#link-to "users"}}cancel{{/link-to}}
+      </div>
+
+    </form>
   </div>
 </script>
 

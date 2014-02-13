@@ -35,7 +35,7 @@ defmodule UsersApiRouter do
 
 
   get "/:user_id" do
-    authorize_if! conn, fn(conn, user)->
+    conn = authorize_if! conn, fn(conn, user)->
       user_id = binary_to_integer(conn.params["user_id"])
 
       cond do
@@ -54,7 +54,7 @@ defmodule UsersApiRouter do
 
 
   put "/:user_id" do
-    authorize_if! conn, fn(conn, user)->
+    conn = authorize_if! conn, fn(conn, user)->
       user_id = binary_to_integer(conn.params["user_id"])
 
       cond do
