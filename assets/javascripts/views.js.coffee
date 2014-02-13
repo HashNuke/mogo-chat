@@ -22,12 +22,22 @@ App.RoomEditView = Ember.View.extend
   layoutName: "settings"
   classNames: ["settings"]
 
+
+App.NewMessageView = Ember.View.extend
+  templateName: "new-message"
+  classNames:   ["new-message"]
+
+  keyUp: (event)->
+    if event.keyCode == 13  # enter key
+      @get("controller").send("postMessage", event.target.value);
+      event.target.value = ""
+
+
 App.RoomMessagesView = Ember.View.extend
   templateName: "room-messages"
   classNames: ["messages-wrapper"]
 
   latestMsgId: -1
-
 
   scrollIfRequired: ->
     messages = @get("controller.activeState.room.messages")
@@ -61,12 +71,3 @@ App.RoomMessagesView = Ember.View.extend
     @scrollIfRequired()
   ).observes("controller.activeState")
 
-
-App.NewMessageView = Ember.View.extend
-  templateName: "new-message"
-  classNames:   ["new-message"]
-
-  keyUp: (event)->
-    if event.keyCode == 13  # enter key
-      @get("controller").send("postMessage", event.target.value);
-      event.target.value = ""
