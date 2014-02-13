@@ -528,16 +528,20 @@ html, body {
       float: left;
       width: 100%;
       margin-top: 1em; }
-      .room-content .messages .message .timestamp {
+      .room-content .messages .message .message-meta {
         font-size: 0.75em;
         color: #888;
         width: 100%;
         text-align: right; }
-        .room-content .messages .message .timestamp span {
-          background: #f1f1f1;
-          color: #888;
+        .room-content .messages .message .message-meta .timestamp, .room-content .messages .message .message-meta .post-error {
           padding: 0.25em;
           border-radius: 0.25em; }
+        .room-content .messages .message .message-meta .timestamp {
+          background: #f1f1f1;
+          color: #888; }
+        .room-content .messages .message .message-meta .post-error {
+          background: #dd0000;
+          color: #fff; }
       .room-content .messages .message .user {
         font-weight: bold; }
   .room-content .new-message {
