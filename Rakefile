@@ -17,7 +17,7 @@ end
 
 assets = %w( application.js application.css )
 asset_output = "priv/static/assets"
-extra_dirs = ["images", "partials"]
+extra_dirs = ["images"]
 
 extra_dirs.each do |dir|
   Dir.glob("assets/#{dir}/*.*") do |f|
