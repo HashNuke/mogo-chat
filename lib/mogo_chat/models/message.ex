@@ -29,7 +29,7 @@ defmodule Message do
     user_id: present(),
     room_id: present(),
     body:    present(),
-    type:    member_of(["text", "paste"]),
+    type:    member_of(["text", "paste", "me", "sound"]),
     created_at: present()
 
 

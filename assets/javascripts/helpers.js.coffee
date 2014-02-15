@@ -1,4 +1,4 @@
-Em.Handlebars.helper 'readableTime', (value, options)->
+Em.Handlebars.helper 'readable-time', (value, options)->
   time = moment(value)
   difference = moment().unix() - time.unix()
   if difference > 31536000

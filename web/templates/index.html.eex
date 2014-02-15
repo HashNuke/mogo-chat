@@ -91,23 +91,60 @@
     <div class="load-messages" {{action "loadHistory"}}>Load history...</div>
   {{/if}}
   {{#each message in activeState.room.messages}}
-    <div class="message">
-      <div class="content">
-        <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
-        {{message.body}}
-      </div>
-      <div class="message-meta">
-        {{#if message.errorPosting}}
-          <span class="post-error">error posting ~!</span>
-        {{else}}
-          <span class="timestamp">{{readableTime message.createdAt}}</span>
-        {{/if}}
-      </div>
-    </div>
+    {{partial message.type}}
   {{/each}}
 </div>
 </script>
 
+
+<script type="text/x-handlebars" id="_text">
+  <div class="message">
+    <div class="content">
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
+      {{message.body}}
+    </div>
+    <div class="message-meta">
+      {{#if message.errorPosting}}
+        <span class="post-error">error posting ~!</span>
+      {{else}}
+        <span class="timestamp">{{readable-time message.createdAt}}</span>
+      {{/if}}
+    </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="_me">
+  <div class="message">
+    <div class="content">
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
+      <span class="me-body">{{message.body}}</span>
+    </div>
+    <div class="message-meta">
+      {{#if message.errorPosting}}
+        <span class="post-error">error posting ~!</span>
+      {{else}}
+        <span class="timestamp">{{readable-time message.createdAt}}</span>
+      {{/if}}
+    </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="_paste">
+  <div class="message">
+    <div class="content">
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
+      <br/>
+      <pre class="paste-body">{{message.body}}</pre>
+    </div>
+    <div class="message-meta">
+      {{#if message.errorPosting}}
+        <span class="post-error">error posting ~!</span>
+      {{else}}
+        <span class="timestamp">{{readable-time message.createdAt}}</span>
+      {{/if}}
+    </div>
+  </div>
+</script>
 
 <script type="text/x-handlebars" id="new-message">
   <textarea placeholder="Message..."></textarea>

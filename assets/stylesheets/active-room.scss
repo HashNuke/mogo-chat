@@ -50,6 +50,22 @@
       width: 100%;
       margin-top: 1em;
 
+      .me-body {
+        font-style: italic;
+      }
+
+      pre.paste-body {
+        float: left;
+        width: 100%;
+        font-family: monospace;
+        background: #FAFAFA;
+        padding: 0.5em;
+        color: #444;
+        box-shadow: 0 0 0.1em 0.1em #DDD;
+        margin: 0.3em 0em 0em 0em;
+        font-size: 0.9em;
+      }
+
       .message-meta {
         font-size: 0.75em;
         color: #888;
