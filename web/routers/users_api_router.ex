@@ -9,7 +9,7 @@ defmodule UsersApiRouter do
 
     users = Repo.all User
     users_attributes = lc user inlist users do
-      User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
+      User.attributes(user, ["id", "name", "role", "email"])
     end
     json_response([users: users_attributes], conn)
   end
@@ -19,7 +19,7 @@ defmodule UsersApiRouter do
     authorize_user!(conn, ["admin"])
 
     params = json_decode(conn.req_body)
-    user_params = whitelist_params(params["user"], ["first_name", "last_name", "email", "password", "role"])
+    user_params = whitelist_params(params["user"], ["name", "email", "password", "role"])
 
     user = User.new(user_params)
     |> User.encrypt_password()
@@ -49,7 +49,7 @@ defmodule UsersApiRouter do
 
     user_id = conn.params["user_id"]
     user = Repo.get User, user_id
-    user_attributes = User.attributes(user, ["id", "first_name", "last_name", "role", "email"])
+    user_attributes = User.attributes(user, ["id", "name", "role", "email"])
     json_response [user: user_attributes], conn
   end
 
@@ -69,7 +69,7 @@ defmodule UsersApiRouter do
     user_id = conn.params[:user_id]
     params = json_decode(conn.req_body)
     current_user = conn.assigns[:current_user]
-    whitelist = ["first_name", "last_name", "email", "password"]
+    whitelist = ["name", "email", "password"]
     if current_user.role == "admin" do
       whitelist = whitelist ++ ["role"]
     end

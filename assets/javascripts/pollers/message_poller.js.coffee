@@ -22,7 +22,6 @@ App.MessagePoller = Em.Object.extend
       addAction = "pushObject"
 
     (index, messageAttrs)=>
-      @afterMessageId = messageAttrs.id
       if @store.recordIsLoaded("message", messageAttrs.id)
         message = @store.getById("message", messageAttrs.id)
         if !@room.get("messages").contains(message)
@@ -35,7 +34,6 @@ App.MessagePoller = Em.Object.extend
         body: messageAttrs.body,
         createdAt: messageAttrs.created_at
       })
-
       message.set("room", @room)
 
       if @store.recordIsLoaded("user", messageAttrs.user.id)
@@ -43,14 +41,20 @@ App.MessagePoller = Em.Object.extend
       else
         userParams =
           id: messageAttrs.user.id
-          firstName: messageAttrs.user.first_name
-          lastName: messageAttrs.user.last_name
+          name: messageAttrs.user.name
           role: messageAttrs.user.role
           color: App.paintBox.getColor()
         user = @store.push("user", userParams)
 
       message.set("user", user)
       @room.get("messages")[addAction](message)
+
+      if message.get("body").match("Admin") && addAction == "pushObject" && @afterMessageId
+        console.log "matched #{@afterMessageId}"
+        $audio = $("audio")[0]
+        $audio.load()
+        $audio.play()
+
       if @room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
         @room.get("messages").shiftObject()
 
@@ -69,5 +73,7 @@ App.MessagePoller = Em.Object.extend
         @room.set("isHistoryAvailable", false)
 
       Em.$.each response.messages, @onEachMessage(before).bind(@)
+      if response.messages.length > 0 && !before
+        @afterMessageId = response.messages[response.messages.length - 1].id
 
     $.getJSON url, getJsonCallback.bind(@)

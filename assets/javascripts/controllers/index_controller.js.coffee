@@ -23,6 +23,7 @@ App.IndexController = Ember.ArrayController.extend
 
 
     postMessage: (msgTxt)->
+      msgTxt = msgTxt.rtrim()
       room = @get("activeState").get("room")
       currentUser = @get("currentUser")
       messageParams =
@@ -41,5 +42,4 @@ App.IndexController = Ember.ArrayController.extend
       errorCallback   = =>
         msg.set("errorPosting", true)
         room.get("messages").pushObject(msg)
-        console.log "error posting message"
       msg.save().then(successCallback, errorCallback)

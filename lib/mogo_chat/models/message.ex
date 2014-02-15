@@ -20,9 +20,10 @@ defmodule Message do
       matches = Regex.named_captures(%r/\/me (?<announcement>.+)/g, record.body) ->
         record.type("me").body(matches[:announcement])
       true ->
-        record.type("text").body
-        |> String.strip()
-        |> record.body()
+        record = record.body
+          |> String.strip()
+          |> record.body()
+        record.type("text")
     end
   end
 

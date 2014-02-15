@@ -15,6 +15,10 @@
 //= require_tree "./routes"
 //= require_tree "./pollers"
 
+String.prototype.rtrim = function() {
+  return this.replace(/\s*$/g, "")
+}
+
 window.App = Em.Application.create({LOG_TRANSITIONS: true})
 
 App.ApplicationSerializer = DS.ActiveModelSerializer.extend({})

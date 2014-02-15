@@ -1,9 +1,5 @@
 <p class="message">
-  <%= if @message[:user][:last_name] do %>
-    <%= @message[:user][:first_name] %> <%= @message[:user][:last_name] %>:
-  <%= else %>
-    <b><%= @message[:user][:first_name] %></b>:
-  <% end %>  
+  <b><%= @message[:user][:name] %></b>:
 
   <%= if @message[:type] == "paste" do %>
     <pre style="background: #fafafa; border: 0.1em solid #ccc; padding: 0.5em">

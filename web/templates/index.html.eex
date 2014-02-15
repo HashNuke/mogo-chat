@@ -1,4 +1,6 @@
 <script type="text/x-handlebars" id="index">
+  <audio src="/static/sounds/notify.wav" class="app-audio"></audio>
+
   <div class="left-panel-wrapper" {{bind-attr class="isLeftMenuOpen"}}>
     <div class="left-panel">
       <div class="app-name">
@@ -11,7 +13,7 @@
       </div>
 
       <div class="user-details">
-        Hello {{#link-to "user.edit" currentUser}}{{currentUser.firstName}}{{/link-to}} ~!
+        Hello {{#link-to "user.edit" currentUser}}{{currentUser.name}}{{/link-to}} ~!
       </div>
 
       <div class="rooms">
@@ -76,7 +78,7 @@
 
         <ul>
           {{#each user in activeState.room.users}}
-            <li {{bind-attr style="user.borderStyle"}}>{{user.firstName}} {{user.lastName}}</li>
+            <li {{bind-attr style="user.borderStyle"}}>{{user.name}}</li>
           {{/each}}
         </ul>
       </div>
@@ -100,7 +102,7 @@
 <script type="text/x-handlebars" id="_text">
   <div class="message">
     <div class="content">
-      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>:
       {{message.body}}
     </div>
     <div class="message-info">
@@ -118,7 +120,7 @@
 <script type="text/x-handlebars" id="_me">
   <div class="message">
     <div class="content">
-      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
       <span class="me-body">{{message.body}}</span>
     </div>
     <div class="message-info">
@@ -136,7 +138,7 @@
 <script type="text/x-handlebars" id="_paste">
   <div class="message">
     <div class="content">
-      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
       <br/>
       <div class="paste-wrapper">
         <pre class="paste-body">{{message.condensedBody}}</pre>
@@ -174,7 +176,7 @@
       </div>
 
       <div class="user-details">
-        Hello {{#link-to "user.edit" currentUser}}{{currentUser.firstName}}{{/link-to}} ~!
+        Hello {{#link-to "user.edit" currentUser}}{{currentUser.name}}{{/link-to}} ~!
       </div>
 
       <div class="back-to-chat">{{#link-to "index"}}Back to chat{{/link-to}}</div>
@@ -262,12 +264,7 @@
 
       <div class="field">
         <label>First name</label><br/>
-        {{input type="text" value=model.firstName}}
-      </div>
-
-      <div class="field">
-        <label>Last name</label><br/>
-        {{input type="text" value=model.lastName}}
+        {{input type="text" value=model.name}}
       </div>
 
       <div class="field">
@@ -319,7 +316,7 @@
 
         {{#each user in controller}}
           <div class="item">
-            <span class="name">{{user.firstName}} {{user.lastName}}</span>
+            <span class="name">{{user.name}}</span>
             (<span class="email">{{user.email}}</span>)
             <div class="controls">
               {{#link-to "user.edit" user.id}}Edit{{/link-to}}

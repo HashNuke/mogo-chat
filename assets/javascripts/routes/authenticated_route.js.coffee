@@ -8,8 +8,7 @@ App.AuthenticatedRoute = Em.Route.extend
       if response.user
         userAttributes =
           id: response.user.id,
-          firstName: response.user.first_name,
-          lastName: response.user.last_name,
+          name: response.user.name,
           role: response.user.role
           email: response.user.email
           authToken: response.user.auth_token

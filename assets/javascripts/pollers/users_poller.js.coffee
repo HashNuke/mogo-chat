@@ -20,8 +20,7 @@ App.UsersPoller = Em.Object.extend
     else
       user = @store.push("user",
         id: userAttributes.id
-        firstName: userAttributes.first_name
-        lastName: userAttributes.last_name
+        name: userAttributes.name
         role: userAttributes.role
         color: App.paintBox.getColor()
       )

@@ -6,8 +6,7 @@ defmodule User do
     field :email,      :string
     field :encrypted_password, :string
     field :role,       :string
-    field :first_name, :string
-    field :last_name,  :string
+    field :name, :string
     field :password,   :virtual, default: nil
     field :auth_token, :string
     has_many :messages, Message
@@ -18,7 +17,7 @@ defmodule User do
   validate user,
     email: present(),
     role: member_of(%w(admin member)),
-    first_name: has_length(min: 3),
+    name: has_length(min: 3),
     also: validate_password
 
 
@@ -39,7 +38,7 @@ defmodule User do
 
 
   def public_attributes(record) do
-    attributes(record, ["id", "first_name", "last_name", "role"])
+    attributes(record, ["id", "name", "role"])
   end
 
   def assign_auth_token(record) do

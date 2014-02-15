@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Setup do
     admin_user = User.new(
         email: "admin@example.com",
         password: "password",
-        "first_name": "Admin",
+        "name": "Admin",
         role: "admin")
     |> User.encrypt_password()
     |> User.assign_auth_token()

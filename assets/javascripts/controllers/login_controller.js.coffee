@@ -14,8 +14,7 @@ App.LoginController = Em.Controller.extend
       successCallback = (response)=>
         userAttributes = {
           id: response.user.id,
-          firstName: response.user.first_name,
-          lastName: response.user.last_name,
+          name: response.user.name,
           role: response.user.role,
           color: App.paintBox.getColor()
         }
