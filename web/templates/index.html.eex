@@ -139,7 +139,7 @@
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
       <br/>
       <div class="paste-wrapper">
-        <pre class="paste-body">{{message.body}}</pre>
+        <pre class="paste-body">{{message.condensedBody}}</pre>
         <div class="paste-actions">
           <a target="_blank" {{bind-attr href=message.link}}>view</a>
         </div>
