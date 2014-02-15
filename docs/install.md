@@ -1,4 +1,4 @@
-## Install instructions for different platforms
+# Install instructions for different platforms
 
 ### Heroku
 
@@ -17,3 +17,47 @@ heroku apps:info
 ```
 
 The last command will output your Heroku app's URL. Enjoy ~!
+
+
+### Local install for development and other purposes
+
+You'll need Erlang version R16B02 or higher, Elixir version v0.12.4 and Postgresql.
+
+* Create a postgresql database called `mogo_chat_development`
+
+* Copy the `config/database.json.sample` as `config/database.json` and edit the database credentials.
+
+* Then copy-paste the following into your terminal:
+
+```
+mix deps.get
+bash scripts/migrate
+bash scripts/setup
+```
+
+Use one of the following commands to start the app:
+
+```
+# you can start server with an Elixir console
+bash scripts/start_with_shell
+
+# Or you can start without the console
+bash scripts/start
+```
+
+#### Building assets
+
+* Run `bundle exec rake assets:compile` to compile assets once.
+
+* Run `bundle exec rake assets:watch` to start asset server.
+
+To compress javascript when building assets, use the env var `MIX_ENV=prod`.
+
+#### Tests
+
+For running test, you'll need a database called `mogo_chat_test`. Make sure you also edit the credentials in `config/database.json` as required.
+
+* Get dependencies: `MIX_ENV=test mix deps.get`
+
+* Run tests: `bash scripts/run_tests`
+
