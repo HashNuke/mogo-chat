@@ -18,6 +18,7 @@ heroku apps:info
 
 The last command will output your Heroku app's URL. Enjoy ~!
 
+---
 
 ### Local install for development and other purposes
 
