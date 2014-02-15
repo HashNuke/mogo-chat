@@ -4,6 +4,8 @@ Team chat appication.
 
 Written using Elixir, Ember.js and Postgresql.
 
+Refer to [docs/install-heroku.md](https://github.com/HashNuke/mogo-chat/blob/master/docs/install-heroku.md) for installation instructions for Heroku.
+
 ### Features
 
 * Works on mobile devices ~!
@@ -12,9 +14,6 @@ Written using Elixir, Ember.js and Postgresql.
 * Easy to install
 * [TODO] Support for pasting code, `/me` command and room sounds
 * [TODO] API with token authentication
-
-
-Refer to [docs/install.md](https://github.com/HashNuke/mogo-chat/blob/master/docs/install.md) for installation instructions.
 
 ---------------------------------------------------
 
