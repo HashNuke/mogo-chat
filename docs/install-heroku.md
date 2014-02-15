@@ -18,4 +18,4 @@ heroku apps:info
 
 The last command will output your Heroku app's URL. Enjoy ~!
 
-Visit the app and use admin@example.com as your login email and the password is "password" (without the quotes ofcourse).
+Visit the app and use `admin@example.com` as your login email and the password is `password`.
