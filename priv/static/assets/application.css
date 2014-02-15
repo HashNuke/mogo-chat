@@ -528,6 +528,18 @@ html, body {
       float: left;
       width: 100%;
       margin-top: 1em; }
+      .room-content .messages .message .me-body {
+        font-style: italic; }
+      .room-content .messages .message pre.paste-body {
+        float: left;
+        width: 100%;
+        font-family: monospace;
+        background: #FAFAFA;
+        padding: 0.5em;
+        color: #444;
+        box-shadow: 0 0 0.1em 0.1em #DDD;
+        margin: 0.3em 0em 0em 0em;
+        font-size: 0.9em; }
       .room-content .messages .message .message-meta {
         font-size: 0.75em;
         color: #888;
