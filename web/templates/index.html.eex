@@ -103,12 +103,14 @@
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>:
       {{message.body}}
     </div>
-    <div class="message-meta">
-      {{#if message.errorPosting}}
-        <span class="post-error">error posting ~!</span>
-      {{else}}
-        <span class="timestamp">{{readable-time message.createdAt}}</span>
-      {{/if}}
+    <div class="message-info">
+      <div class="message-meta">
+        {{#if message.errorPosting}}
+          <span class="post-error">error posting ~!</span>
+        {{else}}
+          <span class="timestamp">{{readable-time message.createdAt}}</span>
+        {{/if}}
+      </div>
     </div>
   </div>
 </script>
@@ -119,12 +121,14 @@
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
       <span class="me-body">{{message.body}}</span>
     </div>
-    <div class="message-meta">
-      {{#if message.errorPosting}}
-        <span class="post-error">error posting ~!</span>
-      {{else}}
-        <span class="timestamp">{{readable-time message.createdAt}}</span>
-      {{/if}}
+    <div class="message-info">
+      <div class="message-meta">
+        {{#if message.errorPosting}}
+          <span class="post-error">error posting ~!</span>
+        {{else}}
+          <span class="timestamp">{{readable-time message.createdAt}}</span>
+        {{/if}}
+      </div>
     </div>
   </div>
 </script>
@@ -134,14 +138,21 @@
     <div class="content">
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.firstName}}</span>
       <br/>
-      <pre class="paste-body">{{message.body}}</pre>
+      <div class="paste-wrapper">
+        <pre class="paste-body">{{message.body}}</pre>
+        <div class="paste-actions">
+          <a target="_blank" {{bind-attr href=message.link}}>view</a>
+        </div>
+      </div>
     </div>
-    <div class="message-meta">
-      {{#if message.errorPosting}}
-        <span class="post-error">error posting ~!</span>
-      {{else}}
-        <span class="timestamp">{{readable-time message.createdAt}}</span>
-      {{/if}}
+    <div class="message-info">
+      <div class="message-meta">
+        {{#if message.errorPosting}}
+          <span class="post-error">error posting ~!</span>
+        {{else}}
+          <span class="timestamp">{{readable-time message.createdAt}}</span>
+        {{/if}}
+      </div>
     </div>
   </div>
 </script>

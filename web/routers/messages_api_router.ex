@@ -71,7 +71,8 @@ defmodule MessagesApiRouter do
       room_id: room.id,
       user_id: user_id,
       created_at: current_timestamp()
-    ) |> Message.assign_message_type()
+    )
+    |> Message.assign_message_type()
 
     case Message.validate(message) do
       [] ->

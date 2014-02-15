@@ -34,6 +34,7 @@ App.NewMessageView = Ember.View.extend
 
   keyUp: (event)->
     if event.keyCode == 13  # enter key
+      return if event.target.value.trim() == ""
       @get("controller").send("postMessage", event.target.value);
       event.target.value = ""
 

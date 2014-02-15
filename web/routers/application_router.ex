@@ -13,6 +13,7 @@ defmodule ApplicationRouter do
   # forward "/posts", to: PostsRouter
 
 
+  forward "/rooms", to: RoomMessagesRouter
   forward "/api/sessions", to: SessionsApiRouter
   forward "/api/users",    to: UsersApiRouter
   forward "/api/rooms",    to: RoomsApiRouter

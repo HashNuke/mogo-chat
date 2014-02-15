@@ -49,3 +49,7 @@ App.Message = DS.Model.extend
   errorPosting: DS.attr("boolean", defaultValue: false)
   user: DS.belongsTo("user")
   room: DS.belongsTo("room")
+
+  link: (->
+    "/rooms/#{@get("room.id")}/messages/#{@get("id")}"
+  ).property(["id", "roomId"])

@@ -54,41 +54,59 @@
         font-style: italic;
       }
 
-      pre.paste-body {
+      .paste-wrapper {
         float: left;
         width: 100%;
-        font-family: monospace;
-        background: #FAFAFA;
-        padding: 0.5em;
-        color: #444;
         box-shadow: 0 0 0.1em 0.1em #DDD;
-        margin: 0.3em 0em 0em 0em;
-        font-size: 0.9em;
+        background: #fff;
+        margin-top: 0.25em;
+        padding: 0.25em;
+
+        .paste-actions {
+          float: left;
+          a {
+            color: #06C;
+          }
+        }
+
+        pre.paste-body {
+          float: left;
+          width: 100%;
+          font-family: monospace;
+          background: #FAFAFA;
+          padding: 0.5em;
+          color: #444;
+          margin: 0.3em 0em 0em 0em;
+          font-size: 0.9em;
+        }
       }
 
-      .message-meta {
+      .message-info {
+        float: left;
         font-size: 0.75em;
         color: #888;
         width: 100%;
         text-align: right;
 
-        .timestamp, .post-error {
-          padding: 0.25em;
-          border-radius: 0.25em;
-        }
+        .message-meta {
+          float: right;
 
-        .timestamp {
-          background: #f1f1f1;
-          color: #888;
-        }
+          .timestamp, .post-error {
+            padding: 0.25em;
+            border-radius: 0.25em;
+            float: right;
+          }
 
-        .post-error {
-          background: #dd0000;
-          color: #fff;
-        }
-      }
+          .timestamp {
+            background: #f1f1f1;
+            color: #888;
+          }
 
-      .content {
+          .post-error {
+            background: #dd0000;
+            color: #fff;
+          }
+        }
       }
 
       .user {
