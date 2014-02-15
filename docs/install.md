@@ -18,6 +18,7 @@ heroku apps:info
 
 The last command will output your Heroku app's URL. Enjoy ~!
 
+---
 
 ### Local install for development and other purposes
 
@@ -46,6 +47,8 @@ bash scripts/start
 ```
 
 #### Building assets
+
+You'll need Ruby for this. Install a nice version like Ruby 2.1 and install the `bundler` and `rake` rubygems. Then run `bundle install` to install Ruby dependencies. When done, you will be able to use the following commands to compile or watch assets when development is happening.
 
 * Run `bundle exec rake assets:compile` to compile assets once.
 
