@@ -95,10 +95,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
       @get("room.messages")[addAction](message)
 
       if message.get("body").match(@get("user.name")) && addAction == "pushObject" && @get("afterMessageId")
-        console.log "play audio"
-        $audio = $("audio")[0]
-        $audio.load()
-        $audio.play()
+        App.notifyBySound()
 
       if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
         @get("room.messages").shiftObject()

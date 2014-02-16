@@ -1,5 +1,5 @@
 <script type="text/x-handlebars" id="index">
-  <audio src="/static/sounds/notify.wav" class="app-audio"></audio>
+  <audio src="/static/sounds/notify.wav" id="app-audio"></audio>
 
   <div class="left-panel-wrapper" {{bind-attr class="isLeftMenuOpen"}}>
     <div class="left-panel">
