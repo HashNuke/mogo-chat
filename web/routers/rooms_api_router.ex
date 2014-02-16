@@ -86,9 +86,19 @@ defmodule RoomsApiRouter do
   delete "/:room_id" do
     authorize_user!(conn, ["admin"])
 
-    room_id = conn.params["room_id"]
+    room_id = binary_to_integer(conn.params["room_id"])
+
+    # Note instead of fetching it and deleting it
+    # just create a new record and delete it
     room = Room.new(id: room_id)
     Repo.delete room
+
+    # Delete all messages
+    Repo.delete_all(from m in Message, where: m.room_id == ^room_id)
+
+    # Delete the room user states
+    Repo.delete_all(from rus in RoomUserState, where: rus.room_id == ^room_id)
+
     json_response("", conn)
   end
 
