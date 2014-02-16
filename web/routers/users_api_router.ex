@@ -91,11 +91,15 @@ defmodule UsersApiRouter do
   delete "/:user_id" do
     authorize_user!(conn, ["admin"])
 
-    user_id = conn.params["user_id"]
+    user_id = binary_to_integer(conn.params["user_id"])
     current_user_id = get_session(conn, :user_id)
     if current_user_id != user_id do
       user = User.new(id: user_id)
+
+      # TODO actually just mark the user as archived and don't allow logins
       Repo.delete user
+
+      Repo.delete_all(from rus in RoomUserState, where: rus.user_id == ^user_id)
     end
     json_response("", conn)
   end
