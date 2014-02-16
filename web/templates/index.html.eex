@@ -286,12 +286,14 @@
         </div>
       {{/if}}
 
-      <div class="field">
-        <p>
-          <label>Auth token</label>:
-          <code>{{model.authToken}}</code>
-        </p>
-      </div>
+      {{#if model.id}}
+        <div class="field">
+          <p>
+            <label>Auth token</label>:
+            <code>{{model.authToken}}</code>
+          </p>
+        </div>
+      {{/if}}
 
       <div class="actions">
         <button class="save" {{action "save"}}>Save</button>
