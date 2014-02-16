@@ -64765,21 +64765,19 @@ if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and 
 }
 
 function handleVisibilityChange() {
-  if (document[hidden]) {
-    App.isPageActive = false
-  } else {
-    App.isPageActive = true
-  }
+  if (document[hidden])
+    App.isPageActive = false;
+  else
+    App.isPageActive = true;
 }
 
-if (typeof document.addEventListener === "undefined" || typeof hidden === "undefined") {
-  App.isPageActive = false
-} else {
+if (typeof document.addEventListener === "undefined" || typeof hidden === "undefined")
+  App.isPageActive = false;
+else
   document.addEventListener(visibilityChange, handleVisibilityChange, false);
-}
 
 
-App.notifyBySound = function(){
+App.notifyBySound = function() {
   if(App.isPageActive)
     return
   $audio = $("#app-audio")[0];
