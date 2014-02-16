@@ -64780,6 +64780,7 @@ else
 App.notifyBySound = function() {
   if(App.isPageActive)
     return
+
   $audio = $("#app-audio")[0];
   $audio.load();
   $audio.play();
@@ -64880,29 +64881,31 @@ App.Router.map(function() {
     beforeMessageId: DS.attr("number"),
     afterMessageId: DS.attr("number"),
     addUsers: function(users) {
-      var user, userAttributes, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = users.length; _i < _len; _i++) {
-        userAttributes = users[_i];
-        if (this.store.recordIsLoaded("user", userAttributes.id)) {
-          user = this.store.getById("user", userAttributes.id);
-        } else {
-          user = this.store.push("user", {
-            id: userAttributes.id,
-            name: userAttributes.name,
-            role: userAttributes.role,
-            color: App.paintBox.getColor()
-          });
+      var user, userAttributes;
+      users = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = users.length; _i < _len; _i++) {
+          userAttributes = users[_i];
+          if (this.store.recordIsLoaded("user", userAttributes.id)) {
+            _results.push(user = this.store.getById("user", userAttributes.id));
+          } else {
+            _results.push(user = this.store.push("user", {
+              id: userAttributes.id,
+              name: userAttributes.name,
+              role: userAttributes.role,
+              color: App.paintBox.getColor()
+            }));
+          }
         }
-        _results.push(this.get("room.users").pushObject(user));
-      }
-      return _results;
+        return _results;
+      }).call(this);
+      return this.set("room.users", users);
     },
     addMessages: function(data) {
-      var addAction, before, message, messageAttrs, messages, user, userParams, _i, _len;
+      var addAction, message, messageAttrs, messages, user, userParams, _i, _len;
       messages = data.messages;
-      before = data.before;
-      if (before) {
+      if (data.before) {
         addAction = "unshiftObject";
       } else {
         addAction = "pushObject";
@@ -64943,7 +64946,7 @@ App.Router.map(function() {
           this.get("room.messages").shiftObject();
         }
       }
-      if (messages.length > 0 && !before) {
+      if (messages.length > 0 && !data.before) {
         return this.set("afterMessageId", messages[messages.length - 1].id);
       }
     }
@@ -65674,7 +65677,6 @@ App.Router.map(function() {
           if (!response.users) {
             return true;
           }
-          _this.roomState.set("room.users", []);
           return _this.roomState.trigger("addUsers", response.users);
         };
       })(this));
