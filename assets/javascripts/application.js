@@ -46,7 +46,10 @@ function handleVisibilityChange() {
   if (document[hidden])
     App.isPageActive = false;
   else
+  {
     App.isPageActive = true;
+    document.title = "Mogo Chat";
+  }
 }
 
 if (typeof document.addEventListener === "undefined" || typeof hidden === "undefined")
@@ -59,6 +62,7 @@ App.notifyBySound = function() {
   if(App.isPageActive)
     return
 
+  document.title = "[+] " + document.title
   $audio = $("#app-audio")[0];
   $audio.load();
   $audio.play();

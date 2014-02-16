@@ -20,7 +20,7 @@ defmodule RoomUserStatesApiRouter do
       if length(result) == 0 do
         room_user_state = RoomUserState.new(user_id: user_id, room_id: room.id, joined: false)
         room_user_state = Repo.create(room_user_state)
-        get_query = query = from r in RoomUserState,
+        get_query = from r in RoomUserState,
           where: r.id == ^room_user_state.id,
           preload: :user
 

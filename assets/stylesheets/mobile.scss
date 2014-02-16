@@ -27,6 +27,13 @@
     overflow-x: hidden !important;
   }
 
+  .left-panel-wrapper {
+    .rooms li {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+  }
+
   .login { width: 100%; }
 
   .detail {
