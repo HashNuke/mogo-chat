@@ -44,7 +44,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
 
   addUsers: (users)->
-    for userAttributes in users
+    users = for userAttributes in users
       if @store.recordIsLoaded("user", userAttributes.id)
         user = @store.getById("user", userAttributes.id)
       else
@@ -54,14 +54,13 @@ App.RoomUserState = DS.Model.extend Em.Evented,
           role: userAttributes.role
           color: App.paintBox.getColor()
         )
-      @get("room.users").pushObject(user)
+    @set("room.users", users)
 
 
   addMessages: (data)->
     messages = data.messages
-    before = data.before
 
-    if before
+    if data.before
       addAction = "unshiftObject"
     else
       addAction = "pushObject"
@@ -100,7 +99,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
       if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
         @get("room.messages").shiftObject()
 
-    if messages.length > 0 && !before
+    if messages.length > 0 && !data.before
       @set("afterMessageId", messages[messages.length - 1].id)
 
 

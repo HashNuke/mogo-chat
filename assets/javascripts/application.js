@@ -58,6 +58,7 @@ else
 App.notifyBySound = function() {
   if(App.isPageActive)
     return
+
   $audio = $("#app-audio")[0];
   $audio.load();
   $audio.play();

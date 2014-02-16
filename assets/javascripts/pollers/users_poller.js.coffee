@@ -17,5 +17,4 @@ App.UsersPoller = Em.Object.extend
     $.getJSON "/api/rooms/#{@roomState.get("room.id")}/users", (response)=>
       return true if !response.users
       #TODO normalizePayload of serializer doesn't seem to do much
-      @roomState.set("room.users", [])
       @roomState.trigger "addUsers", response.users
