@@ -1,6 +1,7 @@
 App.RoomUserStateSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
-    room: {embedded: "load"}
+    room: {embedded: "load"},
+    user: {embedded: "load"}
   }
 })
 

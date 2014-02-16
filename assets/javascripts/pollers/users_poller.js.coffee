@@ -4,9 +4,8 @@ App.UsersPoller = Em.Object.extend
     @started = true
     @fetchUsers() && @timer = setInterval(@fetchUsers.bind(@), 5000)
 
-  setRoom: (room)->
-    @room = room
-    @roomId = @room.get("id")
+  setRoomState: (roomState)->
+    @roomState = roomState
 
   stop: ->
     return true if !@started
@@ -14,22 +13,9 @@ App.UsersPoller = Em.Object.extend
     @started = false
 
 
-  onEachUser: (index, userAttributes)->
-    if @route.store.recordIsLoaded("user", userAttributes.id)
-      user = @route.store.getById("user", userAttributes.id)
-    else
-      user = @route.store.push("user",
-        id: userAttributes.id
-        name: userAttributes.name
-        role: userAttributes.role
-        color: App.paintBox.getColor()
-      )
-    @room.get("users").pushObject(user)
-
-
   fetchUsers: ->
-    $.getJSON "/api/rooms/#{@roomId}/users", (response)=>
+    $.getJSON "/api/rooms/#{@roomState.get("room.id")}/users", (response)=>
       return true if !response.users
       #TODO normalizePayload of serializer doesn't seem to do much
-      @room.set("users", [])
-      Em.$.each response.users, @onEachUser.bind(@)
+      @roomState.set("room.users", [])
+      @roomState.trigger "addUsers", response.users

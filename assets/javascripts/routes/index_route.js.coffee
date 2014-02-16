@@ -12,13 +12,11 @@ App.IndexRoute = App.AuthenticatedRoute.extend
         activeState = item if !activeState?
 
         item.messagePoller = new App.MessagePoller()
-        item.messagePoller.route = @
-        item.messagePoller.setRoom item.get("room")
+        item.messagePoller.setRoomState item
         item.messagePoller.start()
 
         item.usersPoller = new App.UsersPoller()
-        item.usersPoller.route = @
-        item.usersPoller.setRoom item.get("room")
+        item.usersPoller.setRoomState item
         item.usersPoller.start()
 
     controller.set("activeState", activeState)

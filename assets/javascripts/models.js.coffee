@@ -42,6 +42,21 @@ App.RoomUserState = DS.Model.extend Em.Evented,
   beforeMessageId: DS.attr("number")
   afterMessageId: DS.attr("number")
 
+
+  addUsers: (users)->
+    for userAttributes in users
+      if @store.recordIsLoaded("user", userAttributes.id)
+        user = @store.getById("user", userAttributes.id)
+      else
+        user = @store.push("user",
+          id: userAttributes.id
+          name: userAttributes.name
+          role: userAttributes.role
+          color: App.paintBox.getColor()
+        )
+      @get("room.users").pushObject(user)
+
+
   addMessages: (data)->
     messages = data.messages
     before = data.before
@@ -78,8 +93,6 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
       message.set("user", user)
       @get("room.messages")[addAction](message)
-
-      console.log @get("user.name"), message.get("body").match(@get("user.name"))
 
       if message.get("body").match(@get("user.name")) && addAction == "pushObject" && @get("afterMessageId")
         console.log "play audio"
