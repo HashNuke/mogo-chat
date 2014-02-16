@@ -47,7 +47,7 @@ App.RoomMessagesView = Ember.View.extend
 
   scrollIfRequired: ->
     messages = @get("controller.activeState.room.messages")
-    return if messages.length == 0
+    return if !messages || messages.length == 0
 
     lastMsg = messages[messages.length - 1]
     @set("latestMsgId", lastMsg.id)

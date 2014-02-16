@@ -4,6 +4,15 @@ App.RoomUserStateItemController = Em.ObjectController.extend
 
   actions:
 
+    leaveRoom: ->
+      roomItemState = @get("model")
+      roomItemState.messagePoller.stop()
+      roomItemState.usersPoller.stop()
+      roomItemState.set("joined", false)
+      roomItemState.save()
+      @get("controllers.index").set("activeState", null)
+
+
     joinOrOpen: ->
       roomItemState = @get("model")
       if roomItemState.get("joined") == false
