@@ -536,7 +536,7 @@ html, body {
       .room-content .messages .message .paste-wrapper {
         float: left;
         width: 100%;
-        box-shadow: 0 0 0.1em 0.1em #DDD;
+        box-shadow: 0 0 0.1em 0.05em #CCC;
         background: #fff;
         margin-top: 0.25em;
         padding: 0.25em; }
