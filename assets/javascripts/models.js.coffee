@@ -34,11 +34,64 @@ App.Room = DS.Model.extend
   isHistoryAvailable: DS.attr("boolean")
 
 
-App.RoomUserState = DS.Model.extend
-  userId: DS.attr("number")
+App.RoomUserState = DS.Model.extend Em.Evented,
+  user: DS.belongsTo("user")
   joined:  DS.attr("boolean")
   room:  DS.belongsTo("room")
   lastPingedAt: DS.attr("date")
+  beforeMessageId: DS.attr("number")
+  afterMessageId: DS.attr("number")
+
+  addMessages: (data)->
+    messages = data.messages
+    before = data.before
+
+    if before
+      addAction = "unshiftObject"
+    else
+      addAction = "pushObject"
+
+    for messageAttrs in messages
+      if @store.recordIsLoaded("message", messageAttrs.id)
+        message = @store.getById("message", messageAttrs.id)
+        if !@get("room.messages").contains(message)
+          @get("room.messages")[addAction](message)
+        return
+
+      message = @store.push("message", {
+        id: messageAttrs.id,
+        type: messageAttrs.type,
+        body: messageAttrs.body,
+        createdAt: messageAttrs.created_at
+      })
+      message.set("room", @get("room"))
+
+      if @store.recordIsLoaded("user", messageAttrs.user.id)
+        user = @store.getById("user", messageAttrs.user.id)
+      else
+        userParams =
+          id: messageAttrs.user.id
+          name: messageAttrs.user.name
+          role: messageAttrs.user.role
+          color: App.paintBox.getColor()
+        user = @store.push("user", userParams)
+
+      message.set("user", user)
+      @get("room.messages")[addAction](message)
+
+      console.log @get("user.name"), message.get("body").match(@get("user.name"))
+
+      if message.get("body").match(@get("user.name")) && addAction == "pushObject" && @get("afterMessageId")
+        console.log "play audio"
+        $audio = $("audio")[0]
+        $audio.load()
+        $audio.play()
+
+      if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
+        @get("room.messages").shiftObject()
+
+    if messages.length > 0 && !before
+      @set("afterMessageId", messages[messages.length - 1].id)
 
 
 App.Message = DS.Model.extend
