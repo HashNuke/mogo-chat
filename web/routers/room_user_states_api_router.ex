@@ -12,15 +12,24 @@ defmodule RoomUserStatesApiRouter do
     rooms = Repo.all(Room)
 
     room_user_states_attributes = Enum.map rooms, fn(room)->
-      query = from r in RoomUserState, where: r.user_id == ^user_id and r.room_id == ^room.id
+      query = from r in RoomUserState,
+        where: r.user_id == ^user_id and r.room_id == ^room.id,
+        preload: :user
+
       result = Repo.all query
       if length(result) == 0 do
         room_user_state = RoomUserState.new(user_id: user_id, room_id: room.id, joined: false)
         room_user_state = Repo.create(room_user_state)
-        RoomUserState.public_attributes(room_user_state) ++ [room: Room.public_attributes(room)]
+        get_query = query = from r in RoomUserState,
+          where: r.id == ^room_user_state.id,
+          preload: :user
+
+        [room_user_state] = Repo.all get_query
+
+        RoomUserState.public_attributes(room_user_state) ++ [room: Room.public_attributes(room)] ++ [user: User.public_attributes(room_user_state.user.get)]
       else
         [room_user_state|_] = result
-        RoomUserState.public_attributes(room_user_state) ++ [room: Room.public_attributes(room)]
+        RoomUserState.public_attributes(room_user_state) ++ [room: Room.public_attributes(room)] ++ [user: User.public_attributes(room_user_state.user.get)]
       end
     end
 
