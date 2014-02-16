@@ -22,13 +22,13 @@ App.MessagePoller = Em.Object.extend
       addAction = "pushObject"
 
     (index, messageAttrs)=>
-      if @store.recordIsLoaded("message", messageAttrs.id)
-        message = @store.getById("message", messageAttrs.id)
+      if @route.store.recordIsLoaded("message", messageAttrs.id)
+        message = @route.store.getById("message", messageAttrs.id)
         if !@room.get("messages").contains(message)
           @room.get("messages")[addAction](message)
         return
 
-      message = @store.push("message", {
+      message = @route.store.push("message", {
         id: messageAttrs.id,
         type: messageAttrs.type,
         body: messageAttrs.body,
@@ -36,20 +36,20 @@ App.MessagePoller = Em.Object.extend
       })
       message.set("room", @room)
 
-      if @store.recordIsLoaded("user", messageAttrs.user.id)
-        user = @store.getById("user", messageAttrs.user.id)
+      if @route.store.recordIsLoaded("user", messageAttrs.user.id)
+        user = @route.store.getById("user", messageAttrs.user.id)
       else
         userParams =
           id: messageAttrs.user.id
           name: messageAttrs.user.name
           role: messageAttrs.user.role
           color: App.paintBox.getColor()
-        user = @store.push("user", userParams)
+        user = @route.store.push("user", userParams)
 
       message.set("user", user)
       @room.get("messages")[addAction](message)
 
-      if message.get("body").match("Admin") && addAction == "pushObject" && @afterMessageId
+      if message.get("body").match(@route.controller.get("currentUser").get("name")) && addAction == "pushObject" && @afterMessageId
         console.log "matched #{@afterMessageId}"
         $audio = $("audio")[0]
         $audio.load()

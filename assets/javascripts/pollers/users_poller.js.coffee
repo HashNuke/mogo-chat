@@ -15,10 +15,10 @@ App.UsersPoller = Em.Object.extend
 
 
   onEachUser: (index, userAttributes)->
-    if @store.recordIsLoaded("user", userAttributes.id)
-      user = @store.getById("user", userAttributes.id)
+    if @route.store.recordIsLoaded("user", userAttributes.id)
+      user = @route.store.getById("user", userAttributes.id)
     else
-      user = @store.push("user",
+      user = @route.store.push("user",
         id: userAttributes.id
         name: userAttributes.name
         role: userAttributes.role

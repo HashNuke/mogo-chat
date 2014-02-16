@@ -3,7 +3,7 @@ App.RoomUserStateItemController = Em.ObjectController.extend
   currentUser: Ember.computed.alias("controllers.application.currentUser")
 
   actions:
-    join: ->
+    joinOrOpen: ->
       room_item_state = @get("model")
       if room_item_state.get("joined") == false
         room_item_state.set("joined", true)

@@ -8,6 +8,7 @@ App.IndexController = Ember.ArrayController.extend
 
 
   detectMessageType: (msgTxt)->
+    #TODO update this
     if msgTxt.match("\n")
       "paste"
     else
