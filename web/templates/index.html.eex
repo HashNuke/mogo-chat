@@ -7,7 +7,7 @@
         Mogo Chat
         <div class="logout">
           {{#link-to "logout"}}
-            <img src="/static/assets/logout.png" alt="Logout" title="Logout"/>
+            <img src="/static/assets/logout.png" id="logout-btn" alt="Logout" title="Logout"/>
           {{/link-to}}
         </div>
       </div>
@@ -212,17 +212,17 @@
 
       <div class="field">
         <label>Email</label><br/>
-        {{input type="text" value=email}}
+        {{input type="text" name="email" value=email}}
       </div>
 
       <div class="field">
         <label>Password</label><br/>
-        {{input type="password" value=password}}
+        {{input type="password" name="password" value=password}}
       </div>
 
       <div class="actions">
         <span class="auth-error">{{errorNotification}}</span>
-        {{input type="submit" value="Log In"}}
+        {{input type="submit" name="login" value="Log In"}}
       </div>
 
       {{# if error}}
