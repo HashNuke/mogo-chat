@@ -28,9 +28,6 @@ defmodule MogoChat.Dynamo do
       key: "_mogo_chat_session"
     ]
 
-  if Mix.env == :test do
-    config :server, port: 4001
-  end
 
   # Default functionality available in templates
   templates do

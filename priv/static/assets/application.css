@@ -552,7 +552,8 @@ html, body {
           padding: 0.5em;
           color: #444;
           margin: 0.3em 0em 0em 0em;
-          font-size: 0.9em; }
+          font-size: 0.9em;
+          overflow-x: scroll; }
       .room-content .messages .message .message-info {
         float: left;
         font-size: 0.75em;
@@ -657,14 +658,23 @@ html, body {
       color: #BBB;
       padding: 0.25em 0em 0.25em 0em; }
       .left-panel .navigation ul li a, .left-panel .rooms ul li a {
-        cursor: pointer;
-        display: block;
-        padding: 0.25em; }
-        .left-panel .navigation ul li a:hover, .left-panel .rooms ul li a:hover {
+        cursor: pointer; }
+      .left-panel .navigation ul li .room-name, .left-panel .rooms ul li .room-name {
+        padding: 0.25em;
+        font-size: 0.9em; }
+        .left-panel .navigation ul li .room-name:hover, .left-panel .rooms ul li .room-name:hover {
           background: #f1f1f1;
           border-radius: 0.3em; }
+      .left-panel .navigation ul li .leave-room, .left-panel .rooms ul li .leave-room {
+        color: #C00;
+        padding: 0em 0.35em 0em 0.35em;
+        border: 0.1em solid #CCC;
+        border-radius: 0.2em;
+        background: #F1F1F1; }
     .left-panel .navigation ul .joined, .left-panel .rooms ul .joined {
       color: #666; }
+    .left-panel .navigation ul .unjoined, .left-panel .rooms ul .unjoined {
+      padding-left: 1.6em; }
 .left-panel .rooms li {
   font-size: 1.1em; }
 .left-panel .navigation li a {
@@ -770,6 +780,10 @@ html, body {
     position: absolute;
     overflow-x: hidden !important; }
 
+  .left-panel-wrapper .rooms li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em; }
+
   .login {
     width: 100%; }
 
@@ -817,6 +831,10 @@ html, body {
   .container {
     position: absolute;
     overflow-x: hidden !important; }
+
+  .left-panel-wrapper .rooms li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em; }
 
   .login {
     width: 100%; }
@@ -866,6 +884,10 @@ html, body {
     position: absolute;
     overflow-x: hidden !important; }
 
+  .left-panel-wrapper .rooms li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em; }
+
   .login {
     width: 100%; }
 
@@ -914,6 +936,10 @@ html, body {
     position: absolute;
     overflow-x: hidden !important; }
 
+  .left-panel-wrapper .rooms li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em; }
+
   .login {
     width: 100%; }
 
@@ -961,6 +987,10 @@ html, body {
   .container {
     position: absolute;
     overflow-x: hidden !important; }
+
+  .left-panel-wrapper .rooms li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em; }
 
   .login {
     width: 100%; }

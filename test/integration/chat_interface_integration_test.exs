@@ -1,4 +1,4 @@
-defmodule RoomManagementIntegrationTest do
+defmodule ChatInterfaceIntegrationTest do
   use MogoChat.TestCase
   use Hound.Helpers
   import TestUtils
