@@ -98,6 +98,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
       if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
         @get("room.messages").shiftObject()
+        @set("room.isHistoryAvailable", true)
 
     if messages.length > 0 && !data.before
       @set("afterMessageId", messages[messages.length - 1].id)

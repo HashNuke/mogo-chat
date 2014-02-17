@@ -27,8 +27,9 @@ App.ApplicationAdapter    = DS.ActiveModelAdapter.reopen({namespace: "api"});
 App.ApplicationView       = Em.View.extend({classNames: ["container"]});
 App.paintBox = new MogoChat.PaintBox();
 
+
 var hidden, visibilityChange;
-if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
+if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
   hidden = "hidden";
   visibilityChange = "visibilitychange";
 } else if (typeof document.mozHidden !== "undefined") {
