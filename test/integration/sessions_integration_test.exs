@@ -21,8 +21,8 @@ defmodule SessionIntegrationTest do
   end
 
 
-  def until_element(element, wait_time \\ 10000) do
-    new_wait_time = wait_time - 1000
+  def until_element(element, wait_time \\ 10) do
+    new_wait_time = wait_time - 1
     :timer.sleep(1000)
     {strategy, identifier} = element
 
@@ -43,9 +43,9 @@ defmodule SessionIntegrationTest do
 
 
   test "should redirect to login if I visit a page without logging in" do
-    # navigate_to app_path()
-    # current_url = 
-    # Regex.match?(%r/(login)/, app_path())
+    navigate_to app_path()
+    wait_until({:name, "login"})
+    assert Regex.match?(%r/(login)/, current_url)
   end
 
 
