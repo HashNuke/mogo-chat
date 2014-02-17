@@ -1,8 +1,8 @@
-# Dynamo.under_test(MogoChat.Dynamo)
-# Dynamo.Loader.enable
 ExUnit.start
 Hound.start [driver: "selenium"]
 Repo.start_link
+
+MogoChat.Dynamo.run()
 
 defmodule MogoChat.TestCase do
   use ExUnit.CaseTemplate
