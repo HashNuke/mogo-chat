@@ -1,8 +1,7 @@
 ExUnit.start
 Hound.start [driver: "selenium"]
-Repo.start_link
-
 MogoChat.Dynamo.run()
+Repo.start_link
 
 defmodule MogoChat.TestCase do
   use ExUnit.CaseTemplate
@@ -25,6 +24,41 @@ defmodule TestUtils do
     table_names = ["users", "messages", "rooms", "room_user_states"]
     sql = "TRUNCATE TABLE #{Enum.join(table_names, ", ")} RESTART IDENTITY CASCADE;"
     Repo.adapter.query(Repo, sql)
+  end
+
+
+  def wait_until(element, func \\ nil) do
+    if until_element(element) do
+      if func do
+        apply(func, [])
+      else
+        true
+      end
+    else
+      IO.inspect "The following element wasn't found:"
+      throw element
+    end
+  end
+
+
+  defp until_element(element, wait_time \\ 10) do
+    new_wait_time = wait_time - 1
+    :timer.sleep(1000)
+    {strategy, identifier} = element
+
+    if new_wait_time > 0 do
+      try do
+        find_element(strategy, identifier)
+      catch
+        _ ->
+          until_element(element, new_wait_time)
+      else
+        _ ->
+          true
+      end
+    else
+      find_element(strategy, identifier)
+    end
   end
 
 
