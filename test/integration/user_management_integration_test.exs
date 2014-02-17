@@ -23,7 +23,11 @@ defmodule UserManagementIntegrationTest do
   end
 
 
-  test "admin should be able to update password for users" do
+  test "admin should be able to update password for user and user must be able to login with new password" do
+  end
+
+
+  test "when admin edits user, password should not change" do
   end
 
 
@@ -41,4 +45,5 @@ defmodule UserManagementIntegrationTest do
 
   test "member should *not* be able to manage users" do
   end
+
 end
