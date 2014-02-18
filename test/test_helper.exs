@@ -27,37 +27,41 @@ defmodule TestUtils do
   end
 
 
-  def wait_until(element, func \\ nil) do
-    if until_element(element) do
-      if func do
-        apply(func, [])
-      else
-        true
+  defmacro wait_helpers do
+    quote do
+      def wait_until(element, func \\ nil) do
+        if until_element(element) do
+          if func do
+            apply(func, [])
+          else
+            true
+          end
+        else
+          IO.inspect "The following element wasn't found:"
+          throw element
+        end
       end
-    else
-      IO.inspect "The following element wasn't found:"
-      throw element
-    end
-  end
 
 
-  defp until_element(element, wait_time \\ 10) do
-    new_wait_time = wait_time - 1
-    :timer.sleep(1000)
-    {strategy, identifier} = element
+      defp until_element(element, wait_time \\ 10) do
+        new_wait_time = wait_time - 1
+        :timer.sleep(1000)
+        {strategy, identifier} = element
 
-    if new_wait_time > 0 do
-      try do
-        find_element(strategy, identifier)
-      catch
-        _ ->
-          until_element(element, new_wait_time)
-      else
-        _ ->
-          true
+        if new_wait_time > 0 do
+          try do
+            find_element(strategy, identifier)
+          catch
+            _ ->
+              until_element(element, new_wait_time)
+          else
+            _ ->
+              true
+          end
+        else
+          find_element(strategy, identifier)
+        end
       end
-    else
-      find_element(strategy, identifier)
     end
   end
 

@@ -5,7 +5,7 @@ defmodule SessionIntegrationTest do
 
   hound_session
   truncate_db_after_test
-
+  wait_helpers
 
   test "should redirect to login if I visit a page without logging in" do
     navigate_to app_path()
@@ -48,6 +48,7 @@ defmodule SessionIntegrationTest do
     user = create_member("Test", "test@example.com")
 
     navigate_to app_path()
+    wait_until({:name, "email"})
     url_at_login = current_url()
 
     fill_field {:name, "email"}, user.email
@@ -66,9 +67,8 @@ defmodule SessionIntegrationTest do
     user = create_admin("Test", "test@example.com")
 
     navigate_to app_path()
-    url_at_login = current_url()
-
     wait_until({:name, "email"})
+    url_at_login = current_url()
 
     fill_field {:name, "email"}, user.email
     fill_field {:name, "password"}, "password"
