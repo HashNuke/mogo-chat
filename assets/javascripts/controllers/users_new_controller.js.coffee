@@ -12,5 +12,10 @@ App.UsersNewController = Em.Controller.extend
 
       successCallback = =>
         @transitionToRoute("users.index")
-      errorCallback = => console.log("error saving user")
+
+      errorCallback = (response) =>
+        if response.errors
+          @set("errors", response.errors)
+        else
+          @set("errorMsg", "Oops ~! something went wrong")
       @get("model").save().then(successCallback, errorCallback)

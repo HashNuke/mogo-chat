@@ -9,6 +9,7 @@ defmodule Room do
   end
 
   validate room,
+    name: present(),
     name: has_length(1..30)
 
   def public_attributes(record) do

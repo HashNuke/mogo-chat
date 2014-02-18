@@ -238,18 +238,15 @@
 
 
 <script type="text/x-handlebars" id="user/edit">
-
   <div class="detail">
     <div class="header">
       <div class="title">Edit user</div>
     </div>
 
-    {{view App.UserFormView}}
+    {{partial "user-form"}}
 
   </div>
 </script>
-
-
 
 
 <script type="text/x-handlebars" id="users/new">
@@ -258,56 +255,71 @@
       <div class="title">New user</div>
     </div>
 
-    {{view App.UserFormView}}
+    {{partial "user-form"}}
 
   </div>
 </script>
 
 
-<script type="text/x-handlebars" id="user-form">
-  <div class="user-form">
-    <form {{action "save" on="submit"}}>
+<script type="text/x-handlebars" id="_user-form">
+  <div class="page">
+    <div class="user-form">
+      <form {{action "save" on="submit"}}>
 
-      <div class="field">
-        <label>First name</label><br/>
-        {{input type="text" value=model.name}}
-      </div>
+        {{#if errorMsg}}
+          <div class="error">{{errorMsg}}</div>
+        {{/if}}
 
-      <div class="field">
-        <label>Email</label><br/>
-        {{input type="text" value=model.email}}
-      </div>
-
-      <div class="field">
-        <label>Password</label><br/>
-        {{input type="password" value=model.password}}
-      </div>
-
-      {{#if currentUser.isAdmin}}
         <div class="field">
-          <label>Role</label>
-          {{view Ember.Select
-                 content=validRoles
-                 value=model.role}}
+          <label>First name</label><br/>
+          {{input type="text" value=model.name}}
+          {{#if errors.name}}
+            <div class="error">{{errors.name}}</div>
+          {{/if}}
         </div>
-      {{/if}}
 
-      {{#if model.id}}
         <div class="field">
-          <p>
-            <label>Auth token</label>:
-            <code>{{model.authToken}}</code>
-          </p>
+          <label>Email</label><br/>
+          {{input type="text" value=model.email}}
+          {{#if errors.email}}
+            <div class="error">{{errors.email}}</div>
+          {{/if}}
         </div>
-      {{/if}}
 
-      <div class="actions">
-        <button class="save" {{action "save"}}>Save</button>
-        or
-        {{#link-to "users"}}cancel{{/link-to}}
-      </div>
+        <div class="field">
+          <label>Password</label><br/>
+          {{input type="password" value=model.password}}
+          {{#if errors.password}}
+            <div class="error">{{errors.password}}</div>
+          {{/if}}
+        </div>
 
-    </form>
+        {{#if currentUser.isAdmin}}
+          <div class="field">
+            <label>Role</label>
+            {{view Ember.Select
+                   content=validRoles
+                   value=model.role}}
+          </div>
+        {{/if}}
+
+        {{#if model.id}}
+          <div class="field">
+            <p>
+              <label>Auth token</label>:
+              <code>{{model.authToken}}</code>
+            </p>
+          </div>
+        {{/if}}
+
+        <div class="actions">
+          <button class="save" {{action "save"}}>Save</button>
+          or
+          {{#link-to "users"}}cancel{{/link-to}}
+        </div>
+
+      </form>
+    </div>
   </div>
 </script>
 
@@ -351,9 +363,12 @@
       <div class="room-form">
         <form {{action "save" on="submit"}}>
 
+          {{#if errorMsg}}<div class="error">{{errorMsg}}</div>{{/if}}
+
           <div class="field">
             <label>Name</label><br/>
             {{input type="text" value=roomName}}
+            {{#if errors.name}}<div class="error">{{errors.name}}</div>{{/if}}
           </div>
 
           <div class="actions">
@@ -379,9 +394,12 @@
       <div class="room-form">
         <form {{action "save" on="submit"}}>
 
+          {{#if errorMsg}}<div class="error">{{errorMsg}}</div>{{/if}}
+
           <div class="field">
             <label>Name</label><br/>
             {{input type="text" value=model.name}}
+            {{#if errors.name}}<div class="error">{{errors.name}}</div>{{/if}}            
           </div>
 
           <div class="actions">

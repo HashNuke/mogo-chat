@@ -4,6 +4,10 @@
   height: 100%;
   overflow-y: scroll;
 
+  .error, .error-msg {
+    color: #D00;
+  }
+
   .add {
     padding: 0.25em 0.5em;
     border: 1px solid #68A056;

@@ -8,5 +8,11 @@ App.RoomEditController = Em.Controller.extend
     save: ->
       successCallback = =>
         @transitionToRoute("rooms.index")
-      errorCallback = => console.log("error saving room")
+
+      errorCallback = (response) =>
+        console.log response
+        if response.errors
+          @set("errors", response.errors)
+        else
+          @set("errorMsg", "Oops ~! something went wrong")
       @get("model").save().then(successCallback, errorCallback)

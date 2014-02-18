@@ -15,10 +15,11 @@ defmodule User do
 
 
   validate user,
+    name:  present(),
+    name:  has_length(min: 3),
     email: present(),
-    role: member_of(%w(admin member)),
-    name: has_length(min: 3),
-    also: validate_password
+    role:  member_of(%w(admin member)),
+    also:  validate_password
 
 
   def validate_password(user) do

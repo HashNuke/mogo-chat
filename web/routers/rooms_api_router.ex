@@ -56,10 +56,10 @@ defmodule RoomsApiRouter do
 
     case Room.validate(room) do
       [] ->
-        saved_room = Repo.create(room)
-        json_response [room: Room.public_attributes(saved_room)], conn
+        room = Repo.create(room)
+        json_response [room: Room.public_attributes(room)], conn
       errors ->
-        json_response [errors: errors], conn
+        json_response [errors: errors], conn, 422
     end
   end
 
