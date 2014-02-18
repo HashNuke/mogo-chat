@@ -64780,11 +64780,9 @@ App.paintBox = new MogoChat.PaintBox();
 
       evt = evt || window.event;
       if(evt.type == "focusout" || evt.type == "blur" || evt.type == "pagehige" || this[hidden]) {
-        console.log("hidden");
         App.isPageActive = false;
       }
       else {
-        console.log("not hidden");
         App.isPageActive = true;
         document.title = "Mogo Chat";
       }
@@ -64938,7 +64936,6 @@ App.Router.map(function() {
       for (_i = 0, _len = messages.length; _i < _len; _i++) {
         messageAttrs = messages[_i];
         if (this.store.recordIsLoaded("message", messageAttrs.id)) {
-          console.log("message already in store");
           message = this.store.getById("message", messageAttrs.id);
           existingKeys = [];
           _ref = this.get("room.messages");
