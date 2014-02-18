@@ -5,6 +5,7 @@ defmodule ChatInterfaceIntegrationTest do
 
   hound_session
   truncate_db_after_test
+  test_helpers
 
 
   test "user should be able to join rooms" do

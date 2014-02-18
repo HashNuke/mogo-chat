@@ -5,7 +5,7 @@ defmodule SessionIntegrationTest do
 
   hound_session
   truncate_db_after_test
-  wait_helpers
+  test_helpers
 
   test "should redirect to login if I visit a page without logging in" do
     navigate_to app_path()
@@ -45,44 +45,12 @@ defmodule SessionIntegrationTest do
 
 
   test "member should be able to login and logout" do
-    user = create_member("Test", "test@example.com")
-
-    navigate_to app_path()
-    wait_until({:name, "email"})
-    url_at_login = current_url()
-
-    fill_field {:name, "email"}, user.email
-    fill_field {:name, "password"}, "password"
-    click({:name, "login"})
-
-    wait_until({:class, "left-panel-wrapper"})
-    assert url_at_login != current_url()
-
-    click({:id, "logout-btn"})
-    assert url_at_login == current_url()
+    login_member("Test", "test@example.com")
   end
 
 
   test "admin should be able to login and logout" do
-    user = create_admin("Test", "test@example.com")
-
-    navigate_to app_path()
-    wait_until({:name, "email"})
-    url_at_login = current_url()
-
-    fill_field {:name, "email"}, user.email
-    fill_field {:name, "password"}, "password"
-    click({:name, "login"})
-
-    wait_until({:class, "left-panel-wrapper"})
-    assert url_at_login != current_url()
-
-    click({:id, "logout-btn"})
-    wait_until({:name, "login"})
-
-    IO.inspect current_url()
-
-    assert url_at_login == current_url()
+    login_admin("Test", "test@example.com")
   end
 
 end

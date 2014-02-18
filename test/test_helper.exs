@@ -27,7 +27,7 @@ defmodule TestUtils do
   end
 
 
-  defmacro wait_helpers do
+  defmacro test_helpers do
     quote do
       def wait_until(element, func \\ nil) do
         if until_element(element) do
@@ -62,6 +62,32 @@ defmodule TestUtils do
           find_element(strategy, identifier)
         end
       end
+
+
+      def login_user(name, email, role) do
+        user = create_user("Test", "test@example.com", role)
+
+        navigate_to app_path()
+        wait_until({:name, "email"})
+        url_at_login = current_url()
+
+        fill_field {:name, "email"}, user.email
+        fill_field {:name, "password"}, "password"
+        click({:name, "login"})
+
+        wait_until({:class, "left-panel-wrapper"})
+        assert url_at_login != current_url()
+      end
+
+
+      def login_admin(name, email) do
+        login_user(name, email, "admin")
+      end
+
+      def login_member(name, email) do
+        login_user(name, email, "member")
+      end
+
     end
   end
 
