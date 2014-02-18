@@ -29,38 +29,62 @@ defmodule TestUtils do
 
   defmacro test_helpers do
     quote do
-      def wait_until(element, func \\ nil) do
-        if until_element(element) do
-          if func do
-            apply(func, [])
-          else
-            true
-          end
+      def wait_until(arg, wait_time \\ 10) do
+        if until_element(arg, wait_time) do
+          true
         else
-          IO.inspect "The following element wasn't found:"
-          throw element
+          IO.inspect "The following condition wasn't fullfilled:"
+          throw arg
         end
       end
 
 
-      defp until_element(element, wait_time \\ 10) do
+      defp until_element(arg, wait_time) do
         new_wait_time = wait_time - 1
         :timer.sleep(1000)
-        {strategy, identifier} = element
 
         if new_wait_time > 0 do
           try do
-            find_element(strategy, identifier)
+            if is_tuple(arg) do
+              {strategy, identifier} = arg
+              find_element(strategy, identifier)
+            else
+              if !apply(arg, []) do
+                until_element(arg, new_wait_time)
+              end
+            end
           catch
             _ ->
-              until_element(element, new_wait_time)
+              until_element(arg, new_wait_time)
           else
             _ ->
               true
           end
         else
-          find_element(strategy, identifier)
+          if is_tuple(arg) do
+            {strategy, identifier} = arg
+            find_element(strategy, identifier)
+          else
+            apply(arg, [])
+          end
         end
+      end
+
+
+      def join_room(name) do
+        elements = find_all_elements(:class, "room-name")
+
+        lc element inlist elements do
+          room_name = visible_text(element)
+          if Regex.match?(%r(#{name}), room_name) do
+            click(element)
+            wait_until fn->
+              active_room_name = visible_text({:class, "active-room-name"})
+              Regex.match?(%r(#{active_room_name}), room_name)
+            end
+          end
+        end
+
       end
 
 
@@ -89,6 +113,12 @@ defmodule TestUtils do
       end
 
     end
+  end
+
+
+  def create_room(name) do
+    Room.new(name: name)
+    |> Repo.create
   end
 
 

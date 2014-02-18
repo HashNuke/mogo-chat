@@ -50,7 +50,7 @@
         <div class="left-menu-control" {{action "toggleLeftMenu"}}>
           <img src="/static/assets/navicon.png"/>
         </div>
-        Join a room
+        <span class="active-room-name">Join a room</span>
       </div>
 
       <div class="messages-wrapper">
@@ -61,7 +61,7 @@
         <div class="left-menu-control" {{action "toggleLeftMenu"}}>
           <img src="/static/assets/navicon.png"/>
         </div>
-        {{activeState.room.name}}
+        <span class="active-room-name">{{activeState.room.name}}</span>
         <div class="right-menu-control" {{action "toggleRightMenu"}}>
           <img src="/static/assets/users.png"/>
         </div>
