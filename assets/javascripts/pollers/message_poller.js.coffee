@@ -14,7 +14,9 @@ App.MessagePoller = Em.Object.extend
 
   fetchMessages: (before = false)->
     url = "/api/messages/#{@roomState.get("room.id")}"
-    if before
+    if before == true
+      true
+    else if before
       url = "#{url}?before=#{before}"
     else if @roomState.get("afterMessageId")
       url = "#{url}?after=#{@roomState.get("afterMessageId")}"

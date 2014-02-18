@@ -19,7 +19,11 @@ App.IndexController = Ember.ArrayController.extend
     loadHistory: ->
       activeState = @get("activeState")
       room = activeState.get("room")
-      beforeId = room.get("messages")[0].get("id")
+      if room.get("messages")[0]
+        beforeId = room.get("messages")[0].get("id")
+      else
+        beforeId = true
+
       activeState.messagePoller.fetchMessages(beforeId)
 
 

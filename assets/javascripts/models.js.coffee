@@ -62,6 +62,8 @@ App.RoomUserState = DS.Model.extend Em.Evented,
     messages = data.messages
 
     if data.before
+      if data.before == true && messages
+        messages = messages.reverse()
       addAction = "unshiftObject"
     else
       addAction = "pushObject"
@@ -69,13 +71,15 @@ App.RoomUserState = DS.Model.extend Em.Evented,
     for messageAttrs in messages
       if @store.recordIsLoaded("message", messageAttrs.id)
         console.log "message already in store"
-        # message = @store.getById("message", messageAttrs.id)
-        # keys = []
-        # for msg in @get("room.messages")
-        #   keys.push(msg.get("id"))
+        message = @store.getById("message", messageAttrs.id)
 
-        # if keys.indexOf(message.id) == -1
-        #   @get("room.messages")[addAction](message)
+        #TODO this can be optimized I think. Computed property?
+        existingKeys = []
+        for existingMsg in @get("room.messages")
+          existingKeys.push(existingMsg.get("id"))
+
+        if existingKeys.indexOf(message.get("id")) == -1
+          @get("room.messages")[addAction](message)
       else
         message = @store.push("message", {
           id: messageAttrs.id,
@@ -83,30 +87,29 @@ App.RoomUserState = DS.Model.extend Em.Evented,
           body: messageAttrs.body,
           createdAt: messageAttrs.created_at
         })
-
-        message.set("room", @get("room"))
-
-        if @store.recordIsLoaded("user", messageAttrs.user.id)
-          user = @store.getById("user", messageAttrs.user.id)
-        else
-          userParams =
-            id: messageAttrs.user.id
-            name: messageAttrs.user.name
-            role: messageAttrs.user.role
-            color: App.paintBox.getColor()
-          user = @store.push("user", userParams)
-
-        message.set("user", user)
         @get("room.messages")[addAction](message)
 
-        if message.get("body").match(@get("user.name")) && addAction == "pushObject" && @get("afterMessageId")
-          @set("notification", true)
-          console.log "set notifications to true"
-          App.notifyBySound()
+      message.set("room", @get("room"))
 
-        if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
-          @get("room.messages").shiftObject()
-          @set("room.isHistoryAvailable", true)
+      if @store.recordIsLoaded("user", messageAttrs.user.id)
+        user = @store.getById("user", messageAttrs.user.id)
+      else
+        userParams =
+          id: messageAttrs.user.id
+          name: messageAttrs.user.name
+          role: messageAttrs.user.role
+          color: App.paintBox.getColor()
+        user = @store.push("user", userParams)
+
+      message.set("user", user)
+
+      if message.get("body").match(@get("user.name")) && addAction == "pushObject" && @get("afterMessageId")
+        @set("notification", true)
+        App.notifyBySound()
+
+      if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
+        @get("room.messages").shiftObject()
+        @set("room.isHistoryAvailable", true)
 
     if messages.length > 0 && !data.before
       @set("afterMessageId", messages[messages.length - 1].id)
