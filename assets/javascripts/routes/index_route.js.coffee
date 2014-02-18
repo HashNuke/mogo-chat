@@ -9,7 +9,9 @@ App.IndexRoute = App.AuthenticatedRoute.extend
 
       # This is to make sure the first active room is loaded
       if item.get("joined") == true
-        activeState = item if !activeState?
+        if !activeState?
+          activeState = item
+          activeState.set("active", true)
 
         item.messagePoller = new App.MessagePoller()
         item.messagePoller.setRoomState item

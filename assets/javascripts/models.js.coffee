@@ -41,6 +41,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
   lastPingedAt: DS.attr("date")
   beforeMessageId: DS.attr("number")
   afterMessageId: DS.attr("number")
+  active: DS.attr("boolean", {defaultValue: false})
   notification: DS.attr("boolean", {defaultValue: false})
 
   addUsers: (users)->
