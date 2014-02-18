@@ -22,9 +22,12 @@
           {{#each room_user_state in controller}}
             <li {{bind-attr class="room_user_state.joined:joined:unjoined"}}>
               {{#if room_user_state.joined }}
-                <button class="leave-room" {{action "leaveRoom" this}}>x</button>
+                <span class="leave-room" {{action "leaveRoom" this}}>&cross;</span>
               {{/if}}
               <a class="room-name" {{action "joinOrOpen" this}}>{{room_user_state.room.name}}</a>
+              {{#if room_user_state.notification }}
+                <span class="notification">&odot;</span>
+              {{/if}}
             </li>
           {{/each}}
         </ul>

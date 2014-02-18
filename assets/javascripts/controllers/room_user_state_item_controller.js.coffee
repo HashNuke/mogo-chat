@@ -31,6 +31,8 @@ App.RoomUserStateItemController = Em.ObjectController.extend
         errorCallback = =>
           console.log("error whatever...")
         roomItemState.save().then(successCallback, errorCallback)
+      else
+        roomItemState.set("notification", false)
 
       @get("controllers.index").set("activeState", roomItemState)
       #TODO load the channel

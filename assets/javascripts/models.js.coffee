@@ -41,7 +41,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
   lastPingedAt: DS.attr("date")
   beforeMessageId: DS.attr("number")
   afterMessageId: DS.attr("number")
-
+  notification: DS.attr("boolean", {defaultValue: false})
 
   addUsers: (users)->
     users = for userAttributes in users
@@ -94,6 +94,8 @@ App.RoomUserState = DS.Model.extend Em.Evented,
       @get("room.messages")[addAction](message)
 
       if message.get("body").match(@get("user.name")) && addAction == "pushObject" && @get("afterMessageId")
+        @set("notification", true)
+        console.log "set notifications to true"
         App.notifyBySound()
 
       if @get("room.messages.length") == (MogoChat.config.messagesPerLoad + 1) && addAction == "pushObject"
@@ -101,7 +103,10 @@ App.RoomUserState = DS.Model.extend Em.Evented,
         @set("room.isHistoryAvailable", true)
 
     if messages.length > 0 && !data.before
+      console.log "setting after msg id"
       @set("afterMessageId", messages[messages.length - 1].id)
+    else
+      console.log "not setting after message id"
 
 
 App.Message = DS.Model.extend
