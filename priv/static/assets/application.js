@@ -65040,11 +65040,6 @@ App.Router.map(function() {
     classNames: ["settings"]
   });
 
-  App.UserFormView = Ember.View.extend({
-    templateName: "user-form",
-    classNames: "page"
-  });
-
   App.NewMessageView = Ember.View.extend({
     templateName: "new-message",
     classNames: ["new-message"],
@@ -65233,8 +65228,13 @@ App.Router.map(function() {
           };
         })(this);
         errorCallback = (function(_this) {
-          return function() {
-            return console.log("error saving room");
+          return function(response) {
+            console.log(response);
+            if (response.errors) {
+              return _this.set("errors", response.errors);
+            } else {
+              return _this.set("errorMsg", "Oops ~! something went wrong");
+            }
           };
         })(this);
         return this.get("model").save().then(successCallback, errorCallback);
@@ -65344,8 +65344,12 @@ App.Router.map(function() {
           };
         })(this);
         errorCallback = (function(_this) {
-          return function() {
-            return console.log("error saving room");
+          return function(response) {
+            if (response.errors) {
+              return _this.set("errors", response.errors);
+            } else {
+              return _this.set("errorMsg", "Oops ~! something went wrong");
+            }
           };
         })(this);
         return room.save().then(successCallback, errorCallback);
@@ -65370,8 +65374,12 @@ App.Router.map(function() {
           };
         })(this);
         errorCallback = (function(_this) {
-          return function() {
-            return console.log("error saving user");
+          return function(response) {
+            if (response.errors) {
+              return _this.set("errors", response.errors);
+            } else {
+              return _this.set("errorMsg", "Oops ~! something went wrong");
+            }
           };
         })(this);
         return this.get("model").save().then(successCallback, errorCallback);
@@ -65438,8 +65446,12 @@ App.Router.map(function() {
           };
         })(this);
         errorCallback = (function(_this) {
-          return function() {
-            return console.log("error saving user");
+          return function(response) {
+            if (response.errors) {
+              return _this.set("errors", response.errors);
+            } else {
+              return _this.set("errorMsg", "Oops ~! something went wrong");
+            }
           };
         })(this);
         return this.get("model").save().then(successCallback, errorCallback);
