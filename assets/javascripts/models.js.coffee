@@ -70,7 +70,6 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
     for messageAttrs in messages
       if @store.recordIsLoaded("message", messageAttrs.id)
-        console.log "message already in store"
         message = @store.getById("message", messageAttrs.id)
 
         #TODO this can be optimized I think. Computed property?

@@ -58,11 +58,9 @@ App.paintBox = new MogoChat.PaintBox();
 
       evt = evt || window.event;
       if(evt.type == "focusout" || evt.type == "blur" || evt.type == "pagehige" || this[hidden]) {
-        console.log("hidden");
         App.isPageActive = false;
       }
       else {
-        console.log("not hidden");
         App.isPageActive = true;
         document.title = "Mogo Chat";
       }
