@@ -1,9 +1,1 @@
-* Manage Rooms
-  * create/edit/delete rooms
-* Manage Users
-  * create/edit/delete users
-* Room listing
-* Joining and leaving rooms
-  * create notifications on joining and leaving
-  * controls to join and leave room
 * API docs
