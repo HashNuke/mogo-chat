@@ -41,8 +41,10 @@ App.notifyBySound = function() {
   if(App.isPageActive)
     return
 
-  document.title = "[+] " + document.title
+  if(!document.title.match(/[\+]/g))
+    document.title = "[+] " + document.title;
+
   $audio = $("#app-audio")[0];
   $audio.load();
   $audio.play();
-}
+};
