@@ -109,7 +109,7 @@
   <div class="message">
     <div class="content">
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>:
-      {{message.body}}
+      {{{message.formattedBody}}}
     </div>
     <div class="message-info">
       <div class="message-meta">
@@ -127,7 +127,7 @@
   <div class="message">
     <div class="content">
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
-      <span class="me-body">{{message.body}}</span>
+      <span class="me-body">{{{message.processedBody}}}</span>
     </div>
     <div class="message-info">
       <div class="message-meta">

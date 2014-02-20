@@ -50,9 +50,8 @@
       width: 100%;
       margin-top: 1em;
 
-      .me-body {
-        font-style: italic;
-      }
+      .content a { color: #06c; }
+      .me-body { font-style: italic; }
 
       .paste-wrapper {
         float: left;
@@ -64,9 +63,7 @@
 
         .paste-actions {
           float: left;
-          a {
-            color: #06C;
-          }
+          a { color: #06C; }
         }
 
         pre.paste-body {
@@ -110,9 +107,7 @@
         }
       }
 
-      .user {
-        font-weight: bold;
-      }
+      .user { font-weight: bold; }
     }
   }
 

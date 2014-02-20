@@ -7,12 +7,13 @@ App.IndexController = Ember.ArrayController.extend
   itemController: "RoomUserStateItem"
 
 
-  detectMessageType: (msgTxt)->
-    #TODO update this
-    if msgTxt.match("\n")
-      "paste"
+  detectTypeAndFormatBody: (body)->
+    if body.match("\n")
+      {type: "paste", body: body}
+    else if matches = (/\/me (.*)/g).exec(body)
+      {type: "me", body: matches[1]}
     else
-      "text"
+      {type: "text", body: body}
 
 
   actions:
@@ -28,20 +29,27 @@ App.IndexController = Ember.ArrayController.extend
 
 
     postMessage: (msgTxt)->
-      msgTxt = msgTxt.rtrim()
+      msgTxt = msgTxt.replace(/\s*$/g, "")
       room = @get("activeState").get("room")
       currentUser = @get("currentUser")
+      formatted = @detectTypeAndFormatBody(msgTxt)
       messageParams =
         room: room
         body: msgTxt
-        type: @detectMessageType(msgTxt)
+        type: formatted.type
         createdAt: new Date()
         user: currentUser
 
+      if messageParams.type != "paste"
+        messageParams.formattedBody = App.plugins.processMessageBody(formatted.body, formatted.type)
+
       msg = @store.createRecord("message", messageParams)
+      console.log "backup", msg.get("formattedBody")
 
       if room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1)
         room.get("messages").shiftObject()
+
+      console.log "backup again", msg.get("formattedBody")
       successCallback = =>
         room.get("messages").pushObject(msg)
       errorCallback   = =>

@@ -14,11 +14,8 @@
 //= require "./routes/authenticated_route"
 //= require_tree "./routes"
 //= require_tree "./pollers"
-
-
-String.prototype.rtrim = function() {
-  return this.replace(/\s*$/g, "")
-}
+//= require "plugins"
+//= require "notifications"
 
 
 window.App = Em.Application.create({LOG_TRANSITIONS: true});
@@ -26,57 +23,8 @@ App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});
 App.ApplicationAdapter    = DS.ActiveModelAdapter.reopen({namespace: "api"});
 App.ApplicationView       = Em.View.extend({classNames: ["container"]});
 App.paintBox = new MogoChat.PaintBox();
+App.plugins  = new MogoChat.PluginRegistry();
 
-
-
-//NOTE from http://stackoverflow.com/a/1060034/477045
-(function() {
-    var hidden = "hidden";
-
-    // Standards:
-    if (hidden in document)
-        document.addEventListener("visibilitychange", onVisibilityChange);
-    else if ((hidden = "mozHidden") in document)
-        document.addEventListener("mozvisibilitychange", onVisibilityChange);
-    else if ((hidden = "webkitHidden") in document)
-        document.addEventListener("webkitvisibilitychange", onVisibilityChange);
-    else if ((hidden = "msHidden") in document)
-        document.addEventListener("msvisibilitychange", onVisibilityChange);
-    // IE 9 and lower:
-    else if ('onfocusin' in document)
-        document.onfocusin = document.onfocusout = onVisibilityChange;
-    // All others:
-    else
-        window.onpageshow = window.onpagehide 
-            = window.onfocus = window.onblur = onVisibilityChange;
-
-    function onVisibilityChange (evt) {
-      var v = 'visible', h = 'hidden';
-      var evtMap = {
-        focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
-      };
-
-      evt = evt || window.event;
-      if(evt.type == "focusout" || evt.type == "blur" || evt.type == "pagehige" || this[hidden]) {
-        App.isPageActive = false;
-      }
-      else {
-        App.isPageActive = true;
-        document.title = "Mogo Chat";
-      }
-    }
-})();
-
-
-App.notifyBySound = function() {
-  if(App.isPageActive)
-    return
-
-  document.title = "[+] " + document.title
-  $audio = $("#app-audio")[0];
-  $audio.load();
-  $audio.play();
-}
 
 App.Router.map(function() {
   // login
@@ -93,7 +41,6 @@ App.Router.map(function() {
     });
   });
 
-
   // users
   // users/new
   // users/:user_id
@@ -102,7 +49,6 @@ App.Router.map(function() {
     this.resource("user", {path: "/:user_id"}, function() {
       this.route("edit");
     });
-
   });
 
 });

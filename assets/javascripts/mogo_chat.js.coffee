@@ -4,8 +4,10 @@ MogoChat = {}
 MogoChat.config =
   messagesPerLoad: 20
 
-class MogoChat.Plugins
+class MogoChat.PluginRegistry
   plugins: []
+
+  all: -> @plugins
 
   register: (name, regex, callback)->
     for plugin in @plugins
@@ -22,6 +24,13 @@ class MogoChat.Plugins
         break
     return false unless registeredIndex
     @plugins.splice(registeredIndex, 1)[0]
+
+
+  processMessageBody: (body, type, history = false) ->
+    for plugin, index in @plugins
+      if body.match(plugin.regex)
+        body = plugin.callback(body, type, history)
+    body
 
 
 class MogoChat.PaintBox

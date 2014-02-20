@@ -84,6 +84,11 @@ App.RoomUserState = DS.Model.extend Em.Evented,
           id: messageAttrs.id,
           type: messageAttrs.type,
           body: messageAttrs.body,
+          formattedBody: App.plugins.processMessageBody(
+            messageAttrs.body,
+            messageAttrs.type,
+            (if data.before then true else false)
+          ),
           createdAt: messageAttrs.created_at
         })
         @get("room.messages")[addAction](message)
@@ -116,6 +121,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
 App.Message = DS.Model.extend
   body: DS.attr("string")
+  formattedBody: DS.attr("string")
   type: DS.attr("string")
   createdAt: DS.attr("string")
   errorPosting: DS.attr("boolean", defaultValue: false)
