@@ -44,12 +44,11 @@ App.IndexController = Ember.ArrayController.extend
         messageParams.formattedBody = App.plugins.processMessageBody(formatted.body, formatted.type)
 
       msg = @store.createRecord("message", messageParams)
-      console.log "backup", msg.get("formattedBody")
+      console.log "formatted body: ", msg.get("formattedBody")
 
       if room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1)
         room.get("messages").shiftObject()
 
-      console.log "backup again", msg.get("formattedBody")
       successCallback = =>
         room.get("messages").pushObject(msg)
       errorCallback   = =>
