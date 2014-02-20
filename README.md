@@ -8,11 +8,11 @@ Refer to [docs/install-heroku.md](https://github.com/HashNuke/mogo-chat/blob/mas
 
 ### Features
 
+* Easy to install
 * Works on mobile devices ~!
 * Multiple rooms
 * Join and leave rooms
-* Easy to install
-* [TODO] Support for pasting code, `/me` command and room sounds
+* Sound notifications
 * [TODO] API with token authentication
 
 ---------------------------------------------------
@@ -21,4 +21,8 @@ Refer to [docs/install-heroku.md](https://github.com/HashNuke/mogo-chat/blob/mas
 
 Akash Manohar J &copy; 2014, under the MIT License. See LICENSE file for details.
 
-See CREDITS file for artwork credits.
+##### Artwork
+
+* Users icon designed by Mike Finch - <http://thenounproject.com/term/users/22000/>
+* Logout icon "Power" designed by Michela Tannola - <http://thenounproject.com/term/power/25339/>
+* Notification sound - <http://www.freesound.org/people/Divinux/sounds/198414/>
