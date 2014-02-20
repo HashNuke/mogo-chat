@@ -71,7 +71,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
       message.set("user", user)
 
-      if message.get("body").match(@get("user.name")) && message.get("user.id") != @get("user.id") && addAction == "pushObject" && @get("afterMessageId")
+      if message.get("body").match(@get("user.name")) && message.get("type") != "paste" && message.get("user.id") != @get("user.id") && addAction == "pushObject" && @get("afterMessageId")
         @set("notification", true) if !@get("active")
         App.notifyBySound()
 
