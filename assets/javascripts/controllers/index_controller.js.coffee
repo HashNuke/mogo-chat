@@ -44,7 +44,6 @@ App.IndexController = Ember.ArrayController.extend
         messageParams.formattedBody = App.plugins.processMessageBody(formatted.body, formatted.type)
 
       msg = @store.createRecord("message", messageParams)
-      console.log "formatted body: ", msg.get("formattedBody")
 
       if room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1)
         room.get("messages").shiftObject()
