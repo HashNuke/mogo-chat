@@ -7,6 +7,7 @@
 //= require "mogo_chat"
 //= require_self
 //= require "serializers"
+//= require "transforms"
 //= require "models"
 //= require "views"
 //= require "helpers"

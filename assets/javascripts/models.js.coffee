@@ -20,12 +20,6 @@ App.User = DS.Model.extend
   ).property("color")
 
 
-DS.ArrayTransform = DS.Transform.extend
-  deserialize: (serialized)-> []
-  serialize: (deserialized)-> []
-
-App.register("transform:array", DS.ArrayTransform)
-
 App.Room = DS.Model.extend
   name: DS.attr("string")
   roomUserState: DS.belongsTo("room_user_state")

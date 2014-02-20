@@ -531,6 +531,8 @@ html, body {
       float: left;
       width: 100%;
       margin-top: 1em; }
+      .room-content .messages .message .content a {
+        color: #06c; }
       .room-content .messages .message .me-body {
         font-style: italic; }
       .room-content .messages .message .paste-wrapper {
