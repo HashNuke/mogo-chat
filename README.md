@@ -1,15 +1,15 @@
-# MogoChat
+# MogoChat - team chat app
 
-Team chat appication.
+#### 3-minute Heroku install. [Just copy paste a command](https://github.com/HashNuke/mogo-chat/blob/master/docs/install-heroku.md)
 
 Written using Elixir, Ember.js and Postgresql.
 
-Refer to [docs/install-heroku.md](https://github.com/HashNuke/mogo-chat/blob/master/docs/install-heroku.md) for installation instructions for Heroku. Instructions for more platforms will come soon.
+Install instructions for more platforms will come soon.
 
 ### Features
 
 * Easy to install
-* Works on mobile devices ~!
+* **Works on mobile devices ~!**
 * Multiple rooms
 * Join and leave rooms
 * Sound notifications
