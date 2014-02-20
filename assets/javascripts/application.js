@@ -8,7 +8,7 @@
 //= require_self
 //= require "serializers"
 //= require "transforms"
-//= require "models"
+//= require_tree "./models"
 //= require "views"
 //= require "helpers"
 //= require_tree "./controllers"

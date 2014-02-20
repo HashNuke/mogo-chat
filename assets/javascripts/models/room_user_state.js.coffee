@@ -1,33 +1,3 @@
-App.User = DS.Model.extend
-  name: DS.attr("string")
-  email:  DS.attr("string")
-  role:   DS.attr("string")
-  password: DS.attr("string")
-  color: DS.attr("string")
-  authToken: DS.attr("string")
-
-  isAdmin: (->
-    @get("role") == "admin"
-  ).property("role")
-
-
-  borderStyle: (->
-    "border-left: 0.2em solid #{@get("color")};"
-  ).property("color")
-
-  fontColor: (->
-    "color: #{@get("color")};"
-  ).property("color")
-
-
-App.Room = DS.Model.extend
-  name: DS.attr("string")
-  roomUserState: DS.belongsTo("room_user_state")
-  messages: DS.attr("array")
-  users: DS.attr("array")
-  isHistoryAvailable: DS.attr("boolean")
-
-
 App.RoomUserState = DS.Model.extend Em.Evented,
   user: DS.belongsTo("user")
   joined:  DS.attr("boolean")
@@ -111,27 +81,3 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
     if messages.length > 0 && !data.before
       @set("afterMessageId", messages[messages.length - 1].id)
-
-
-App.Message = DS.Model.extend
-  body: DS.attr("string")
-  formattedBody: DS.attr("string", defaultValue: "this is empty")
-  type: DS.attr("string")
-  createdAt: DS.attr("string")
-  errorPosting: DS.attr("boolean", defaultValue: false)
-  user: DS.belongsTo("user")
-  room: DS.belongsTo("room")
-
-  condensedBody: (->
-    splitMsg = @get("body").split("\n")
-    if splitMsg.length > 5
-      newMsg = splitMsg.slice(0, 4)
-      newMsg.push("...")
-      newMsg.join("\n")
-    else
-      splitMsg.join("\n")
-  ).property("body")
-
-  link: (->
-    "/rooms/#{@get("room.id")}/messages/#{@get("id")}"
-  ).property(["id", "roomId"])
