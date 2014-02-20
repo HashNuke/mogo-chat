@@ -40,9 +40,6 @@ App.IndexController = Ember.ArrayController.extend
         createdAt: new Date()
         user: currentUser
 
-      if messageParams.type != "paste"
-        messageParams.formattedBody = App.plugins.processMessageBody(formatted.body, formatted.type)
-
       msg = @store.createRecord("message", messageParams)
 
       if room.get("messages.length") == (MogoChat.config.messagesPerLoad + 1)
@@ -50,6 +47,9 @@ App.IndexController = Ember.ArrayController.extend
 
       successCallback = =>
         room.get("messages").pushObject(msg)
+        # Note, this can't be set before save(), because createRecord empties this
+        if formatted.type != "paste"
+          msg.set "formattedBody", App.plugins.processMessageBody(formatted.body, formatted.type)
       errorCallback   = =>
         msg.set("errorPosting", true)
         room.get("messages").pushObject(msg)

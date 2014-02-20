@@ -121,7 +121,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
 
 App.Message = DS.Model.extend
   body: DS.attr("string")
-  formattedBody: DS.attr("string")
+  formattedBody: DS.attr("string", defaultValue: "this is empty")
   type: DS.attr("string")
   createdAt: DS.attr("string")
   errorPosting: DS.attr("boolean", defaultValue: false)

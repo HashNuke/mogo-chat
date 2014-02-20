@@ -127,7 +127,7 @@
   <div class="message">
     <div class="content">
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
-      <span class="me-body">{{{message.processedBody}}}</span>
+      <span class="me-body">{{{message.formattedBody}}}</span>
     </div>
     <div class="message-info">
       <div class="message-meta">
