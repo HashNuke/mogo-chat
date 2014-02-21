@@ -427,7 +427,7 @@ html, body {
   width: 100%;
   height: 100%;
   float: left;
-  overflow-x: hidden; }
+  overflow: hidden; }
 
 .left-panel .title, .room-details .title {
   font-size: 0.85em;
@@ -494,10 +494,12 @@ html, body {
 
 .room-content {
   position: absolute;
-  height: 100%; }
+  height: 100%;
+  overflow: hidden; }
   .room-content .room-info {
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    z-index: 100;
+    background: #fff;
     top: 0em;
     padding: 0.25em;
     font-size: 1.25em;
@@ -577,8 +579,7 @@ html, body {
       .room-content .messages .message .user {
         font-weight: bold; }
   .room-content .new-message {
-    width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0em; }
     .room-content .new-message textarea {
       width: 100%;
@@ -776,6 +777,10 @@ html, body {
   .room-content {
     width: 60%;
     left: 20%; }
+    .room-content .new-message {
+      width: 60%; }
+    .room-content .room-info {
+      width: 60%; }
 
   .left-menu-control, .right-menu-control {
     display: none; } }
@@ -794,6 +799,11 @@ html, body {
   .detail {
     width: 100%;
     padding-top: 2.3em; }
+
+  .room-content .room-info {
+    width: 100%; }
+  .room-content .new-message {
+    width: 100%; }
 
   .left-menu-control {
     float: left; }
@@ -847,6 +857,11 @@ html, body {
     width: 100%;
     padding-top: 2.3em; }
 
+  .room-content .room-info {
+    width: 100%; }
+  .room-content .new-message {
+    width: 100%; }
+
   .left-menu-control {
     float: left; }
 
@@ -898,6 +913,11 @@ html, body {
   .detail {
     width: 100%;
     padding-top: 2.3em; }
+
+  .room-content .room-info {
+    width: 100%; }
+  .room-content .new-message {
+    width: 100%; }
 
   .left-menu-control {
     float: left; }
@@ -951,6 +971,11 @@ html, body {
     width: 100%;
     padding-top: 2.3em; }
 
+  .room-content .room-info {
+    width: 100%; }
+  .room-content .new-message {
+    width: 100%; }
+
   .left-menu-control {
     float: left; }
 
@@ -1003,6 +1028,11 @@ html, body {
     width: 100%;
     padding-top: 2.3em; }
 
+  .room-content .room-info {
+    width: 100%; }
+  .room-content .new-message {
+    width: 100%; }
+
   .left-menu-control {
     float: left; }
 
@@ -1051,6 +1081,10 @@ html, body {
   .room-content {
     width: 60%;
     left: 20%; }
+    .room-content .new-message {
+      width: 60%; }
+    .room-content .room-info {
+      width: 60%; }
 
   .left-menu-control, .right-menu-control {
     display: none; } }
