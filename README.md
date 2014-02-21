@@ -16,7 +16,7 @@ Install instructions for more platforms will come soon.
 
 ---------------------------------------------------
 
-### CREDITS
+### Credits
 
 Akash Manohar J &copy; 2014, under the MIT License. See LICENSE file for details.
 
