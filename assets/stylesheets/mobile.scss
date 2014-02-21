@@ -12,6 +12,14 @@
   .room-content {
     width: 60%;
     left: 20%;
+
+    .new-message {
+      width: 60%;
+    }
+
+    .room-info {
+      width: 60%;
+    }
   }
 
   .left-menu-control, .right-menu-control {
@@ -39,6 +47,15 @@
   .detail {
     width: 100%;
     padding-top: 2.3em;
+  }
+
+  .room-content {
+    .room-info {
+      width: 100%;
+    }
+    .new-message {
+      width: 100%; 
+    }
   }
 
   .left-menu-control { float: left; }
