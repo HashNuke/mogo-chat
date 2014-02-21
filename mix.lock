@@ -1,6 +1,6 @@
 [ "bcrypt": {:git, "git://github.com/irccloud/erlang-bcrypt.git", "3a26a36e4f274bbe30c6a2668922951a9467c99d", []},
-  "cowboy": {:git, "git://github.com/extend/cowboy.git", "0ec713fc4b185c3cd0f6b2e7ec2c5f198361bddd", []},
-  "cowlib": {:git, "git://github.com/extend/cowlib.git", "63298e8e160031a70efff86a1acde7e7db1fcda6", [ref: "0.4.0"]},
+  "cowboy": {:git, "git://github.com/extend/cowboy.git", "a96dddd04a6d7b0356e5dcafab73ac6533245861", []},
+  "cowlib": {:git, "git://github.com/extend/cowlib.git", "0d4ece08a7cce90a07cf33d4edad29bc324c7d90", [ref: "0.5.1"]},
   "decimal": {:git, "git://github.com/ericmj/decimal.git", "eef08ae02496d7c9d6bed2b06342d7be0e791223", []},
   "dynamo": {:git, "git://github.com/elixir-lang/dynamo.git", "a25f6701993ea7a88f2ccd3b8c40c3216305442b", []},
   "ecto": {:git, "git://github.com/elixir-lang/ecto.git", "2710795aef61b39b190b4077d75794174e0f450a", []},
