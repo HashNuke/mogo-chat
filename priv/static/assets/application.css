@@ -516,7 +516,7 @@ html, body {
     position: absolute;
     width: 100%;
     top: 2.7em;
-    bottom: 2.5em;
+    bottom: 3.5em;
     overflow-y: scroll; }
   .room-content .load-messages {
     background: #FDE893;
@@ -583,7 +583,7 @@ html, body {
     bottom: 0em; }
     .room-content .new-message textarea {
       width: 100%;
-      height: 2.5em;
+      height: 3.5em;
       resize: none;
       border-top: 0.1em solid #DDD;
       border-right: none;
