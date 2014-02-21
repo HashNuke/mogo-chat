@@ -2,11 +2,11 @@
 <html>
 <head>
   <title><%= content_for(:title) || "Mogo Chat" %></title>
-  <meta content="True" name="HandheldFriendly"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="HandheldFriendly" content="True"/>
   <meta name="google" value="notranslate" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width"/>
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="minimal-ui"/>
 
   <script type="text/javascript" src="/static/assets/application.js"></script>
   <link rel="stylesheet" href="/static/assets/application.css"/>
