@@ -18,7 +18,7 @@ defmodule MogoChat.Mixfile do
 
   defp deps(:prod) do
     [ { :cowboy, github: "extend/cowboy" },
-      { :dynamo, "~> 0.1.0-dev", github: "elixir-lang/dynamo" },
+      { :dynamo, "~> 0.1.0-dev", github: "fishcakez/dynamo", branch: "sendfile" },
       { :postgrex, github: "ericmj/postgrex" },
       { :ecto, github: "elixir-lang/ecto" },
       { :jsex, github: "talentdeficit/jsex" },
