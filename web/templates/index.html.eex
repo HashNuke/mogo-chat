@@ -148,9 +148,11 @@
       <br/>
       <div class="paste-wrapper">
         <pre class="paste-body">{{message.condensedBody}}</pre>
-        <div class="paste-actions">
-          <a target="_blank" {{bind-attr href=message.link}}>view</a>
-        </div>
+        {{#unless message.errorPosting}}
+          <div class="paste-actions">
+            <a target="_blank" {{bind-attr href=message.link}}>view</a>
+          </div>
+        {{/unless}}
       </div>
     </div>
     <div class="message-info">

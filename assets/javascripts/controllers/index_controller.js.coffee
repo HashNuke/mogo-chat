@@ -53,4 +53,6 @@ App.IndexController = Ember.ArrayController.extend
       errorCallback   = =>
         msg.set("errorPosting", true)
         room.get("messages").pushObject(msg)
+        if formatted.type != "paste"
+          msg.set "formattedBody", App.plugins.processMessageBody(formatted.body, formatted.type)
       msg.save().then(successCallback, errorCallback)
