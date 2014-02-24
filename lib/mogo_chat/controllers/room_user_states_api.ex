@@ -1,14 +1,11 @@
-defmodule RoomUserStatesApiRouter do
-  use Dynamo.Router
+defmodule MogoChat.Controllers.RoomUserStatesApi do
+  use Phoenix.Controller
   import Ecto.Query
-  import MogoChat.RouterUtils
+  import MogoChat.ControllerUtils
 
-  prepare do
-    authenticate_user!(conn)
-  end
-
-  get "/" do
-    user_id = get_session(conn, :user_id)
+  def show(conn) do
+    conn = authenticate_user!(conn)
+    user_id = conn.assigns[:session]
     rooms = Repo.all(Room)
 
     room_user_states_attributes = Enum.map rooms, fn(room)->
@@ -33,14 +30,15 @@ defmodule RoomUserStatesApiRouter do
       end
     end
 
-    json_response([room_user_states: room_user_states_attributes], conn)
+    json_resp conn, [room_user_states: room_user_states_attributes]
   end
 
 
-  put "/:room_user_state_id" do
-    room_user_state_id = binary_to_integer(conn.params[:room_user_state_id])
-    user_id = get_session(conn, :user_id)
-    params = json_decode conn.req_body
+  def update(conn) do
+    conn = authenticate_user!(conn)
+    room_user_state_id = binary_to_integer(conn.params["room_user_state_id"])
+    user_id = conn.assigns[:session]
+    params = conn.params
 
     room_user_state_params = whitelist_params(params["room_user_state"], ["joined"])
     query = from r in RoomUserState,
@@ -52,9 +50,9 @@ defmodule RoomUserStatesApiRouter do
     case RoomUserState.validate(new_room_user_state) do
       [] ->
         :ok = Repo.update(new_room_user_state)
-        json_response [user: RoomUserState.public_attributes(new_room_user_state)], conn
+        json_resp conn, [user: RoomUserState.public_attributes(new_room_user_state)]
       errors ->
-        json_response [errors: errors], conn, 422
+        json_resp conn, [errors: errors], 422
     end
   end
 

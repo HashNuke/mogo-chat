@@ -1,35 +1,36 @@
-defmodule SessionsApiRouter do
-  use Dynamo.Router
+defmodule MogoChat.Controllers.SessionsApi do
+  use Phoenix.Controller
   import Ecto.Query
-  import MogoChat.RouterUtils
+  import MogoChat.ControllerUtils
 
 
-  get "/" do
-    user_id = get_session conn, :user_id
+  def index(conn) do
+    user_id = conn.assigns[:session]
     if user_id do
       user = Repo.get(User, user_id)
       attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token"])
-      json_response [user: attributes], conn
+      json_resp conn, [user: attributes]
     else
-      json_response [error: "no session"], conn
+      json_resp conn, [error: "no session"]
     end
   end
 
 
-  post "/" do
+  def create(conn) do
     params = conn.params
     login(conn, params["email"], params["password"])
   end
 
 
-  delete "/" do
-    json_response [ok: "logged out"], delete_session(conn, :user_id)
+  def destroy(conn) do
+    json_resp destroy_session(conn), [ok: "logged out"]
   end
 
 
   defp login(conn, email, password) when email == nil or password == nil do
-    json_response [error: "Please check your login credentials."], conn, 401
+    json_resp conn, [error: "Please check your login credentials."], 401
   end
+
 
   defp login(conn, email, password) do
     query = from u in User, where: u.email == ^email
@@ -39,14 +40,14 @@ defmodule SessionsApiRouter do
       true ->
         user = users |> hd
         if User.valid_password?(user, password) do
-          conn = put_session(conn, :user_id, user.id)
+          conn = put_session(conn, user.id)
           user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token"])
-          json_response [user: user_attributes], conn
+          json_resp conn, [user: user_attributes]
         else
-          json_response [error: "Please check your login credentials."], conn, 401
+          json_resp conn, [error: "Please check your login credentials."], 401
         end
       false ->
-        json_response [error: "Maybe you don't have an account?"], conn, 401
+        json_resp conn, [error: "Maybe you don't have an account?"], 401
     end
   end
 

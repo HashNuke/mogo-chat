@@ -1,24 +1,26 @@
-defmodule UsersApiRouter do
-  use Dynamo.Router
+defmodule MogoChat.Controllers.UsersApi do
+  use Phoenix.Controller
   import Ecto.Query
-  import MogoChat.RouterUtils
+  import MogoChat.ControllerUtils
 
 
-  get "/" do
-    authorize_user!(conn, ["admin"])
+  def index(conn) do
+    conn = authenticate_user!(conn)
+    authorize_roles!(conn, ["admin"])
 
     users = Repo.all User
     users_attributes = lc user inlist users do
       User.attributes(user, ["id", "name", "role", "email"])
     end
-    json_response([users: users_attributes], conn)
+    json_resp conn, [users: users_attributes]
   end
 
 
-  post "/" do
-    authorize_user!(conn, ["admin"])
+  def create(conn) do
+    conn = authenticate_user!(conn)
+    authorize_roles!(conn, ["admin"])
 
-    params = json_decode(conn.req_body)
+    params = conn.params
     user_params = whitelist_params(params["user"], ["name", "email", "password", "role"])
 
     user = User.new(user_params)
@@ -28,15 +30,16 @@ defmodule UsersApiRouter do
     case User.validate(user) do
       [] ->
         saved_user = Repo.create(user)
-        json_response [user: User.public_attributes(saved_user)], conn
+        json_resp conn, [user: User.public_attributes(saved_user)]
       errors ->
-        json_response [errors: errors], conn, 422
+        json_resp conn, [errors: errors], 422
     end
   end
 
 
-  get "/:user_id" do
-    conn = authorize_if! conn, fn(conn, user)->
+  def show(conn) do
+    conn = authenticate_user!(conn)
+    authorize_if! conn, fn(conn, user)->
       user_id = binary_to_integer(conn.params["user_id"])
 
       cond do
@@ -50,12 +53,13 @@ defmodule UsersApiRouter do
     user_id = conn.params["user_id"]
     user = Repo.get User, user_id
     user_attributes = User.attributes(user, ["id", "name", "role", "email"])
-    json_response [user: user_attributes], conn
+    json_resp conn, [user: user_attributes]
   end
 
 
-  put "/:user_id" do
-    conn = authorize_if! conn, fn(conn, user)->
+  def update(conn) do
+    conn = authenticate_user!(conn)
+    authorize_if! conn, fn(conn, user)->
       user_id = binary_to_integer(conn.params["user_id"])
 
       cond do
@@ -66,8 +70,8 @@ defmodule UsersApiRouter do
       end
     end
 
-    user_id = conn.params[:user_id]
-    params = json_decode(conn.req_body)
+    user_id = conn.params["user_id"]
+    params = conn.params
     current_user = conn.assigns[:current_user]
     whitelist = ["name", "email", "password"]
     if current_user.role == "admin" do
@@ -81,18 +85,19 @@ defmodule UsersApiRouter do
     case User.validate(user) do
       [] ->
         :ok = Repo.update(user)
-        json_response [user: User.public_attributes(user)], conn
+        json_resp conn, [user: User.public_attributes(user)]
       errors ->
-        json_response [errors: errors], conn, 422
+        json_resp conn, [errors: errors], 422
     end
   end
 
 
-  delete "/:user_id" do
-    authorize_user!(conn, ["admin"])
+  def destroy(conn) do
+    conn = authenticate_user!(conn)
+    authorize_roles!(conn, ["admin"])
 
     user_id = binary_to_integer(conn.params["user_id"])
-    current_user_id = get_session(conn, :user_id)
+    current_user_id = conn.assigns[:session]
     if current_user_id != user_id do
       user = User.new(id: user_id)
 
@@ -101,7 +106,7 @@ defmodule UsersApiRouter do
 
       Repo.delete_all(from rus in RoomUserState, where: rus.user_id == ^user_id)
     end
-    json_response("", conn)
+    json_resp conn, ""
   end
 
 end

@@ -4,31 +4,33 @@ defmodule MogoChat.Mixfile do
   def project do
     [ app: :mogo_chat,
       version: "0.0.1",
-      build_per_environment: true,
-      dynamos: [MogoChat.Dynamo],
-      compilers: [:elixir, :dynamo, :app],
-      deps: deps(Mix.env) ]
+      elixir: "~> 0.12.4",
+      deps: deps ]
   end
 
   # Configuration for the OTP application
   def application do
-    [ applications: [:cowboy, :dynamo, :bcrypt, :qdate, :jsex, :uuid],
-      mod: { MogoChat, [] } ]
-  end
-
-  defp deps(:prod) do
-    [ { :cowboy, github: "extend/cowboy" },
-      { :dynamo, "~> 0.1.0-dev", github: "fishcakez/dynamo", branch: "sendfile" },
-      { :postgrex, github: "ericmj/postgrex" },
-      { :ecto, github: "elixir-lang/ecto" },
-      { :jsex, github: "talentdeficit/jsex" },
-      { :qdate, github: "choptastic/qdate" },
-      { :bcrypt, github: "irccloud/erlang-bcrypt" },
-      { :uuid, github: "okeuday/uuid" }
+    [
+      applications: [:erlydtl, :bcrypt, :qdate, :jsex, :uuid],
+      mod: { MogoChat, []}
     ]
   end
 
-  defp deps(_) do
-    deps(:prod) ++ [{ :hound, github: "HashNuke/hound" }]
+  # Returns the list of dependencies in the format:
+  # { :foobar, git: "https://github.com/elixir-lang/foobar.git", tag: "0.1" }
+  #
+  # To specify particular versions, regardless of the tag, do:
+  # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
+  defp deps do
+    [
+      {:phoenix, github: "phoenixframework/phoenix"},
+      {:erlydtl, github: "erlydtl/erlydtl", tag: "0.9.0"},
+      {:ecto, github: "elixir-lang/ecto"},
+      {:postgrex, github: "ericmj/postgrex"},
+      {:jsex, github: "talentdeficit/jsex"},
+      {:qdate, github: "choptastic/qdate" },
+      {:bcrypt, github: "irccloud/erlang-bcrypt"},
+      {:uuid, github: "okeuday/uuid"}
+    ]
   end
 end

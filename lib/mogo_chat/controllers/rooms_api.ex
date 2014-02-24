@@ -1,13 +1,13 @@
-defmodule RoomsApiRouter do
-  use Dynamo.Router
+defmodule MogoChat.Controllers.RoomsApi do
+  use Phoenix.Controller
   import Ecto.Query
-  import MogoChat.RouterUtils
+  import MogoChat.ControllerUtils
 
 
-  get "/:room_id/users" do
+  def active_users(conn) do
     authenticate_user!(conn)
 
-    room_id = binary_to_integer(conn.params[:room_id])
+    room_id = binary_to_integer(conn.params["room_id"])
     room = Repo.get Room, room_id
     now  = current_timestamp()
     seconds_ago = now.sec(now.sec - 7)
@@ -20,36 +20,36 @@ defmodule RoomsApiRouter do
       User.public_attributes(room_user_state.user.get)
     end
 
-    json_response([users: users_attributes], conn)
+    json_resp conn, [users: users_attributes]
   end
 
 
-  get "/" do
+  def index(conn) do
     authenticate_user!(conn)
 
     rooms = Repo.all Room
     rooms_attributes = lc room inlist rooms do
       Room.public_attributes(room)
       end
-    json_response([rooms: rooms_attributes], conn)
+    json_resp conn, [rooms: rooms_attributes]
   end
 
 
-  get "/:room_id" do
-    authenticate_user!(conn)
+  def show(conn) do
+    conn = authenticate_user!(conn)
 
-    room_id = conn.params[:room_id]
+    room_id = conn.params["room_id"]
     room = Repo.get Room, room_id
 
-    [room: Room.public_attributes(room)]
-    |> json_response(conn)
+    json_resp conn, [room: Room.public_attributes(room)]
   end
 
 
-  post "/" do
-    authorize_user!(conn, ["admin"])
+  def create(conn) do
+    conn = authenticate_user!(conn)
+    authorize_roles!(conn, ["admin"])
 
-    params = json_decode conn.req_body
+    params = conn.params
 
     room_params = whitelist_params(params["room"], ["name"])
     room = Room.new room_params
@@ -57,18 +57,19 @@ defmodule RoomsApiRouter do
     case Room.validate(room) do
       [] ->
         room = Repo.create(room)
-        json_response [room: Room.public_attributes(room)], conn
+        json_resp conn, [room: Room.public_attributes(room)]
       errors ->
-        json_response [errors: errors], conn, 422
+        json_resp conn, [errors: errors], 422
     end
   end
 
 
-  put "/:room_id" do
-    authorize_user!(conn, ["admin"])
+  def update(conn) do
+    conn = authenticate_user!(conn)
+    authorize_roles!(conn, ["admin"])
 
-    room_id = conn.params[:room_id]
-    params = json_decode conn.req_body
+    room_id = conn.params["room_id"]
+    params = conn.params
 
     room_params = whitelist_params(params["room"], ["name"])
     room = Repo.get(Room, room_id).update(room_params)
@@ -76,15 +77,16 @@ defmodule RoomsApiRouter do
     case Room.validate(room) do
       [] ->
         :ok = Repo.update(room)
-        json_response [user: Room.public_attributes(room)], conn
+        json_resp conn, [user: Room.public_attributes(room)]
       errors ->
-        json_response [errors: errors], conn, 422
+        json_resp conn, [errors: errors], 422
     end
   end
 
 
-  delete "/:room_id" do
-    authorize_user!(conn, ["admin"])
+  def destroy(conn) do
+    conn = authenticate_user!(conn)
+    authorize_roles!(conn, ["admin"])
 
     room_id = binary_to_integer(conn.params["room_id"])
 
@@ -99,7 +101,7 @@ defmodule RoomsApiRouter do
     # Delete the room user states
     Repo.delete_all(from rus in RoomUserState, where: rus.room_id == ^room_id)
 
-    json_response("", conn)
+    json_resp conn, ""
   end
 
 end

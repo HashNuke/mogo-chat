@@ -1,18 +1,15 @@
-defmodule MessagesApiRouter do
-  use Dynamo.Router
+defmodule MogoChat.Controllers.MessagesApi do
+  use Phoenix.Controller
   import Ecto.Query
-  import MogoChat.RouterUtils
-
-  prepare do
-    authenticate_user!(conn)
-  end
+  import MogoChat.ControllerUtils
 
 
-  get "/:room_id" do
-    user_id = get_session(conn, :user_id)
-    before_message_id = conn.params[:before]
-    after_message_id  = conn.params[:after]
-    room = Repo.get Room, binary_to_integer(conn.params[:room_id])
+  def index(conn) do
+    conn = authenticate_user!(conn)
+    user_id = conn.assigns[:session]
+    before_message_id = conn.params["before"]
+    after_message_id  = conn.params["after"]
+    room = Repo.get Room, binary_to_integer(conn.params["room_id"])
 
     query = cond do
       before_message_id ->
@@ -54,14 +51,15 @@ defmodule MessagesApiRouter do
     if !before_message_id do
       messages_attributes = Enum.reverse(messages_attributes)
     end
-    [messages: messages_attributes]
-    |> json_response(conn)
+
+    json_resp conn, [messages: messages_attributes]
   end
 
 
-  post "/" do
-    user_id = get_session(conn, :user_id)
-    params = json_decode conn.req_body
+  def create(conn) do
+    conn = authenticate_user!(conn)
+    user_id = conn.assigns[:session]
+    params = conn.params
 
     message_params = whitelist_params(params["message"], ["room_id", "body"])
     room = Repo.get Room, message_params["room_id"]
@@ -77,9 +75,9 @@ defmodule MessagesApiRouter do
     case Message.validate(message) do
       [] ->
         saved_message = Repo.create(message)
-        json_response [message: Message.public_attributes(saved_message)], conn
+        json_resp conn, [message: Message.public_attributes(saved_message)]
       errors ->
-        json_response [errors: errors], conn
+        json_resp conn, [errors: errors]
     end
   end
 

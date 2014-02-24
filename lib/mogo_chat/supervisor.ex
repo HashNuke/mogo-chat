@@ -2,18 +2,19 @@ defmodule MogoChat.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
-    :supervisor.start_link({ :local, __MODULE__ }, __MODULE__, [])
+    :supervisor.start_link(__MODULE__, [])
   end
 
-
   def init([]) do
-    dynamo_options = [max_restarts: 5, max_seconds: 5]
-
-    tree = [
-      worker(MogoChat.Dynamo, [dynamo_options]),
+    children = [
+      # Define workers and child supervisors to be supervised
+      # worker(MogoChat.Worker, [])
+      worker(MogoChat.Router, []),
       worker(Repo, [])
     ]
 
-    supervise(tree, strategy: :one_for_all)
+    # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
+    # for other strategies and supported options
+    supervise(children, strategy: :one_for_one)
   end
 end

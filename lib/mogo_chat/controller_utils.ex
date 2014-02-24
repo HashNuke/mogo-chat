@@ -1,13 +1,16 @@
-defmodule MogoChat.RouterUtils do
-
-  import Dynamo.HTTP.Session
-  import Dynamo.HTTP.Halt
-  import Dynamo.HTTP.Redirect
+defmodule MogoChat.ControllerUtils do
+  import Plug.Connection
+  import Phoenix.Controller
 
 
   def json_decode(json) do
     {:ok, data} = JSEX.decode(json)
     data
+  end
+
+
+  def json_resp(conn, data, status \\ 200) do
+    json conn, status, json_encode(data)
   end
 
 
@@ -29,11 +32,6 @@ defmodule MogoChat.RouterUtils do
   end
 
 
-  def json_response(data, conn, status \\ 200) do
-    conn.resp_content_type("application/json").resp status, json_encode(data)
-  end
-
-
   def xhr?(conn) do
     headers = conn.req_headers
     headers["x-requested-with"] && Regex.match?(%r/xmlhttprequest/i, headers["x-requested-with"])
@@ -41,10 +39,10 @@ defmodule MogoChat.RouterUtils do
 
 
   def authenticate_user!(conn) do
-    user_id = get_session(conn, :user_id)
+    user_id = conn.assigns[:session]
     if user_id do
       user = Repo.get(User, user_id)
-      conn.assign(:current_user, user)
+      assign(conn, :current_user, user)
     else
       unauthorized!(conn)
     end
@@ -53,40 +51,27 @@ defmodule MogoChat.RouterUtils do
 
   defp unauthorized!(conn) do
     if xhr?(conn) do
-      halt! conn.status(401)
+      send_response(conn, 401, "application/json", "")
     else
-      redirect! conn, to: "/#login", format: :html
+      redirect conn, "/#login"
     end
   end
 
-  @spec authorize_if!(any, (any, any ->  :true | :false)) :: any
+
   def authorize_if!(conn, condition) do
-    conn = authenticate_user!(conn)
     user = conn.assigns[:current_user]
     is_authorized = apply(condition, [conn, user])
 
-    if is_authorized do
-      conn
-    else
+    unless is_authorized do
       unauthorized!(conn)
     end
   end
 
 
-  #TODO This looks like duplication. Maybe can use authenticate_user!
-  # to fetch the user
-  @spec authorize_user!(any, List.t) :: any
-  def authorize_user!(conn, allowed_roles) do
-    user_id = get_session(conn, :user_id)
+  def authorize_roles!(conn, allowed_roles) do
+    user = conn.assigns[:current_user]
 
-    if user_id do
-      user = Repo.get(User, user_id)
-      if :lists.member(user.role, allowed_roles) do
-        conn = conn.assign(:current_user, user)
-      else
-        unauthorized!(conn)
-      end
-    else
+    unless :lists.member(user.role, allowed_roles) do
       unauthorized!(conn)
     end
   end
@@ -110,4 +95,15 @@ defmodule MogoChat.RouterUtils do
     whitelist_params(params, rest, collected)
   end
 
+
+  def put_session(conn, user_id) do
+    :ok = conn.assigns[:session_adapter].put(conn.assigns[:session_id], user_id)
+    assign(conn, :session, user_id)
+  end
+
+
+  def destroy_session(conn) do
+    apply(conn.assigns[:session_adapter], :delete, [conn.assigns[:session_id]])
+    assign(conn, :session, nil)
+  end
 end
