@@ -1,5 +1,5 @@
 defmodule MogoChat.Router do
-  use Phoenix.Router, port: 4000
+  use Phoenix.Router
 
   def start_link do
     __MODULE__.start
