@@ -10,7 +10,7 @@ end
 defmodule MogoChat.Config.Dev do
   use MogoChat.Config
 
-  config :router, port: System.get_env("PORT") || 4000
+  config :router, port: System.get_env("PORT") || "4000"
   config :plugs, code_reload: true
   config :logger, level: :debug
 end
