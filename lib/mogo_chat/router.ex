@@ -5,7 +5,6 @@ defmodule MogoChat.Router do
     __MODULE__.start
   end
 
-  plug Phoenix.ErrorHandler
   plug MogoChat.AuthErrorHandler
 
   plug Plug.Parsers, parsers: [:urlencoded, :multipart, MogoChat.JsonParser]

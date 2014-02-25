@@ -9,6 +9,7 @@ defmodule MogoChat.AuthErrorHandler do
   def wrap(conn, _opts, fun) do
     try do
       fun.(conn)
+      IO.inspect "it executes fine"
     catch
       kind, {{exception, application_trace}, _} ->
         # Check if this error can be handled by this plug
