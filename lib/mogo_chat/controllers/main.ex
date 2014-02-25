@@ -9,6 +9,7 @@ defmodule MogoChat.Controllers.Main do
 
 
   def tryout(conn) do
+    raise ArgumentError, message: "fghgfdh"
     text conn, "hi #{conn.params["username"]}, #{conn.params["password"]}"
   end
 

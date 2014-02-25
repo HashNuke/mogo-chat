@@ -12,7 +12,7 @@ defmodule MogoChat.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: [:erlydtl, :bcrypt, :qdate, :jsex, :uuid],
+      applications: [:phoenix, :erlydtl, :bcrypt, :qdate, :jsex, :uuid],
       mod: { MogoChat, []}
     ]
   end
@@ -20,7 +20,8 @@ defmodule MogoChat.Mixfile do
 
   defp deps do
     [
-      {:phoenix,  github: "phoenixframework/phoenix"},
+      # {:phoenix,  github: "phoenixframework/phoenix"},
+      {:phoenix,  path: "/Users/akashmanohar/projects/phoenix"},
       {:erlydtl,  github: "erlydtl/erlydtl", tag: "0.9.0"},
       {:ecto,     github: "elixir-lang/ecto"},
       {:postgrex, github: "ericmj/postgrex"},

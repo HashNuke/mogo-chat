@@ -5,13 +5,16 @@ defmodule MogoChat.Router do
     __MODULE__.start
   end
 
+  plug Phoenix.ErrorHandler
+  plug MogoChat.AuthErrorHandler
+
   plug Plug.Parsers, parsers: [:urlencoded, :multipart, MogoChat.JsonParser]
   plug Plug.Static, at: "/static", from: :mogo_chat
   plug Plugs.Session, name: "mogo_chat_session", adapter: Plugs.Session.Adapters.Ets
 
 
   get  "/", MogoChat.Controllers.Main, :index, as: :index
-  post "/tryout", MogoChat.Controllers.Main, :tryout
+  get "/tryout", MogoChat.Controllers.Main, :tryout
 
   get    "/api/sessions", MogoChat.Controllers.SessionsApi, :index
   post   "/api/sessions", MogoChat.Controllers.SessionsApi, :create

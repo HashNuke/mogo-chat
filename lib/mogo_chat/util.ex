@@ -1,14 +1,5 @@
 defmodule MogoChat.Util do
 
-  defexception BadRequest, [:message] do
-    defimpl Plug.Exception do
-      def status(_exception) do
-        400
-      end
-    end
-  end
-
-
   @doc """
   Borrowed from ericmj's hex_web https://github.com/ericmj/hex_web/blob/master/lib/hex_web/util.ex#L43-L56
   Read the body from a Plug connection.

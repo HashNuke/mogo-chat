@@ -13,7 +13,6 @@
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
   "merl": {:git, "git://github.com/erlydtl/merl.git", "8cd131f65159309dce77db6fb8e2e8526a083867", [branch: "erlydtl"]},
   "mime": {:git, "git://github.com/dynamo/mime.git", "db84370c53a67a7e58a4d0cfb026f4edc64a9367", []},
-  "phoenix": {:git, "git://github.com/phoenixframework/phoenix.git", "af2f7bb3c1eccf7631f17db8de70842b60c73587", []},
   "plug": {:git, "git://github.com/elixir-lang/plug.git", "c735ee21ab8384ab47ac27feb56cc509641fdc6d", []},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "3cc20d045243fe8d034a295923bd3deeb3be047a", []},
   "postgrex": {:git, "git://github.com/ericmj/postgrex.git", "a5d46bd78e4bea76f274edb7868344629795e9c3", []},

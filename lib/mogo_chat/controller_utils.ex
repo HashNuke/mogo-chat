@@ -51,9 +51,11 @@ defmodule MogoChat.ControllerUtils do
 
   defp unauthorized!(conn) do
     if xhr?(conn) do
-      send_response(conn, 401, "application/json", "")
+      raise MogoChat.Errors.Unauthorized, message: "not authorized"
     else
-      redirect conn, "/#login"
+      raise MogoChat.Errors.Unauthorized, message: "not authorized"
+      # throw "AuthError"
+      # redirect conn, "/#login"
     end
   end
 
