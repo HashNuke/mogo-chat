@@ -52,7 +52,7 @@ defmodule MogoChat.Controllers.UsersApi do
 
     user_id = conn.params["user_id"]
     user = Repo.get User, user_id
-    user_attributes = User.attributes(user, ["id", "name", "role", "email"])
+    user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token"])
     json_resp conn, [user: user_attributes]
   end
 

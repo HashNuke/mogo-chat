@@ -20,14 +20,14 @@ defmodule MogoChat.Mixfile do
 
   defp deps do
     [
-      {:phoenix, github: "phoenixframework/phoenix"},
-      {:erlydtl, github: "erlydtl/erlydtl", tag: "0.9.0"},
-      {:ecto, github: "elixir-lang/ecto"},
+      {:phoenix,  github: "phoenixframework/phoenix"},
+      {:erlydtl,  github: "erlydtl/erlydtl", tag: "0.9.0"},
+      {:ecto,     github: "elixir-lang/ecto"},
       {:postgrex, github: "ericmj/postgrex"},
-      {:jsex, github: "talentdeficit/jsex"},
-      {:qdate, github: "choptastic/qdate" },
-      {:bcrypt, github: "irccloud/erlang-bcrypt"},
-      {:uuid, github: "okeuday/uuid"}
+      {:jsex,     github: "talentdeficit/jsex"},
+      {:qdate,    github: "choptastic/qdate" },
+      {:bcrypt,   github: "irccloud/erlang-bcrypt"},
+      {:uuid,     github: "okeuday/uuid"}
     ]
   end
 end
