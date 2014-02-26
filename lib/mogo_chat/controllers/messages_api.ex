@@ -6,7 +6,7 @@ defmodule MogoChat.Controllers.MessagesApi do
 
   def index(conn) do
     conn = authenticate_user!(conn)
-    user_id = conn.assigns[:session]
+    user_id = conn.assigns[:current_user].id
     before_message_id = conn.params["before"]
     after_message_id  = conn.params["after"]
     room = Repo.get Room, binary_to_integer(conn.params["room_id"])
@@ -58,7 +58,7 @@ defmodule MogoChat.Controllers.MessagesApi do
 
   def create(conn) do
     conn = authenticate_user!(conn)
-    user_id = conn.assigns[:session]
+    conn.assigns[:current_user].id
     params = conn.params
 
     message_params = whitelist_params(params["message"], ["room_id", "body"])

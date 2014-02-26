@@ -2,7 +2,7 @@
 defmodule MogoChat.Config do
   use Phoenix.Config.App
 
-  config :router, port: 4000
+  config :router, port: System.get_env("PORT") || 4000
   config :plugs, code_reload: false
 end
 
@@ -10,8 +10,8 @@ end
 defmodule MogoChat.Config.Dev do
   use MogoChat.Config
 
-  config :router, port: System.get_env("PORT") || "4000"
-  config :plugs, code_reload: true
+  config :router, port: System.get_env("PORT") || 4000
+  config :plugs, code_reload: false
   config :logger, level: :error
 end
 

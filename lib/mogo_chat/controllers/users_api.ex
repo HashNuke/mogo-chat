@@ -97,7 +97,7 @@ defmodule MogoChat.Controllers.UsersApi do
     authorize_roles!(conn, ["admin"])
 
     user_id = binary_to_integer(conn.params["user_id"])
-    current_user_id = conn.assigns[:session]
+    current_user_id = conn.assigns[:current_user].id
     if current_user_id != user_id do
       user = User.new(id: user_id)
 

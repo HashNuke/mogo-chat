@@ -5,7 +5,7 @@ defmodule MogoChat.Controllers.RoomUserStatesApi do
 
   def show(conn) do
     conn = authenticate_user!(conn)
-    user_id = conn.assigns[:session]
+    user_id = conn.assigns[:current_user].id
     rooms = Repo.all(Room)
 
     room_user_states_attributes = Enum.map rooms, fn(room)->
@@ -37,7 +37,7 @@ defmodule MogoChat.Controllers.RoomUserStatesApi do
   def update(conn) do
     conn = authenticate_user!(conn)
     room_user_state_id = binary_to_integer(conn.params["room_user_state_id"])
-    user_id = conn.assigns[:session]
+    user_id = conn.assigns[:current_user].id
     params = conn.params
 
     room_user_state_params = whitelist_params(params["room_user_state"], ["joined"])
