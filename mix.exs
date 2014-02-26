@@ -20,8 +20,7 @@ defmodule MogoChat.Mixfile do
 
   defp deps do
     [
-      # {:phoenix,  github: "phoenixframework/phoenix"},
-      {:phoenix,  path: "/Users/akashmanohar/projects/phoenix"},
+      {:phoenix,  github: "phoenixframework/phoenix"},
       {:erlydtl,  github: "erlydtl/erlydtl", tag: "0.9.0"},
       {:ecto,     github: "elixir-lang/ecto"},
       {:postgrex, github: "ericmj/postgrex"},
