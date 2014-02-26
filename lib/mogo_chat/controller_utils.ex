@@ -50,13 +50,7 @@ defmodule MogoChat.ControllerUtils do
 
 
   defp unauthorized!(conn) do
-    if xhr?(conn) do
-      raise MogoChat.Errors.Unauthorized, message: "not authorized"
-    else
-      raise MogoChat.Errors.Unauthorized, message: "not authorized"
-      # throw "AuthError"
-      # redirect conn, "/#login"
-    end
+    raise MogoChat.Errors.Unauthorized, message: "not authorized"
   end
 
 

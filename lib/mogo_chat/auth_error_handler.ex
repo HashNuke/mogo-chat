@@ -3,6 +3,7 @@ defmodule MogoChat.AuthErrorHandler do
 
   import Plug.Connection
   import Phoenix.Controller
+  import MogoChat.ControllerUtils
 
   def init(opts), do: opts
 
@@ -12,7 +13,11 @@ defmodule MogoChat.AuthErrorHandler do
     catch
       kind, MogoChat.Errors.Unauthorized[message: reason] ->
         stacktrace = System.stacktrace
-        html conn, 401, "Unauthorized! Please find some other property to trespass"
+        if xhr?(conn) do
+          html conn, 401, "Unauthorized! Please find some other property to trespass"
+        else
+          redirect conn, "/#/login"
+        end
     end
   end
 end
