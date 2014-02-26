@@ -1,14 +1,14 @@
-defmodule Mix.Tasks.Server do
+defmodule Mix.Tasks.Console do
   use Mix.Task
 
-  @shortdoc "Start server"
+  @shortdoc "Start console only"
 
   @moduledoc """
-  Server task.
+  Console task.
   """
   def run(_) do
     :application.ensure_all_started(:mogo_chat)
-    MogoChat.Router.start
+    IEx.start
     :timer.sleep(:infinity)
   end
 end
