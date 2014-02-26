@@ -1,7 +1,7 @@
 defmodule MogoChat.ControllerUtils do
   import Plug.Connection
   import Phoenix.Controller
-
+  import Ecto.Query
 
   def json_decode(json) do
     {:ok, data} = JSEX.decode(json)
@@ -39,12 +39,31 @@ defmodule MogoChat.ControllerUtils do
 
 
   def authenticate_user!(conn) do
-    user_id = conn.assigns[:session]
-    if user_id do
-      user = Repo.get(User, user_id)
+    user = get_user_for_request(conn)
+
+    if user do
       assign(conn, :current_user, user)
     else
       unauthorized!(conn)
+    end
+  end
+
+
+  defp get_user_for_request(conn) do
+    cond do
+      conn.assigns[:session] ->
+        user_id = conn.assigns[:session]
+        Repo.get(User, user_id)
+      conn.req_headers["authorization"] ->
+        auth_token = conn.req_headers["authorization"]
+        query = from u in User, where: u.auth_token == ^auth_token
+        users = Repo.all query
+        if length(users) > 0 do
+          hd(users)
+        else
+          nil
+        end
+      true -> nil
     end
   end
 

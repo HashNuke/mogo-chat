@@ -3,7 +3,11 @@ defmodule MogoChat.JsonParser do
   alias Plug.Conn
 
   def parse(Conn[] = conn, "application", "json", _headers, opts) do
-    read_body(conn, Keyword.fetch!(opts, :limit))
+    if conn.method != "GET" do
+      read_body(conn, Keyword.fetch!(opts, :limit))
+    else
+      { :next, conn }
+    end
   end
 
   def parse(conn, _type, _subtype, _headers, _opts) do

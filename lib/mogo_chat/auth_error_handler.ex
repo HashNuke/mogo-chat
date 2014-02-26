@@ -13,8 +13,8 @@ defmodule MogoChat.AuthErrorHandler do
     catch
       kind, MogoChat.Errors.Unauthorized[message: reason] ->
         stacktrace = System.stacktrace
-        if xhr?(conn) do
-          html conn, 401, "Unauthorized! Please find some other property to trespass"
+        if xhr?(conn) || hd(conn.path_info) == "api" do
+          json conn, 401, '{"error": "Unauthorized! Please find some other property to trespass"}'
         else
           redirect conn, "/#/login"
         end

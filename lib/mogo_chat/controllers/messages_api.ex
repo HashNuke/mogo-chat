@@ -58,7 +58,7 @@ defmodule MogoChat.Controllers.MessagesApi do
 
   def create(conn) do
     conn = authenticate_user!(conn)
-    conn.assigns[:current_user].id
+    user_id = conn.assigns[:current_user].id
     params = conn.params
 
     message_params = whitelist_params(params["message"], ["room_id", "body"])
