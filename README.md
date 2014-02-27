@@ -2,10 +2,6 @@
 
 #### 3-minute Heroku install. [Just copy-paste a command](https://github.com/HashNuke/mogo-chat/blob/master/docs/install-heroku.md)
 
-Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com) and [PostgreSQL](http://postgresql.org)
-
-Install instructions for more platforms will come soon.
-
 ### Features
 
 * **Works on mobile devices ~!**
@@ -13,6 +9,10 @@ Install instructions for more platforms will come soon.
 * Multiple rooms
 * Sound notifications
 * [TODO] API
+
+Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com) and [PostgreSQL](http://postgresql.org)
+
+Install instructions for more platforms will come soon.
 
 ---------------------------------------------------
 
