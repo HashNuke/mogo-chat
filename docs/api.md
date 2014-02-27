@@ -85,6 +85,7 @@ PUT /api/rooms/:room_id
     name: "New room name"
   }
 }
+```
 
 #### Delete a room
 
