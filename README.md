@@ -1,10 +1,8 @@
 # MogoChat - team chat app
 
-### Broken right now due to framework migration. HOLD ON ~!
-
 #### 3-minute Heroku install. [Just copy-paste a command](https://github.com/HashNuke/mogo-chat/blob/master/docs/install-heroku.md)
 
-Written using Elixir, Ember.js and Postgresql.
+Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com) and [PostgreSQL](http://postgresql.org)
 
 Install instructions for more platforms will come soon.
 

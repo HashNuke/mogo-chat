@@ -11,9 +11,7 @@ git clone https://github.com/HashNuke/mogo-chat.git
 cd mogo-chat
 heroku create --buildpack "https://github.com/HashNuke/heroku-elixir-buildpack.git"
 git push heroku master
-heroku run bash scripts/migrate
-heroku run bash scripts/setup
-heroku apps:info
+heroku run bash scripts/migrate && heroku run bash scripts/setup && heroku apps:info
 ```
 
 The last command will output your Heroku app's URL. Enjoy ~!
