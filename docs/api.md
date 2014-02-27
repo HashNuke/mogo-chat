@@ -22,6 +22,25 @@ Your access to certain API calls depends on the role of your account.
 Request body must be encoded in JSON for all POST and PUT requests.
 
 
+### Available APIs
+
+* [Users](#users)
+  * [Create a user](#create-a-user)
+  * [Modify a user](#modify-a-user)
+  * [Delete a user](#delete-a-user)
+* [Rooms](#rooms)
+  * [Create a room](#create-a-room)
+  * [Modify a room](#modify-a-room)
+  * [Delete a room](#delete-a-room)
+  * [Active users in a room](#active-users-in-a-room)
+* [Messages](#messages)
+  * [Post a message to a room](#post-a-message-to-a-room)
+  * [Get messages in a room](#get-messages-in-a-room)
+* [Room User States](#room-user-states)
+  * [Get room states](#get-room-states)
+  * [Join or leave rooms](#join-or-leave-rooms)
+
+
 ## Users
 
 #### Create a user
@@ -92,7 +111,7 @@ Request body example:
 > DELETE /api/users/:room_id
 
 
-#### Get active users in a room
+#### Active users in a room
 
 > GET /rooms/:room_id/users
 
@@ -103,6 +122,14 @@ TODO example body
 ```
 
 ## Messages
+
+#### Post a message to a room
+
+> POST /messages
+
+```
+TODO
+```
 
 #### Get messages in a room
 
@@ -119,17 +146,9 @@ In order to get a room's history or get future messages, you can pass any one of
 TODO
 ```
 
-#### Post a message to a room
-
-> POST /messages
-
-```
-TODO
-```
-
 ## Room User States
 
-#### Get logged in rooms
+#### Get room states
 
 > GET /api/room_user_states
 
