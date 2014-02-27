@@ -10,7 +10,7 @@
 * Sound notifications
 * [TODO] API
 
-Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com) and [PostgreSQL](http://postgresql.org)
+Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com), [CoffeeScript](http://coffeescript.org) and [PostgreSQL](http://postgresql.org)
 
 Install instructions for more platforms will come soon.
 
