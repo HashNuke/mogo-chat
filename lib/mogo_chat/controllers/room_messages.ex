@@ -15,11 +15,9 @@ defmodule MogoChat.Controllers.RoomMessages do
     [message] = Repo.all query
     message_params = message.__entity__(:keywords)
     user_params = message.user.get.__entity__(:keywords)
-    # conn = assign(conn, :message, message_params ++ [user: user_params])
+    message = message_params ++ [user: user_params]
 
-    #TODO
-    # render conn, "message.html"
-    text conn, "Some message should be rendered"
+    html conn, MogoChat.Templates.message(message)
   end
 
 end

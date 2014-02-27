@@ -1,0 +1,13 @@
+<html>
+<body>
+<p class="message">
+  <b><%= message[:user][:name] %></b>:
+
+  <%= if message[:type] == "paste" do %>
+    <pre style="background: #fafafa; border: 0.1em solid #ccc; padding: 0.5em"><%= message[:body] %></pre>
+  <%= else %>
+    <%= message[:body] %>
+  <% end %>
+</p>
+</body>
+</html>

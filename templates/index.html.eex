@@ -1,3 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MogoChat</title>
+  <meta name="HandheldFriendly" content="True"/>
+  <meta name="google" value="notranslate" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <script type="text/javascript" src="/static/assets/application.js"></script>
+  <link rel="stylesheet" href="/static/assets/application.css"/>
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+</head>
+<body>
+
+
 <script type="text/x-handlebars" id="index">
   <audio src="/static/sounds/notify.wav" id="app-audio"></audio>
 
@@ -441,3 +458,6 @@
     </div>
   </div>
 </script>
+
+</body>
+</html>
