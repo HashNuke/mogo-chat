@@ -1,33 +1,38 @@
 defmodule FileTree do
 
   def build(path) do
-    tree = :gb_trees.empty()
+    graph = :digraph.new([:acyclic])
     {:ok, dir_list} = File.ls(path)
-    build(path, dir_list, tree)
+    :digraph.add_vertex(graph, path, [type: :dir])
+    build(path, dir_list, graph)
   end
 
-  def build(parent, [], tree) do
-    tree
+  def build(_parent, [], graph) do
+    graph
   end
 
-  def build(parent, [item|items], tree) do
+  def build(parent, [item|items], graph) do
     item_path = :filename.absname_join(parent, item)
+    {parent_vertex, _label} = :digraph.vertex(graph, parent)
 
-    updated_tree = case :filelib.is_dir(item_path) do
+
+    graph = case :filelib.is_dir(item_path) do
       true ->
         {:ok, dir_list} = File.ls(item_path)
-        new_tree = :gb_trees.insert(item_path, [type: :dir, path: item_path], tree)
-        build(item_path, dir_list, new_tree)
+        vertex = :digraph.add_vertex(graph, item_path, [type: :dir])
+        :digraph.add_edge(graph, parent_vertex, vertex)
+        build(item_path, dir_list, graph)
       false ->
-        :gb_trees.insert(item_path, [type: :file, path: item_path, compiled: nil], tree)
+        vertex = :digraph.add_vertex(graph, item_path, [type: :file, compiled: nil])
+        :digraph.add_edge(graph, parent_vertex, vertex)
+        graph
     end
-    build(parent, items, updated_tree)
+    build(parent, items, graph)
   end
 end
 
 
 defmodule Wilcog.ScssCompiler do
-  
 end
 
 defmodule Wilcog.CoffeeCompiler do
@@ -37,4 +42,7 @@ defmodule Wilcog.DefaultCompiler do
 end
 
 
-IO.inspect :gb_trees.keys(FileTree.build("#{File.cwd!}/assets"))
+root = "#{File.cwd!}/assets"
+graph = FileTree.build("#{File.cwd!}/assets")
+{root_vertex, _} = :digraph.vertex(graph, root)
+IO.inspect :digraph.out_neighbours(graph, root_vertex)
