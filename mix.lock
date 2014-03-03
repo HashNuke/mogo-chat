@@ -3,11 +3,13 @@
   "cowlib": {:git, "git://github.com/extend/cowlib.git", "63298e8e160031a70efff86a1acde7e7db1fcda6", [ref: "0.4.0"]},
   "decimal": {:git, "git://github.com/ericmj/decimal.git", "342476ec74b90619f54e419c9449b8fa2e859ae7", []},
   "ecto": {:git, "git://github.com/elixir-lang/ecto.git", "29744894030a86719dd6d50529435b96a0fc0312", []},
+  "erlang_js": {:git, "https://github.com/basho/erlang_js", "bc8db2a770ef5359e47ad1e85bef5b345f4ea422", [branch: "master"]},
   "erlang_localtime": {:git, "git://github.com/choptastic/erlang_localtime.git", "ebcafb02326e4b2e2ea8fb9a8ba1abacf6426a57", [branch: "master"]},
   "erlware_commons": {:git, "git://github.com/erlware/erlware_commons.git", "b125ce055e8dd7df20b5a30c190f1a4c42a90b92", [branch: "master"]},
   "erlydtl": {:git, "git://github.com/erlydtl/erlydtl.git", "8c876fde4c2b383c241d4d6cbba39d979548cd94", [tag: "0.9.0"]},
   "ex_conf": {:git, "git://github.com/phoenixframework/ex_conf.git", "4ca0cbf65c70d1ce787834a0988338729dcf4098", []},
   "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "ee01fe3efd7b8af1dbaa00946bad5817d57b5875", []},
+  "exec": {:git, "https://github.com/saleyn/erlexec.git", "4760e31bc9867b89eeaf4e3dad01ba387c54eea8", [branch: "master"]},
   "inflex": {:git, "git://github.com/nurugger07/inflex.git", "b1c8b1d2647867b9171dbf3e6a3a4ab77ad0617e", []},
   "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "3db1d520e00fb28c3eee4e5b30645d5878037c38", []},
   "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]},
@@ -21,4 +23,6 @@
   "quickrand": {:git, "https://github.com/okeuday/quickrand.git", "b4db3b4483b73107682fc593c2bc94be922ddcda", [tag: "v1.3.1"]},
   "ranch": {:git, "git://github.com/extend/ranch.git", "5df1f222f94e08abdcab7084f5e13027143cc222", [ref: "0.9.0"]},
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "fd40c960c7912193631d948fe962e1162a8d1334", [branch: "master"]},
-  "uuid": {:git, "git://github.com/okeuday/uuid.git", "c28dd577b5ee57b8583e6d26417729c09089c206", []} ]
+  "stylish": {:git, "git://github.com/hashnuke/stylish.git", "f502b81a7ef778c674129a5af94dceff204db620", [submodules: true]},
+  "uuid": {:git, "git://github.com/okeuday/uuid.git", "c28dd577b5ee57b8583e6d26417729c09089c206", []},
+  "wilcog": {:git, "/Users/akashmanohar/projects/wilcog", "a9bc042c0c0deb7fbda177c7612f6103169b4b63", []} ]

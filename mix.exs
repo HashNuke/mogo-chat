@@ -20,6 +20,8 @@ defmodule MogoChat.Mixfile do
 
   defp deps do
     [
+      {:wilcog,   git: "/Users/akashmanohar/projects/wilcog"},
+      {:stylish,  github: "hashnuke/stylish", submodules: true},
       {:phoenix,  github: "phoenixframework/phoenix"},
       {:ecto,     github: "elixir-lang/ecto"},
       {:postgrex, github: "ericmj/postgrex"},
