@@ -1,16 +1,16 @@
 Definitions.
-D = [0-9]
-S = (\+|\-)?
-H = [a-zA-Z0-9]
-Spl = (\\((u{H}{4})|([\"trf\bn\/])))
+Sc = \/\*
+Ec = \*/
+Dc=(require_self|require_tree|require)
+Sws = [\s\t\r\n]
+Ws = [\s\t\r\n]*
+Sp = [\s\t]*
+Path = ("[^\s\n]+"|[^\s\n]+)
 
 Rules.
-([\s\t\r\n]+)                  : skip_token.
-[\{\}\[\]\,\:]                 : {token, {list_to_atom(TokenChars), TokenLine}}.
-('true'|'false'|'null')        : {token, {list_to_atom(TokenChars), TokenLine}}.
-{S}{D}+                        : {token,{'NUMBER',TokenLine,list_to_integer(TokenChars)}}.
-{S}{D}+\.{D}+((E|e){S}{D}+)?   : {token,{'NUMBER',TokenLine,list_to_float(TokenChars)}}.
-"(([^\\\"])|{Spl})*"           : {token,{'STRING',TokenLine,strip_quotes(TokenChars)}}.
+{Sws} : skip_token.
+{Ws}\*{Sp}={Ws}{Dc}{Sp}{Path} : {token, {'DIRECTIVES', TokenLine, TokenChars}}.
+. : skip_token.
 
 Erlang code.
 strip_quotes(StrChars) ->
