@@ -1,3 +1,11 @@
+defmodule Wilcog do
+  def compile(asset_path, _output_path, _options) do
+    precompile = ["application.js", "application.css"]
+    FileTree.build(asset_path)
+  end
+end
+
+
 defmodule FileTree do
 
   def build(path) do
@@ -22,7 +30,11 @@ defmodule FileTree do
         :digraph.add_edge(graph, parent_vertex, vertex)
         build(item_path, dir_list, graph)
       false ->
-        vertex = :digraph.add_vertex(graph, item_path, [type: :file, compiled: nil])
+        props = :filename.basename(item_path)
+                |> FilenameUtils.extract_info()
+                |> :lists.merge([type: :file, compiled: nil])
+
+        vertex = :digraph.add_vertex(graph, item_path, props)
         :digraph.add_edge(graph, parent_vertex, vertex)
         graph
     end
@@ -119,11 +131,11 @@ defmodule FilenameUtils do
     basename = compute_basename(first_part, unknown_extensions)
     compiled_name = compiled_name_for(source_filename, basename, known_extensions)
 
-    {
+    [
       source_name: source_filename,
       compiled_name: compiled_name,
       compilers: known_extensions
-    }
+    ]
   end
 
 
@@ -142,14 +154,14 @@ defmodule FilenameUtils do
 end
 
 
-IO.inspect FilenameUtils.extract_info("manifest")
-IO.inspect FilenameUtils.extract_info("test.coffee")
-IO.inspect FilenameUtils.extract_info("test.scss")
-IO.inspect FilenameUtils.extract_info("test.css.scss")
-IO.inspect FilenameUtils.extract_info("jquery.2.0.3.min.js.coffee")
-IO.inspect FilenameUtils.extract_info("jquery.min.js")
+# IO.inspect FilenameUtils.extract_info("manifest")
+# IO.inspect FilenameUtils.extract_info("test.coffee")
+# IO.inspect FilenameUtils.extract_info("test.scss")
+# IO.inspect FilenameUtils.extract_info("test.css.scss")
+# IO.inspect FilenameUtils.extract_info("jquery.2.0.3.min.js.coffee")
+# IO.inspect FilenameUtils.extract_info("jquery.min.js")
 
-# root = "#{File.cwd!}/assets"
-# graph = FileTree.build("#{File.cwd!}/assets")
-# {root_vertex, _} = :digraph.vertex(graph, root)
-# IO.inspect :digraph.out_neighbours(graph, root_vertex)
+root = "#{File.cwd!}/assets"
+graph = FileTree.build("#{File.cwd!}/assets")
+{root_vertex, _} = :digraph.vertex(graph, root)
+IO.inspect :digraph.out_neighbours(graph, root_vertex)
