@@ -74,7 +74,7 @@ defmodule FilenameUtils do
     ]
   end
 
-  def compiled_name_for(source_filename, basename, []) do
+  def compiled_name_for(_source_filename, basename, []) do
     basename
   end
 
@@ -87,21 +87,16 @@ defmodule FilenameUtils do
     part1
   end
 
-  def compute_basename(part1, parts) do
-    Enum.join [part1 | parts], "."
+  def compute_basename(part1, other_parts) do
+    [part1 | other_parts] |> Enum.join(".")
   end
 
 
   def compute_extension(source_filename, extension) do
-    if compiler_for(extension) do
-      compiler = compiler_for(extension)
-      if defines_extension?(compiler) do
-        compiler.expected_extension(source_filename)
-      else
-        extension
-      end
-    else
-      extension
+    cond do
+      compiler_for(extension) && defines_extension?(compiler_for(extension)) ->
+        compiler_for(extension).expected_extension(source_filename)
+      true -> extension
     end
   end
 
@@ -120,6 +115,7 @@ defmodule FilenameUtils do
     if unknown_extensions != [] do
       unknown_extensions = :lists.reverse(unknown_extensions)
     end
+
     basename = compute_basename(first_part, unknown_extensions)
     compiled_name = compiled_name_for(source_filename, basename, known_extensions)
 
@@ -130,11 +126,6 @@ defmodule FilenameUtils do
     }
   end
 
-
-  # def extension_for(filename) do
-  #   extensions = :lists.reverse(String.split(filename, "."))
-  #   |> resolve_extensions()
-  # end
 
   def group_extensions([]) do
     {[], []}
