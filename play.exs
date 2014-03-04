@@ -74,36 +74,29 @@ defmodule FilenameUtils do
     ]
   end
 
-  def compilable_extensions do
-    ["scss", "js", "coffee", "css"]
-  end
-
-
-  def compiled_name_for(basename, [], []) do
+  def compiled_name_for(source_filename, basename, []) do
     basename
   end
 
-  def compiled_name_for(basename, [], known_extensions) do
-    [basename, compute_extension(:lists.last(known_extensions))]
+  def compiled_name_for(source_filename, basename, known_extensions) do
+    [basename] ++ [compute_extension(source_filename, :lists.last(known_extensions))]
     |> Enum.join(".")
   end
 
-  def compiled_name_for(basename, unknown_extensions, []) do
-    [basename] ++ :lists.reverse(unknown_extensions)
-    |> Enum.join(".")
+  def compute_basename(part1, []) do
+    part1
   end
 
-  def compiled_name_for(basename, unknown_extensions, known_extensions) do
-    [basename] ++ :lists.reverse(unknown_extensions) ++ [compute_extension(:lists.last(known_extensions))]
-    |> Enum.join(".")
+  def compute_basename(part1, parts) do
+    Enum.join [part1 | parts], "."
   end
 
 
-  def compute_extension(extension) do
+  def compute_extension(source_filename, extension) do
     if compiler_for(extension) do
       compiler = compiler_for(extension)
       if defines_extension?(compiler) do
-        compiler.expected_extension("asdas")
+        compiler.expected_extension(source_filename)
       else
         extension
       end
@@ -118,18 +111,20 @@ defmodule FilenameUtils do
   end
 
 
-  def extract_info(filename) do
-    parts = String.split(filename, ".")
-    basename = hd(parts)
+  def extract_info(source_filename) do
+    parts = String.split(source_filename, ".")
+    first_part = hd(parts)
     {known_extensions, unknown_extensions} = tl(parts)
-    |> :lists.reverse()
     |> group_extensions()
 
-
-    compiled_name = compiled_name_for(basename, unknown_extensions, known_extensions)
+    if unknown_extensions != [] do
+      unknown_extensions = :lists.reverse(unknown_extensions)
+    end
+    basename = compute_basename(first_part, unknown_extensions)
+    compiled_name = compiled_name_for(source_filename, basename, known_extensions)
 
     {
-      actual_name: filename,
+      source_name: source_filename,
       compiled_name: compiled_name,
       compilers: known_extensions
     }
@@ -141,10 +136,15 @@ defmodule FilenameUtils do
   #   |> resolve_extensions()
   # end
 
+  def group_extensions([]) do
+    {[], []}
+  end
 
   def group_extensions(extensions) do
-    Enum.split_while extensions, fn(extension)->
-      :lists.member(extension, compilable_extensions)
+    extensions
+    |> :lists.reverse
+    |> Enum.split_while fn(extension)->
+      :lists.member(extension, Dict.keys(compilers))
     end
   end
 
