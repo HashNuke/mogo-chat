@@ -137,6 +137,33 @@ end
 
 defmodule FilenameUtils do
 
+  def path_relative_to_file(file, relative_path) do
+    parent_path = :filename.dirname(file)
+    # We don't use :filename.absname because we need the correct absolute path
+    # to fetch from the file tree graph
+    parts = String.split(relative_path, "/")
+
+    # the parent dir is fixed (something like cd-ed) according to the "..",
+    # while the include path's ".." is popped
+    {parent_parts, include_parts} = :lists.foldl(fn(part, {parent_path_parts, include_path_parts})->
+      case part do
+        ".." ->
+          new_parent_path = parent_path_parts
+          |> :lists.reverse()
+          |> tl()
+          |> :lists.reverse()
+          {new_parent_path, tl(include_path_parts)}
+        "." ->
+          {parent_path_parts, tl(include_path_parts)}
+        _ ->
+          {parent_path_parts, include_path_parts}
+      end
+    end, {String.split(parent_path, "/"), parts}, parts)
+    IO.inspect parent_parts
+    IO.inspect include_parts
+    Enum.join(parent_parts ++ include_parts, "/")
+  end
+
   def compiler_for(extension) do
     compilers[extension]
   end
@@ -219,6 +246,8 @@ end
 
 graph = Wilcog.compile("#{File.cwd!}/assets", "#{File.cwd!}/priv/static/assets")
 IO.inspect :digraph.vertex(graph, "#{File.cwd!}/assets/javascripts/application.js")
+
+IO.inspect FilenameUtils.path_relative_to_file("#{File.cwd!}/assets/javascripts/application.js", "../notification.js")
 
 # IO.inspect FilenameUtils.extract_info("manifest")
 # IO.inspect FilenameUtils.extract_info("test.coffee")
