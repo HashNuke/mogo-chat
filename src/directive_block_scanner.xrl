@@ -13,7 +13,6 @@ DirectiveLine = {DirectiveCmd}{Space}{Path}
 Css = {StartComment}{OptWhitespace}(\**{OptWhitespace}\={OptWhitespace}{DirectiveLine}{OptWhitespace})+{EndComment}
 
 
-
 Rules.
 {Whitespace}     : skip_token.
 {Css}            : {token, {directive_block, TokenLine, TokenChars}}.

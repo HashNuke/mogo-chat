@@ -5,6 +5,38 @@ defmodule Wilcog do
   end
 end
 
+defmodule DirectiveParser do
+  def parse(file) do
+    {:ok, contents} = File.read(file)
+    parse_directives(contents)
+  end
+
+
+  def parse_directives(contents) do
+    {:ok, directive_blocks, _} = :directive_block_scanner.string('#{contents}')
+    parse_directive_blocks(directive_blocks)
+  end
+
+
+  def parse_directive_blocks([]) do
+    []
+  end
+
+  def parse_directive_blocks([directive_block|_]) do
+    {:directive_block, _, token_string} = directive_block
+    {:ok, tokens, _} = :directive_scanner.string(token_string)
+
+    :lists.filtermap(fn({label, _, token_string})->
+      case label == :directive do
+        true -> {true, token_string}
+        false -> false
+      end
+    end, tokens)    
+  end
+
+end
+
+IO.inspect DirectiveParser.parse("/Users/akashmanohar/projects/mogo-chat/test.css")
 
 defmodule FileTree do
 
