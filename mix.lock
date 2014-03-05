@@ -25,4 +25,4 @@
   "rebar_vsn_plugin": {:git, "https://github.com/erlware/rebar_vsn_plugin.git", "fd40c960c7912193631d948fe962e1162a8d1334", [branch: "master"]},
   "stylish": {:git, "git://github.com/hashnuke/stylish.git", "f502b81a7ef778c674129a5af94dceff204db620", [submodules: true]},
   "uuid": {:git, "git://github.com/okeuday/uuid.git", "c28dd577b5ee57b8583e6d26417729c09089c206", []},
-  "wilcog": {:git, "/Users/akashmanohar/projects/wilcog", "a9bc042c0c0deb7fbda177c7612f6103169b4b63", []} ]
+  "wilcog": {:git, "/Users/akashmanohar/projects/wilcog", "5d2af766d4efca7408bf9b28fa329890d52e5d01", []} ]
