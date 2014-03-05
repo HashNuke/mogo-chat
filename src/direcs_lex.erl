@@ -495,12 +495,8 @@ yystate(4, Ics, Line, Tlen, _, _) ->
     {4,Tlen,Ics,Line};
 yystate(3, [32|Ics], Line, Tlen, _, _) ->
     yystate(3, Ics, Line, Tlen+1, 2, Tlen);
-yystate(3, [13|Ics], Line, Tlen, _, _) ->
-    yystate(3, Ics, Line, Tlen+1, 2, Tlen);
 yystate(3, [9|Ics], Line, Tlen, _, _) ->
     yystate(3, Ics, Line, Tlen+1, 2, Tlen);
-yystate(3, [10|Ics], Line, Tlen, _, _) ->
-    yystate(3, Ics, Line+1, Tlen+1, 2, Tlen);
 yystate(3, Ics, Line, Tlen, _, _) ->
     {2,Tlen,Ics,Line,3};
 yystate(2, [114|Ics], Line, Tlen, Action, Alen) ->

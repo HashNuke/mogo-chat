@@ -1,21 +1,21 @@
 Definitions.
-Sc = \/\*
-Ec = \*/
-Dc=(require_self|require_tree|require)
-Sws = [\s\t\r\n]
-Ws = [\s\t\r\n]*
-Sp = [\s\t]*
+StartComment = \/\*
+EndComment = \*/
+DirectiveCmd=(require_self|require_tree|require)
+Whitespace = [\s\t\r\n]
+OptWhitespace = {Whitespace}*
+Space = [\s\t]*
 Path = [^\s\n]+
-DcLine = {Dc}{Sp}{Path}
+DirectiveLine = {DirectiveCmd}{Space}{Path}
 
 Rules.
-{Sws}    : skip_token.
-{Ws}     : skip_token.
-={Ws}    : skip_token.
-\*       : skip_token.
-{Sc}     : {token, {start_comment, TokenLine, TokenChars}}.
-{DcLine} : {token, {directive, TokenLine, TokenChars}}.
-{Ec}     : {token, {end_comment, TokenLine, TokenChars}}.
-.        : skip_token.
+{Whitespace}     : skip_token.
+{OptWhitespace}  : skip_token.
+={Space}         : skip_token.
+\*               : skip_token.
+{StartComment}   : {token, {start_comment, TokenLine, TokenChars}}.
+{DirectiveLine}  : {token, {directive, TokenLine, TokenChars}}.
+{EndComment}     : {token, {end_comment, TokenLine, TokenChars}}.
+.                : skip_token.
 
 Erlang code.
