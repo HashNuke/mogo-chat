@@ -1,7 +1,9 @@
 defmodule Wilcog do
-  def compile(asset_path, _output_path, _options) do
-    precompile = ["application.js", "application.css"]
-    FileTree.build(asset_path)
+  def compile(asset_path, output_path, options \\ []) do
+    default_precompile_list = ["application.js", "application.css"]
+    extra_precompile_list = :proplists.get_value(:precompile, options, [])
+    precompile = default_precompile_list ++ extra_precompile_list
+    graph = FileTree.build("#{File.cwd!}/assets")
   end
 end
 
@@ -11,8 +13,6 @@ defmodule DirectiveParser do
     {:ok, directive_blocks, _} = :directive_block_scanner.string('#{contents}')
     parse_directives(directive_blocks)
   end
-
-
 
   def parse_directives([]) do
     []
@@ -51,7 +51,7 @@ defmodule DirectiveParser do
   end
 end
 
-IO.inspect DirectiveParser.parse("/Users/akashmanohar/projects/mogo-chat/test.css")
+
 
 defmodule FileTree do
 
@@ -77,15 +77,32 @@ defmodule FileTree do
         :digraph.add_edge(graph, parent_vertex, vertex)
         build(item_path, dir_list, graph)
       false ->
-        props = :filename.basename(item_path)
-                |> FilenameUtils.extract_info()
-                |> :lists.merge([type: :file, compiled: nil])
-
+        props = file_properties(item_path)
         vertex = :digraph.add_vertex(graph, item_path, props)
         :digraph.add_edge(graph, parent_vertex, vertex)
         graph
     end
     build(parent, items, graph)
+  end
+
+
+  def file_properties(path) do
+    props = :filename.basename(path)
+      |> FilenameUtils.extract_info()
+      |> :lists.merge([type: :file, compiled: nil])
+
+    case js_or_css?(props[:output]) do
+      true ->
+        props ++ [dependencies: DirectiveParser.parse(path)]
+      false ->
+        props
+    end
+  end
+
+
+  def js_or_css?(output_name) do
+    parts = String.split(output_name, ".")
+    :lists.member(:lists.last(parts), ["js", "css", "coffee", "scss"])
   end
 
 end
@@ -179,8 +196,8 @@ defmodule FilenameUtils do
     compiled_name = compiled_name_for(source_filename, basename, known_extensions)
 
     [
-      source_name: source_filename,
-      compiled_name: compiled_name,
+      source: source_filename,
+      output: compiled_name,
       compilers: known_extensions
     ]
   end
@@ -200,6 +217,8 @@ defmodule FilenameUtils do
 
 end
 
+graph = Wilcog.compile("#{File.cwd!}/assets", "#{File.cwd!}/priv/static/assets")
+IO.inspect :digraph.vertex(graph, "#{File.cwd!}/assets/javascripts/application.js")
 
 # IO.inspect FilenameUtils.extract_info("manifest")
 # IO.inspect FilenameUtils.extract_info("test.coffee")
@@ -208,7 +227,7 @@ end
 # IO.inspect FilenameUtils.extract_info("jquery.2.0.3.min.js.coffee")
 # IO.inspect FilenameUtils.extract_info("jquery.min.js")
 
-root = "#{File.cwd!}/assets"
-graph = FileTree.build("#{File.cwd!}/assets")
-{root_vertex, _} = :digraph.vertex(graph, root)
-IO.inspect :digraph.out_neighbours(graph, root_vertex)
+# root = "#{File.cwd!}/assets"
+# graph = FileTree.build("#{File.cwd!}/assets")
+# {root_vertex, _} = :digraph.vertex(graph, root)
+# IO.inspect :digraph.out_neighbours(graph, root_vertex)
