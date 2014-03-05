@@ -8,32 +8,47 @@ end
 defmodule DirectiveParser do
   def parse(file) do
     {:ok, contents} = File.read(file)
-    parse_directives(contents)
-  end
-
-
-  def parse_directives(contents) do
     {:ok, directive_blocks, _} = :directive_block_scanner.string('#{contents}')
-    parse_directive_blocks(directive_blocks)
+    parse_directives(directive_blocks)
   end
 
 
-  def parse_directive_blocks([]) do
+
+  def parse_directives([]) do
     []
   end
 
-  def parse_directive_blocks([directive_block|_]) do
+  def parse_directives([directive_block|_]) do
     {:directive_block, _, token_string} = directive_block
     {:ok, tokens, _} = :directive_scanner.string(token_string)
 
-    :lists.filtermap(fn({label, _, token_string})->
+    directives = :lists.filtermap(fn({label, _, token_string})->
       case label == :directive do
         true -> {true, token_string}
         false -> false
       end
-    end, tokens)    
+    end, tokens)
+    parse_dependencies(directives)
   end
 
+
+  def parse_dependencies(directives) do
+    :lists.map(fn(directive)->
+      command = :string.tokens(directive, ' ')
+      get_dependency_from_require(command)
+    end, directives)
+  end
+
+
+  def get_dependency_from_require(['require_self']) do
+    :self
+  end
+  def get_dependency_from_require(['require_tree', relative_path]) do
+    {:tree, relative_path}
+  end
+  def get_dependency_from_require(['require', path]) do
+    {:file, path}
+  end
 end
 
 IO.inspect DirectiveParser.parse("/Users/akashmanohar/projects/mogo-chat/test.css")
