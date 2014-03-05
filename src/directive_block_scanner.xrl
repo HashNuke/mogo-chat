@@ -2,13 +2,13 @@ Definitions.
 Whitespace = [\s\t\r\n]
 OptWhitespace = {Whitespace}*
 Space = [\s\t]*
-Path = [^\s\n]+
-
 StartComment = (/\*|\#\#\#)
 EndComment = (\*/|\#\#\#)
-
+Path = [^\s\n]+
 DirectiveCmd=(require_self|require_tree|require)
-DirectiveLine = {DirectiveCmd}{Space}{Path}
+DirectiveWithPath = {DirectiveCmd}{Space}{Path}
+DirectiveWithoutPath = {DirectiveCmd}{Space}
+DirectiveLine = ({DirectiveWithPath}|{DirectiveWithoutPath})
 
 Css = {StartComment}{OptWhitespace}(\**{OptWhitespace}\={OptWhitespace}{DirectiveLine}{OptWhitespace})+{EndComment}
 

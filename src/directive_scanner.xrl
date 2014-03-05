@@ -1,12 +1,14 @@
 Definitions.
-StartComment = \/\*
-EndComment = \*/
-DirectiveCmd=(require_self|require_tree|require)
 Whitespace = [\s\t\r\n]
 OptWhitespace = {Whitespace}*
 Space = [\s\t]*
+StartComment = (/\*|\#\#\#)
+EndComment = (\*/|\#\#\#)
 Path = [^\s\n]+
-DirectiveLine = {DirectiveCmd}{Space}{Path}
+DirectiveCmd=(require_self|require_tree|require)
+DirectiveWithPath = {DirectiveCmd}{Space}{Path}
+DirectiveWithoutPath = {DirectiveCmd}{Space}
+DirectiveLine = ({DirectiveWithPath}|{DirectiveWithoutPath})
 
 Rules.
 {Whitespace}     : skip_token.
