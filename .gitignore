@@ -7,3 +7,5 @@ erl_crash.dump
 _build
 .#*
 config/database.json
+src/directive_block_scanner.erl
+src/directive_scanner.erl
