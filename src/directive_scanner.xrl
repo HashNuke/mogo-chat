@@ -13,7 +13,7 @@ Rules.
 {OptWhitespace}  : skip_token.
 ={Space}         : skip_token.
 \*               : skip_token.
-{StartComment}   : {token, {start_comment, TokenLine, TokenChars}}.
+{StartComment}   : {token, {sart_comment, TokenLine, TokenChars}}.
 {DirectiveLine}  : {token, {directive, TokenLine, TokenChars}}.
 {EndComment}     : {token, {end_comment, TokenLine, TokenChars}}.
 .                : skip_token.
