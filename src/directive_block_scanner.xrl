@@ -10,12 +10,17 @@ DirectiveWithPath = {DirectiveCmd}{Space}{Path}
 DirectiveWithoutPath = {DirectiveCmd}{Space}
 DirectiveLine = ({DirectiveWithPath}|{DirectiveWithoutPath})
 
-Css = {StartComment}{OptWhitespace}(\**{OptWhitespace}\={OptWhitespace}{DirectiveLine}{OptWhitespace})+{EndComment}
+SingleLineComment = (//|\#)
+
+CssBlock = {StartComment}{OptWhitespace}(\**{OptWhitespace}\={OptWhitespace}{DirectiveLine}{OptWhitespace})+{EndComment}
+JsBlock = ({SingleLineComment}{OptWhitespace}={OptWhitespace}{DirectiveLine}{Whitespace})+
+
+CommentBlock = ({CssBlock}|{JsBlock})
 
 
 Rules.
-{Whitespace}     : skip_token.
-{Css}            : {token, {directive_block, TokenLine, TokenChars}}.
-.                : skip_token.
+{Whitespace}   : skip_token.
+{CommentBlock} : {token, {directive_block, TokenLine, TokenChars}}.
+.              : skip_token.
 
 Erlang code.
