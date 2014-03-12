@@ -18,7 +18,7 @@ defmodule User do
     name:  present(),
     name:  has_length(min: 3),
     email: present(),
-    role:  member_of(%w(admin member)),
+    role:  member_of(~w(admin member)),
     also:  validate_password
 
 

@@ -13,12 +13,12 @@ defmodule Message do
 
   def assign_message_type(record) do
     cond do
-      Regex.match?(%r/\n/g, record.body) ->
+      Regex.match?(~r/\n/g, record.body) ->
         record.type("paste")
       #TODO support sounds
-      # matches = Regex.named_captures(%r/\/play (?<sound>\w+)/g, record.body) ->
+      # matches = Regex.named_captures(~r/\/play (?<sound>\w+)/g, record.body) ->
       #   record.type("sound").body(matches[:sound])
-      matches = Regex.named_captures(%r/\/me (?<announcement>.+)/g, record.body) ->
+      matches = Regex.named_captures(~r/\/me (?<announcement>.+)/g, record.body) ->
         record.type("me").body(matches[:announcement])
       true ->
         record = record.body
