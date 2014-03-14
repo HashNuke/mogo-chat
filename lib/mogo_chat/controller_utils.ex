@@ -34,7 +34,7 @@ defmodule MogoChat.ControllerUtils do
 
   def xhr?(conn) do
     headers = conn.req_headers
-    headers["x-requested-with"] && Regex.match?(%r/xmlhttprequest/i, headers["x-requested-with"])
+    headers["x-requested-with"] && Regex.match?(~r/xmlhttprequest/i, headers["x-requested-with"])
   end
 
 

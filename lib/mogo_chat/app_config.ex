@@ -4,8 +4,8 @@ defmodule AppConfig do
     cond do
       System.get_env("STACK") == "cedar" ->
         quote do
-          def url do
-            System.get_env("DATABASE_URL")
+          def conf do
+            parse_url System.get_env("DATABASE_URL")
           end
         end
 
@@ -15,8 +15,8 @@ defmodule AppConfig do
         database_url = config["#{Mix.env}"]
 
         quote do
-          def url do
-            unquote(database_url)
+          def conf do
+            parse_url unquote(database_url)
           end
         end
       true ->
