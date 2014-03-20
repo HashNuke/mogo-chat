@@ -1,9 +1,82 @@
 defmodule Wilcog do
+
   def compile(asset_path, output_path, options \\ []) do
     default_precompile_list = ["application.js", "application.css"]
     extra_precompile_list = :proplists.get_value(:precompile, options, [])
-    precompile = default_precompile_list ++ extra_precompile_list
+    precompile_list = default_precompile_list ++ extra_precompile_list
     graph = FileTree.build("#{File.cwd!}/assets")
+
+    precompile_vertices = get_vertices_of_precompile_list(graph, precompile_list)
+    create_dir_if_not_exists(output_path)
+
+    compile_assets(precompile_vertices, graph, output_path, options)
+  end
+
+
+  def get_vertices_of_precompile_list(graph, precompile_list) do
+    elements = :digraph_utils.topsort(graph)
+    fold_function = fn(name, {precompile_vertices, precompile_list})->
+      {vertex, data} = :digraph.vertex(graph, name)
+      if :lists.member(data[:output], precompile_list) do
+        {precompile_vertices ++ [vertex], precompile_list}
+      else
+        {precompile_vertices, precompile_list}
+      end
+    end
+    {precompile_vertices, _} = :lists.foldr(fold_function, {[], precompile_list}, elements)
+    precompile_vertices
+  end
+
+
+  def create_dir_if_not_exists(path) do
+    if !:filelib.is_dir(path) do
+      :ok = :file.make_dir(path)
+    end
+  end
+
+
+  def write_file(file_path, contents) do
+    {:ok, io_device} = :file.open(file_path, [:write])
+    :file.write(io_device, contents)
+    :file.close(io_device)
+  end
+
+
+  def compile_assets([], graph, output_path, options) do
+  end
+
+
+  def compile_assets([vertex|other_vertices], graph, output_path, options) do
+    {_, data} = :digraph.vertex(graph, vertex)
+    compiled_dependencies = compile_dependencies(data[:dependencies], graph, options)
+    contents = :string.join(compiled_dependencies, ' ')
+    write_file('#{output_path}/#{data[:output]}', contents)
+
+    compile_assets([], graph, output_path, options)
+  end
+
+
+  def compile_dependencies(dependencies, graph, options) do
+    :lists.map(fn(dependency)->
+      dependency_vertex = guess_vertex(graph, dependency)
+      {_, dependency_vertex_data} = :digraph.vertex(dependency_vertex)
+
+      if dependency_vertex_data[:type] == "dir" do
+        compile_dir(dependency, dependency_vertex_data, graph, options)
+      else
+        compile_file(dependency, dependency_vertex_data, graph, options)
+      end
+    end, dependencies)
+  end
+
+
+  def compile_dir(vertex, vertex_data, graph, options) do
+    "definitely"
+  end
+
+
+  def compile_file(vertex, vertex_data, graph, options) do
+    "definitely"
   end
 end
 
@@ -244,10 +317,12 @@ defmodule FilenameUtils do
 
 end
 
-graph = Wilcog.compile("#{File.cwd!}/assets", "#{File.cwd!}/priv/static/assets")
-IO.inspect :digraph.vertex(graph, "#{File.cwd!}/assets/javascripts/application.js")
+Wilcog.compile("#{File.cwd!}/assets", "#{File.cwd!}/priv/static/assets")
 
-IO.inspect FilenameUtils.path_relative_to_file("#{File.cwd!}/assets/javascripts/application.js", "../notification.js")
+
+# IO.inspect :digraph.vertex(graph, "#{File.cwd!}/assets/javascripts/application.js")
+# IO.inspect DirectiveParser.parse "#{File.cwd!}/assets/javascripts/application.js"
+# IO.inspect FilenameUtils.path_relative_to_file("#{File.cwd!}/assets/javascripts/application.js", "../notification.js")
 
 # IO.inspect FilenameUtils.extract_info("manifest")
 # IO.inspect FilenameUtils.extract_info("test.coffee")
