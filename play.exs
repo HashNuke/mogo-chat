@@ -1,13 +1,15 @@
 defmodule Wilcog do
 
   def compile(asset_path, output_path, options \\ []) do
-    default_precompile_list = ["application.js", "application.css"]
+    default_precompile_list = ['application.js', 'application.css']
     extra_precompile_list = :proplists.get_value(:precompile, options, [])
     precompile_list = default_precompile_list ++ extra_precompile_list
-    graph = FileTree.build("#{File.cwd!}/assets")
+    graph = FileTree.build('#{File.cwd!}/assets')
 
     precompile_vertices = get_vertices_of_precompile_list(graph, precompile_list)
     create_dir_if_not_exists(output_path)
+
+    IO.inspect "compiling assets.."
 
     compile_assets(precompile_vertices, graph, output_path, options)
   end
@@ -43,42 +45,100 @@ defmodule Wilcog do
 
 
   def compile_assets([], graph, output_path, options) do
+    IO.inspect "Done compiling assets ~!"
   end
 
 
   def compile_assets([vertex|other_vertices], graph, output_path, options) do
     {_, data} = :digraph.vertex(graph, vertex)
-    compiled_dependencies = compile_dependencies(data[:dependencies], graph, options)
+    compiled_dependencies = compile_dependencies(vertex, data[:dependencies], graph, options)
     contents = :string.join(compiled_dependencies, ' ')
+
+    # current_file_contents = compile_without_dependencies(vertex, vertex_data, graph, options)
     write_file('#{output_path}/#{data[:output]}', contents)
 
-    compile_assets([], graph, output_path, options)
+    compile_assets(other_vertices, graph, output_path, options)
   end
 
 
-  def compile_dependencies(dependencies, graph, options) do
-    :lists.map(fn(dependency)->
-      dependency_vertex = guess_vertex(graph, dependency)
-      {_, dependency_vertex_data} = :digraph.vertex(dependency_vertex)
+  def compile_dependencies(parent_file, dependencies, graph, options) do
+    :lists.map(fn(dependency_info)->
+      case dependency_info do
+        :self ->
+          ''
+        {:file, dependency} ->
+          dependency_vertex = guess_vertex(dependency, "file", parent_file, graph)
+          if dependency_vertex == nil do
+            raise "No match found for #{dependency} in #{parent_file}"
+          end
 
-      if dependency_vertex_data[:type] == "dir" do
-        compile_dir(dependency, dependency_vertex_data, graph, options)
-      else
-        compile_file(dependency, dependency_vertex_data, graph, options)
+          {_, dependency_vertex_data} = :digraph.vertex(graph, dependency_vertex)
+          compile_file(dependency, dependency_vertex_data, graph, options)
+        {:tree, dependency} ->
+          dependency_vertex = guess_vertex(dependency, "dir", parent_file, graph)
+
+          if dependency_vertex == nil do
+            raise "No match found for #{dependency} in #{parent_file}"
+          else
+            IO.inspect "Match for #{dependency} is #{dependency_vertex} in #{parent_file}"
+          end
+
+          {_, dependency_vertex_data} = :digraph.vertex(graph, dependency_vertex)
+          compile_dir(dependency, dependency_vertex_data, graph, options)
       end
     end, dependencies)
   end
 
 
   def compile_dir(vertex, vertex_data, graph, options) do
-    "definitely"
+    'definitely'
+  end
+
+
+  def compile_without_dependencies(vertex, vertex_data, graph, options) do
+    'definitely'
   end
 
 
   def compile_file(vertex, vertex_data, graph, options) do
-    "definitely"
+    'definitely'
   end
+
+
+  def guess_vertex(asset_name, type, reference_vertex, graph) do
+    pattern = FileUtils.possible_path_relative_to_file(reference_vertex, asset_name)
+    vertices = :digraph_utils.topsort(graph)
+
+    find_matching_vertex(vertices, type, pattern, graph)
+  end
+
+
+  def find_matching_vertex([], type, pattern, graph) do
+    nil
+  end
+
+  def find_matching_vertex([vertex | others], type, pattern, graph) do
+    tokens = :re.split(vertex, pattern, [{:return, :list}])
+    {_, vertex_data} = :digraph.vertex(graph, vertex)
+
+    vertex_type = if vertex_data[:type] == :tree do
+      "dir"
+    else
+      "file"
+    end
+
+    cond do
+      vertex_type != type ->
+        find_matching_vertex(others, type, pattern, graph)
+      hd(tokens) == [] ->
+        vertex
+      true ->
+        find_matching_vertex(others, type, pattern, graph)
+    end
+  end
+
 end
+
 
 defmodule DirectiveParser do
   def parse(file) do
@@ -125,12 +185,11 @@ defmodule DirectiveParser do
 end
 
 
-
 defmodule FileTree do
 
   def build(path) do
     graph = :digraph.new([:acyclic])
-    {:ok, dir_list} = File.ls(path)
+    {:ok, dir_list} = :file.list_dir(path)
     :digraph.add_vertex(graph, path, [type: :dir])
     build(path, dir_list, graph)
   end
@@ -145,8 +204,8 @@ defmodule FileTree do
 
     graph = case :filelib.is_dir(item_path) do
       true ->
-        {:ok, dir_list} = File.ls(item_path)
-        vertex = :digraph.add_vertex(graph, item_path, [type: :dir])
+        {:ok, dir_list} = :file.list_dir(item_path)
+        vertex = :digraph.add_vertex(graph, item_path, [type: :dir, dependencies: []])
         :digraph.add_edge(graph, parent_vertex, vertex)
         build(item_path, dir_list, graph)
       false ->
@@ -161,7 +220,7 @@ defmodule FileTree do
 
   def file_properties(path) do
     props = :filename.basename(path)
-      |> FilenameUtils.extract_info()
+      |> FileUtils.extract_info()
       |> :lists.merge([type: :file, compiled: nil])
 
     case js_or_css?(props[:output]) do
@@ -174,8 +233,8 @@ defmodule FileTree do
 
 
   def js_or_css?(output_name) do
-    parts = String.split(output_name, ".")
-    :lists.member(:lists.last(parts), ["js", "css", "coffee", "scss"])
+    parts = :string.tokens(output_name, '.')
+    :lists.member(:lists.last(parts), ['js', 'css', 'coffee', 'scss'])
   end
 
 end
@@ -208,33 +267,31 @@ defmodule Wilcog.DefaultCompiler do
 end
 
 
-defmodule FilenameUtils do
+defmodule FileUtils do
 
-  def path_relative_to_file(file, relative_path) do
+  def possible_path_relative_to_file(file, relative_path) do
     parent_path = :filename.dirname(file)
     # We don't use :filename.absname because we need the correct absolute path
     # to fetch from the file tree graph
-    parts = String.split(relative_path, "/")
+    parts = :string.tokens(relative_path, '/')
 
     # the parent dir is fixed (something like cd-ed) according to the "..",
     # while the include path's ".." is popped
     {parent_parts, include_parts} = :lists.foldl(fn(part, {parent_path_parts, include_path_parts})->
       case part do
-        ".." ->
-          new_parent_path = parent_path_parts
+        '..' ->
+          new_parent_path_parts = parent_path_parts
           |> :lists.reverse()
           |> tl()
           |> :lists.reverse()
-          {new_parent_path, tl(include_path_parts)}
-        "." ->
+          {new_parent_path_parts, tl(include_path_parts)}
+        '.' ->
           {parent_path_parts, tl(include_path_parts)}
         _ ->
           {parent_path_parts, include_path_parts}
       end
-    end, {String.split(parent_path, "/"), parts}, parts)
-    IO.inspect parent_parts
-    IO.inspect include_parts
-    Enum.join(parent_parts ++ include_parts, "/")
+    end, {:string.tokens(parent_path, '/'), parts}, parts)
+    '/' ++ :string.join(parent_parts ++ include_parts, '/')
   end
 
   def compiler_for(extension) do
@@ -256,7 +313,7 @@ defmodule FilenameUtils do
 
   def compiled_name_for(source_filename, basename, known_extensions) do
     [basename] ++ [compute_extension(source_filename, :lists.last(known_extensions))]
-    |> Enum.join(".")
+    |> :string.join('.')
   end
 
   def compute_basename(part1, []) do
@@ -264,7 +321,7 @@ defmodule FilenameUtils do
   end
 
   def compute_basename(part1, other_parts) do
-    [part1 | other_parts] |> Enum.join(".")
+    [part1 | other_parts] |> :string.join('.')
   end
 
 
@@ -283,7 +340,7 @@ defmodule FilenameUtils do
 
 
   def extract_info(source_filename) do
-    parts = String.split(source_filename, ".")
+    parts = :string.tokens(source_filename, '.')
     first_part = hd(parts)
     {known_extensions, unknown_extensions} = tl(parts)
     |> group_extensions()
@@ -317,19 +374,22 @@ defmodule FilenameUtils do
 
 end
 
-Wilcog.compile("#{File.cwd!}/assets", "#{File.cwd!}/priv/static/assets")
-
+Wilcog.compile('#{File.cwd!}/assets', '#{File.cwd!}/priv/static/assets')
 
 # IO.inspect :digraph.vertex(graph, "#{File.cwd!}/assets/javascripts/application.js")
 # IO.inspect DirectiveParser.parse "#{File.cwd!}/assets/javascripts/application.js"
-# IO.inspect FilenameUtils.path_relative_to_file("#{File.cwd!}/assets/javascripts/application.js", "../notification.js")
+# IO.inspect FileUtils.possible_path_relative_to_file('#{File.cwd!}/assets/javascripts/application.js', '../notifications.js')
+# IO.inspect FileUtils.possible_path_relative_to_file('#{File.cwd!}/assets/javascripts/application.js', 'notifications.js')
+# IO.inspect FileUtils.possible_path_relative_to_file('#{File.cwd!}/assets/javascripts/application.js', 'notifications')
+# IO.inspect FileUtils.possible_path_relative_to_file('#{File.cwd!}/assets/javascripts/application.js', 'notifications')
+# IO.inspect FileUtils.possible_path_relative_to_file('#{File.cwd!}/assets/javascripts/application.js', './controllers')
 
-# IO.inspect FilenameUtils.extract_info("manifest")
-# IO.inspect FilenameUtils.extract_info("test.coffee")
-# IO.inspect FilenameUtils.extract_info("test.scss")
-# IO.inspect FilenameUtils.extract_info("test.css.scss")
-# IO.inspect FilenameUtils.extract_info("jquery.2.0.3.min.js.coffee")
-# IO.inspect FilenameUtils.extract_info("jquery.min.js")
+# IO.inspect FileUtils.extract_info("manifest")
+# IO.inspect FileUtils.extract_info("test.coffee")
+# IO.inspect FileUtils.extract_info("test.scss")
+# IO.inspect FileUtils.extract_info("test.css.scss")
+# IO.inspect FileUtils.extract_info("jquery.2.0.3.min.js.coffee")
+# IO.inspect FileUtils.extract_info("jquery.min.js")
 
 # root = "#{File.cwd!}/assets"
 # graph = FileTree.build("#{File.cwd!}/assets")
