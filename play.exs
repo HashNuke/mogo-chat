@@ -17,6 +17,7 @@ defmodule Wilcog do
 
   def get_vertices_of_precompile_list(graph, precompile_list) do
     elements = :digraph_utils.topsort(graph)
+
     fold_function = fn(name, {precompile_vertices, precompile_list})->
       {vertex, data} = :digraph.vertex(graph, name)
       if :lists.member(data[:output], precompile_list) do
@@ -121,7 +122,7 @@ defmodule Wilcog do
     tokens = :re.split(vertex, pattern, [{:return, :list}])
     {_, vertex_data} = :digraph.vertex(graph, vertex)
 
-    vertex_type = if vertex_data[:type] == :tree do
+    vertex_type = if vertex_data[:type] == :dir do
       "dir"
     else
       "file"
