@@ -5,7 +5,7 @@ defmodule MogoChat.Mixfile do
     [ app: :mogo_chat,
       version: "0.0.1",
       build_per_environment: true,
-      elixir: "~> 0.12.4",
+      elixir: "~> 0.12.5",
       deps: deps ]
   end
 
