@@ -34,5 +34,4 @@ App.AuthenticatedRoute = Em.Route.extend
   #TODO not sure why this is here
   actions:
     error: (reason, transition)->
-      console.log "ERROR: moving to login", error
       this.redirectToLogin(transition)

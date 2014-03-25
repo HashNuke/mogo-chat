@@ -67,6 +67,7 @@ App.RoomUserState = DS.Model.extend Em.Evented,
           name: messageAttrs.user.name
           role: messageAttrs.user.role
           color: App.paintBox.getColor()
+          archived: messageAttrs.user.archived
         user = @store.push("user", userParams)
 
       message.set("user", user)

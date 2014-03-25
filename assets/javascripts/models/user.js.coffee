@@ -4,6 +4,7 @@ App.User = DS.Model.extend
   role:   DS.attr("string")
   password: DS.attr("string")
   color: DS.attr("string")
+  archived: DS.attr("boolean", defaultValue: false)
   authToken: DS.attr("string")
 
   isAdmin: (->

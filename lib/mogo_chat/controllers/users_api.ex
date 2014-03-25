@@ -8,7 +8,7 @@ defmodule MogoChat.Controllers.UsersApi do
     conn = authenticate_user!(conn)
     authorize_roles!(conn, ["admin"])
 
-    users = Repo.all User
+    users = Repo.all(from u in User, where: u.archived == ^false)
     users_attributes = lc user inlist users do
       User.attributes(user, ["id", "name", "role", "email", "auth_token"])
     end
@@ -51,8 +51,9 @@ defmodule MogoChat.Controllers.UsersApi do
     end
 
     user_id = conn.params["user_id"]
+    # TODO user query to not return archived users
     user = Repo.get User, user_id
-    user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token"])
+    user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token", "archived"])
     json_resp conn, [user: user_attributes]
   end
 
@@ -79,6 +80,7 @@ defmodule MogoChat.Controllers.UsersApi do
     end
 
     user_params = whitelist_params(params["user"], whitelist)
+    # TODO use query to not fetch archived users
     user = Repo.get(User, user_id).update(user_params)
     |> User.encrypt_password()
 
@@ -99,10 +101,9 @@ defmodule MogoChat.Controllers.UsersApi do
     user_id = binary_to_integer(conn.params["user_id"])
     current_user_id = conn.assigns[:current_user].id
     if current_user_id != user_id do
-      user = User.new(id: user_id)
-
-      # TODO actually just mark the user as archived and don't allow logins
-      Repo.delete user
+      new_attrs = [archived: true, email: nil, auth_token: nil, encrypted_password: nil]
+      updated_user = Repo.get(User, user_id).update(new_attrs)
+      :ok = Repo.update(updated_user)
 
       Repo.delete_all(from rus in RoomUserState, where: rus.user_id == ^user_id)
     end

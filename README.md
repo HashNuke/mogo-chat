@@ -16,6 +16,11 @@ Install instructions for more platforms will come soon.
 
 ---------------------------------------------------
 
+### TODO
+
+* Asset pipeline to compile assets in Elixir/Erlang (In progress)
+* Move Handlebars templates to assets
+
 ### Credits
 
 Akash Manohar J &copy; 2014, under the MIT License. See LICENSE file for details.

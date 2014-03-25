@@ -125,7 +125,9 @@
 <script type="text/x-handlebars" id="_text">
   <div class="message">
     <div class="content">
-      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>:
+      <span class="user" {{bind-attr style="message.user.fontColor"}}>
+        {{message.user.name}}
+      </span>{{#if message.user.archived}}(*deleted user*){{/if}}:
       {{{message.formattedBody}}}
     </div>
     <div class="message-info">
@@ -144,6 +146,7 @@
   <div class="message">
     <div class="content">
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
+      {{#if message.user.archived}}(*deleted user*){{/if}}
       <span class="me-body">{{{message.formattedBody}}}</span>
     </div>
     <div class="message-info">
@@ -162,6 +165,7 @@
   <div class="message">
     <div class="content">
       <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
+      {{#if message.user.archived}}(*deleted user*){{/if}}
       <br/>
       <div class="paste-wrapper">
         <pre class="paste-body">{{message.condensedBody}}</pre>
@@ -354,16 +358,18 @@
         {{#link-to "users.new" classNames="add"}}+ Add{{/link-to}}
 
         {{#each user in controller}}
-          <div class="item">
-            <span class="name">{{user.name}}</span>
-            (<span class="email">{{user.email}}</span>)
-            <div class="controls">
-              {{#link-to "user.edit" user.id}}Edit{{/link-to}}
-              {{#unless isCurrentUser}}
-                <span {{action "remove" this}}>Remove</span>
-              {{/unless}}
+          {{#unless user.archived}}
+            <div class="item">
+              <span class="name">{{user.name}}</span>
+              (<span class="email">{{user.email}}</span>)
+              <div class="controls">
+                {{#link-to "user.edit" user.id}}Edit{{/link-to}}
+                {{#unless isCurrentUser}}
+                  <span {{action "remove" this}}>Remove</span>
+                {{/unless}}
+              </div>
             </div>
-          </div>
+          {{/unless}}
         {{/each}}
 
       </div>

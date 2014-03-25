@@ -10,7 +10,6 @@ App.RoomEditController = Em.Controller.extend
         @transitionToRoute("rooms.index")
 
       errorCallback = (response) =>
-        console.log response
         if response.errors
           @set("errors", response.errors)
         else

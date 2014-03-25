@@ -9,6 +9,7 @@ defmodule User do
     field :name, :string
     field :password,   :virtual, default: nil
     field :auth_token, :string
+    field :archived, :boolean
     has_many :messages, Message
     has_many :room_user_states, RoomUserState
   end
@@ -39,7 +40,7 @@ defmodule User do
 
 
   def public_attributes(record) do
-    attributes(record, ["id", "name", "role"])
+    attributes(record, ["id", "name", "role", "archived"])
   end
 
   def assign_auth_token(record) do

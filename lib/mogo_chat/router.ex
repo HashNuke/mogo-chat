@@ -13,7 +13,6 @@ defmodule MogoChat.Router do
 
 
   get  "/", MogoChat.Controllers.Main, :index, as: :index
-  get "/tryout", MogoChat.Controllers.Main, :tryout
 
   get    "/api/sessions", MogoChat.Controllers.SessionsApi, :index
   post   "/api/sessions", MogoChat.Controllers.SessionsApi, :create
