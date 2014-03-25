@@ -38,6 +38,8 @@ To compress javascript when building assets, use the env var `MIX_ENV=prod`.
 
 #### Tests
 
+[TODO tests might be broken since switching web frameworks. Needs to be fixed]
+
 For running test, you'll need a database called `mogo_chat_test`. Make sure you also edit the credentials in `config/database.json` as required.
 
 * Get dependencies: `MIX_ENV=test mix deps.get`
