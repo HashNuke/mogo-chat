@@ -4,7 +4,7 @@ You'll need a [Heroku](http://heroku.com) account and the [Heroku Toolbelt](http
 
 Once you have them, copy-paste the following commands in your terminal.
 
-__Don't copy-paste one by one. It's tedious. Just copy all the commands at once and paste it.__
+__Copy all the commands at once and paste it. (Don't copy-paste one by one. It's tedious.)__
 
 ```
 git clone https://github.com/HashNuke/mogo-chat.git
