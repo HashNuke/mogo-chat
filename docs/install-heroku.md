@@ -9,7 +9,7 @@ __Don't copy-paste one by one. It's tedious. Just copy all the commands at once 
 ```
 git clone https://github.com/HashNuke/mogo-chat.git
 cd mogo-chat
-heroku create --buildpack "https://github.com/HashNuke/heroku-elixir-buildpack.git"
+heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
 git push heroku master
 heroku run bash scripts/migrate && heroku run bash scripts/setup && heroku apps:info
 ```
