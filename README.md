@@ -2,13 +2,17 @@
 
 #### 3-minute Heroku install. [Just copy-paste a command](https://github.com/HashNuke/mogo-chat/blob/master/docs/install-heroku.md)
 
+![screenshot](https://github.com/HashNuke/mogo-chat/raw/master/screenshot.png "Screenshot")
+
 ### Features
 
 * **Works on mobile devices ~!**
 * Easy to install
 * Multiple rooms
 * Sound notifications
-* API ([docs](https://github.com/HashNuke/mogo-chat/blob/master/docs/api.md))
+* Code snippets
+* /me status messages
+* Comes with an API ([docs](https://github.com/HashNuke/mogo-chat/blob/master/docs/api.md))
 
 Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com), [CoffeeScript](http://coffeescript.org) and [PostgreSQL](http://postgresql.org)
 
@@ -20,6 +24,7 @@ Install instructions for more platforms will come soon.
 
 * Asset pipeline to compile assets in Elixir/Erlang (In progress)
 * Move Handlebars templates to assets
+* grep for `TODO` in the source code and you might stuff to contribute
 
 ### Credits
 
