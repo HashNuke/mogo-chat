@@ -18,14 +18,6 @@ Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/p
 
 Install instructions for more platforms will come soon.
 
----------------------------------------------------
-
-### TODO
-
-* Asset pipeline to compile assets in Elixir/Erlang (In progress)
-* Move Handlebars templates to assets
-* grep for `TODO` in the source code and you might stuff to contribute
-
 ### Credits
 
 Akash Manohar J &copy; 2014, under the MIT License. See LICENSE file for details.
@@ -35,3 +27,10 @@ Akash Manohar J &copy; 2014, under the MIT License. See LICENSE file for details
 * Users icon designed by Mike Finch - <http://thenounproject.com/term/users/22000/>
 * Logout icon "Power" designed by Michela Tannola - <http://thenounproject.com/term/power/25339/>
 * Notification sound - <http://www.freesound.org/people/Divinux/sounds/198414/>
+
+
+### TODO
+
+* Asset pipeline to compile assets in Elixir/Erlang (In progress)
+* Move Handlebars templates to assets
+* grep for `TODO` in the source code and you might stuff to contribute
