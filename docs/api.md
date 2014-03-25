@@ -1,5 +1,7 @@
 # API
 
+[TODO: Too tired to complete the docs. If you feel like contributing, please take a look at the routers and send a pull-request.]
+
 #### Roles
 
 Valid roles are "admin" and "member".
