@@ -10,7 +10,7 @@ defmodule MogoChat.Controllers.UsersApi do
 
     users = Repo.all User
     users_attributes = lc user inlist users do
-      User.attributes(user, ["id", "name", "role", "email"])
+      User.attributes(user, ["id", "name", "role", "email", "auth_token"])
     end
     json_resp conn, [users: users_attributes]
   end
