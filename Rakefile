@@ -11,6 +11,7 @@ sprockets = Sprockets::Environment.new("./") do |env|
   env.append_path 'assets/images'
   if ENV["MIX_ENV"] == "prod"
     env.js_compressor = Uglifier.new
+    env.css_compressor = :scss
   end
 end
 

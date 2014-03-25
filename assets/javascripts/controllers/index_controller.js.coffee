@@ -10,7 +10,7 @@ App.IndexController = Ember.ArrayController.extend
   detectTypeAndFormatBody: (body)->
     if body.match("\n")
       {type: "paste", body: body}
-    else if matches = (/\/me (.*)/g).exec(body)
+    else if matches = (/^\/me (.*)/g).exec(body)
       {type: "me", body: matches[1]}
     else
       {type: "text", body: body}

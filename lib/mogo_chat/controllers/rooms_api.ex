@@ -12,7 +12,7 @@ defmodule MogoChat.Controllers.RoomsApi do
     now  = current_timestamp()
     seconds_ago = now.sec(now.sec - 7)
     query = from s in RoomUserState,
-      where: s.room_id == ^room.id and s.last_pinged_at > ^seconds_ago,
+      where: s.room_id == ^room.id,
       order_by: s.id,
       preload: :user
 

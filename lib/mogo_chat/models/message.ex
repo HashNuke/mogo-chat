@@ -18,7 +18,7 @@ defmodule Message do
       #TODO support sounds
       # matches = Regex.named_captures(~r/\/play (?<sound>\w+)/g, record.body) ->
       #   record.type("sound").body(matches[:sound])
-      matches = Regex.named_captures(~r/\/me (?<announcement>.+)/g, record.body) ->
+      matches = Regex.named_captures(~r/^\/me (?<announcement>.+)/g, record.body) ->
         record.type("me").body(matches[:announcement])
       true ->
         record = record.body
