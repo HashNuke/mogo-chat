@@ -1,4 +1,4 @@
-defmodule HexWeb.Web.HTMLEngine do
+defmodule HTMLEngine do
   use EEx.TransformerEngine
   use EEx.AssignsEngine
 
