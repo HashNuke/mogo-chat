@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Setup.Demo do
     # Truncate everything
     table_names = ["users", "messages", "rooms", "room_user_states"]
     sql = "TRUNCATE TABLE #{Enum.join(table_names, ", ")} RESTART IDENTITY CASCADE;"
-    Repo.adapter.query(Repo, sql)
+    Repo.adapter.query(Repo, sql, [])
 
 
     demo_user = User.new(
