@@ -1,5 +1,9 @@
 App.LoginController = Em.Controller.extend
+  
   needs: ["application"]
+
+  email: "demo@example.com"
+  password: "password"
 
   actions:
     login: ->
