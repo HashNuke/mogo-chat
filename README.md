@@ -14,7 +14,7 @@
 * /me status messages
 * Comes with an API ([docs](https://github.com/HashNuke/mogo-chat/blob/master/docs/api.md))
 
-Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com), [CoffeeScript](http://coffeescript.org) and [PostgreSQL](http://postgresql.org)
+Written using [Elixir](http://elixir-lang.org), [Phoenix Framework](https://github.com/phoenixframework/phoenix), [Ember.js](http://emberjs.com), [CoffeeScript](http://coffeescript.org) and [PostgreSQL](http://postgresql.org)
 
 Install instructions for more platforms will come soon.
 
