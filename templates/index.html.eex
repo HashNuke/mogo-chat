@@ -234,7 +234,7 @@
 
     <div class="title">Mogo Chat</div>
 
-    <p style="background:#f1f1f1; padding: 0.25em"><small>This demo app is reset every few hours.</small></p>
+    <p style="background:#f1f1f1; padding: 0.25em"><small>This demo app is reset everyday.</small></p>
 
     <form {{action "login" on="submit"}}>
 
