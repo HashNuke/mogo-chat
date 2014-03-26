@@ -14,6 +14,11 @@ App.RoomUserStateItemController = Em.ObjectController.extend
 
 
     joinOrOpen: ->
+      # set the previous room as not active
+      previousState = @get("controllers.index.activeState")
+      if previousState
+        previousState.set("active", false)
+
       roomItemState = @get("model")
       if roomItemState.get("joined") == false
         roomItemState.set("joined", true)
@@ -26,8 +31,7 @@ App.RoomUserStateItemController = Em.ObjectController.extend
         roomItemState.usersPoller.setRoomState roomItemState
         roomItemState.usersPoller.start()
 
-        successCallback = =>
-          console.log("saved")
+        successCallback = (=>)
         errorCallback = =>
           console.log("error whatever...")
         roomItemState.save().then(successCallback, errorCallback)
