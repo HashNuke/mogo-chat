@@ -18,7 +18,7 @@ defmodule HTMLEngine do
         { :safe, value } ->
           tmp <> to_string(value)
         value ->
-          tmp <> HexWeb.Web.HTMLEngine.escape(to_string(value))
+          tmp <> HTMLEngine.escape(to_string(value))
       end
     end
   end

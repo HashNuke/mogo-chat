@@ -17,7 +17,8 @@ defmodule MogoChat.Controllers.RoomMessages do
     user_params = message.user.get.__entity__(:keywords)
     message = message_params ++ [user: user_params]
 
-    html conn, MogoChat.Templates.message(message)
+    {:safe, template} = MogoChat.Templates.message(message)
+    html conn, template
   end
 
 end

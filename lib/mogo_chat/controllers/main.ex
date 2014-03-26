@@ -3,7 +3,8 @@ defmodule MogoChat.Controllers.Main do
   import MogoChat.ControllerUtils
 
   def index(conn) do
-    html conn, MogoChat.Templates.index()
+    {:safe, template} = MogoChat.Templates.index()
+    html conn, template
   end
 
 end
