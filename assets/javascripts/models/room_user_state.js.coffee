@@ -44,12 +44,13 @@ App.RoomUserState = DS.Model.extend Em.Evented,
         if existingKeys.indexOf(message.get("id")) == -1
           @get("room.messages")[addAction](message)
       else
+        escapedBody = $('<div/>').text(messageAttrs.body).html();
         message = @store.push("message", {
           id: messageAttrs.id,
           type: messageAttrs.type,
           body: messageAttrs.body,
           formattedBody: App.plugins.processMessageBody(
-            messageAttrs.body,
+            escapedBody,
             messageAttrs.type,
             (if data.before then true else false)
           ),

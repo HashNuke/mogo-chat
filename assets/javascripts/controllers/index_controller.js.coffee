@@ -29,6 +29,7 @@ App.IndexController = Ember.ArrayController.extend
 
 
     postMessage: (msgTxt)->
+      escapedBody = $('<div/>').text(msgTxt).html()
       msgTxt = msgTxt.replace(/\s*$/g, "")
       room = @get("activeState").get("room")
       currentUser = @get("currentUser")
@@ -49,10 +50,10 @@ App.IndexController = Ember.ArrayController.extend
         room.get("messages").pushObject(msg)
         # Note, this can't be set before save(), because createRecord empties this
         if formatted.type != "paste"
-          msg.set "formattedBody", App.plugins.processMessageBody(formatted.body, formatted.type)
+          msg.set "formattedBody", App.plugins.processMessageBody(escapedBody, formatted.type)
       errorCallback   = =>
         msg.set("errorPosting", true)
         room.get("messages").pushObject(msg)
         if formatted.type != "paste"
-          msg.set "formattedBody", App.plugins.processMessageBody(formatted.body, formatted.type)
+          msg.set "formattedBody", App.plugins.processMessageBody(escapedBody, formatted.type)
       msg.save().then(successCallback, errorCallback)
