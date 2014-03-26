@@ -291,6 +291,10 @@
     <div class="user-form">
       <form {{action "save" on="submit"}}>
 
+        <p style="background:#f1f1f1; padding: 0.25em">
+          <b>User editing is disabled in the demo app.</b> Someone keeps changing the password of the demo account.
+        </p>
+
         {{#if errorMsg}}
           <div class="error">{{errorMsg}}</div>
         {{/if}}

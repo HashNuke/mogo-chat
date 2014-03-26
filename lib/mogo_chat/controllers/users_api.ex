@@ -86,7 +86,10 @@ defmodule MogoChat.Controllers.UsersApi do
 
     case User.validate(user) do
       [] ->
-        :ok = Repo.update(user)
+        # NOTE commenting this out because someone
+        # seems to be changing the password
+        # in the demo app
+        # :ok = Repo.update(user)
         json_resp conn, [user: User.public_attributes(user)]
       errors ->
         json_resp conn, [errors: errors], 422
