@@ -2,7 +2,7 @@
 
 ### Local install for development and other purposes
 
-You'll need Erlang version R16B02 or higher, Elixir version v0.12.4 and Postgresql.
+You'll need Erlang version R16B02 or higher, Elixir version v0.12.5 (or higher) and Postgresql.
 
 * Create a postgresql database called `mogo_chat_development`
 
