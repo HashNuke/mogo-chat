@@ -170,7 +170,38 @@ In order to get a room's history or get future messages, you can pass any one of
 * `after` - ID of a message, after which you need the next (newer) 20 messages. Use this to poll for new messages.
 
 ```
-TODO
+{
+    "messages": [
+        {
+            "id": 8,
+            "room_id": 1,
+            "user_id": 2,
+            "body": "Hey guys!",
+            "type": "text",
+            "created_at": "2014-03-30T12:09:11Z",
+            "user": {
+                "id": 2,
+                "name": "Jurre",
+                "role": "member",
+                "archived": false
+            }
+        },
+        {
+            "id": 9,
+            "room_id": 1,
+            "user_id": 2,
+            "body": "What's up!?",
+            "type": "text",
+            "created_at": "2014-03-30T12:17:22Z",
+            "user": {
+                "id": 2,
+                "name": "Jurre",
+                "role": "member",
+                "archived": false
+            }
+        }
+    ]
+}
 ```
 
 ## Room User States
