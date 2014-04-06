@@ -41,6 +41,8 @@ Request body must be encoded in JSON for all POST and PUT requests.
 * [Room User States](#room-user-states)
   * [Get room states](#get-room-states)
   * [Join or leave rooms](#join-or-leave-rooms)
+* [Sessions](#sessions)
+  * [Sign in](#sign-in)
 
 
 ## Users
@@ -171,4 +173,32 @@ Set `joined` to `true` to join a room, or set `false` to leave it.
 
 ```
 TODO
+```
+
+## Sessions
+
+#### Sign in
+> POST /api/sessions
+
+Request body:
+
+```
+{
+  "email": "you@example.com",
+  "password": "correct horse battery staple"
+}
+```
+
+Response body:
+
+```
+{
+  "user": {
+    "id": 1,
+      "name": "You",
+      "role": "admin",
+      "email": "you@example.com",
+      "auth_token": "aa23e8a5-c9d1-4656-bee0-e30807177e0d"
+  }
+}
 ```
