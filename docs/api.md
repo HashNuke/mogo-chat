@@ -131,8 +131,31 @@ TODO example body
 
 > POST /messages
 
+Request body:
+
 ```
-TODO
+{
+  "message": {
+    "room_id": 1,
+    "user_id": 2,
+    "body": "Hey guys, what's up?",
+    "type": "text"
+  }
+}
+```
+
+Response body:
+```
+{
+  "message": {
+    "id": 80,
+      "room_id": 1,
+      "user_id": 2,
+      "body": "Hey guys, what's up?",
+      "type": "text",
+      "created_at": "2014-04-07T08:28:48Z"
+  }
+}
 ```
 
 #### Get messages in a room
@@ -185,7 +208,7 @@ Request body:
 ```
 {
   "email": "you@example.com",
-  "password": "correct horse battery staple"
+    "password": "correct horse battery staple"
 }
 ```
 
