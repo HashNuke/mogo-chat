@@ -112,12 +112,12 @@ Request body example:
 
 #### Delete a room
 
-> DELETE /api/users/:room_id
+> DELETE /api/rooms/:room_id
 
 
 #### Active users in a room
 
-> GET /rooms/:room_id/users
+> GET /api/rooms/:room_id/users
 
 You must be active in a room ("joined") to access it's user list.
 
