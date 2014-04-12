@@ -41,6 +41,8 @@ Request body must be encoded in JSON for all POST and PUT requests.
 * [Room User States](#room-user-states)
   * [Get room states](#get-room-states)
   * [Join or leave rooms](#join-or-leave-rooms)
+* [Sessions](#sessions)
+  * [Sign in](#sign-in)
 
 
 ## Users
@@ -110,12 +112,12 @@ Request body example:
 
 #### Delete a room
 
-> DELETE /api/users/:room_id
+> DELETE /api/rooms/:room_id
 
 
 #### Active users in a room
 
-> GET /rooms/:room_id/users
+> GET /api/rooms/:room_id/users
 
 You must be active in a room ("joined") to access it's user list.
 
@@ -129,8 +131,31 @@ TODO example body
 
 > POST /messages
 
+Request body:
+
 ```
-TODO
+{
+  "message": {
+    "room_id": 1,
+    "user_id": 2,
+    "body": "Hey guys, what's up?",
+    "type": "text"
+  }
+}
+```
+
+Response body:
+```
+{
+  "message": {
+    "id": 80,
+      "room_id": 1,
+      "user_id": 2,
+      "body": "Hey guys, what's up?",
+      "type": "text",
+      "created_at": "2014-04-07T08:28:48Z"
+  }
+}
 ```
 
 #### Get messages in a room
@@ -145,7 +170,38 @@ In order to get a room's history or get future messages, you can pass any one of
 * `after` - ID of a message, after which you need the next (newer) 20 messages. Use this to poll for new messages.
 
 ```
-TODO
+{
+    "messages": [
+        {
+            "id": 8,
+            "room_id": 1,
+            "user_id": 2,
+            "body": "Hey guys!",
+            "type": "text",
+            "created_at": "2014-03-30T12:09:11Z",
+            "user": {
+                "id": 2,
+                "name": "Jurre",
+                "role": "member",
+                "archived": false
+            }
+        },
+        {
+            "id": 9,
+            "room_id": 1,
+            "user_id": 2,
+            "body": "What's up!?",
+            "type": "text",
+            "created_at": "2014-03-30T12:17:22Z",
+            "user": {
+                "id": 2,
+                "name": "Jurre",
+                "role": "member",
+                "archived": false
+            }
+        }
+    ]
+}
 ```
 
 ## Room User States
@@ -171,4 +227,32 @@ Set `joined` to `true` to join a room, or set `false` to leave it.
 
 ```
 TODO
+```
+
+## Sessions
+
+#### Sign in
+> POST /api/sessions
+
+Request body:
+
+```
+{
+  "email": "you@example.com",
+    "password": "correct horse battery staple"
+}
+```
+
+Response body:
+
+```
+{
+  "user": {
+    "id": 1,
+      "name": "You",
+      "role": "admin",
+      "email": "you@example.com",
+      "auth_token": "aa23e8a5-c9d1-4656-bee0-e30807177e0d"
+  }
+}
 ```
