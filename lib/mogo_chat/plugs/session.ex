@@ -1,5 +1,5 @@
 defmodule Plugs.Session do
-  import Plug.Connection
+  import Plug.Conn
 
   @behaviour Plug.Wrapper
 

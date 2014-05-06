@@ -1,5 +1,5 @@
 defmodule MogoChat.ControllerUtils do
-  import Plug.Connection
+  import Plug.Conn
   import Phoenix.Controller
   import Ecto.Query
 

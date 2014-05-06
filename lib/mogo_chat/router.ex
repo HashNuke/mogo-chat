@@ -9,7 +9,8 @@ defmodule MogoChat.Router do
 
   plug Plug.Parsers, parsers: [:urlencoded, :multipart, MogoChat.JsonParser]
   plug Plug.Static, at: "/static", from: :mogo_chat
-  plug Plugs.Session, name: "mogo_chat_session", adapter: Plugs.Session.Adapters.Ets
+  # plug Plugs.Session, name: "", adapter: Plug.Session.Adapters.Ets
+  plug Plug.Session, store: :ets, key: "mogo_chat_session", table: :plug_sessions
 
 
   get  "/", MogoChat.Controllers.Main, :index, as: :index
