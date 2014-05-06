@@ -22,8 +22,8 @@ defmodule MogoChat.Mixfile do
     [
       {:cowboy,   github: "extend/cowboy"},
       {:phoenix,  github: "phoenixframework/phoenix"},
-      {:ecto,     github: "elixir-lang/ecto"},
-      {:postgrex, github: "ericmj/postgrex"},
+      {:ecto,     "~> 0.1.0" },
+      {:postgrex, "~> 0.5.0" },
       {:jsex,     github: "talentdeficit/jsex"},
       {:qdate,    github: "choptastic/qdate" },
       {:bcrypt,   github: "irccloud/erlang-bcrypt"},
