@@ -19,7 +19,7 @@ defmodule Mix.Tasks.Setup do
 
     case User.validate(admin_user) do
       [] ->
-        _saved_user = Repo.create(admin_user)
+        _saved_user = Repo.insert(admin_user)
         IO.puts "Created admin user with email admin@example.com and password \"password\" ~!"
       errors ->
         IO.puts "Error while creating admin user..."
@@ -30,7 +30,7 @@ defmodule Mix.Tasks.Setup do
     lobby = Room.new(name: "Lobby")
     case Room.validate(lobby) do
       [] ->
-        _saved_room = Repo.create(lobby)
+        _saved_room = Repo.insert(lobby)
         IO.puts "Created your first room called \"lobby\""
       errors ->
         IO.puts "Error while creating first room..."
