@@ -15,7 +15,7 @@
   "merl": {:git, "git://github.com/erlydtl/merl.git", "8cd131f65159309dce77db6fb8e2e8526a083867", [branch: "erlydtl"]},
   "mime": {:git, "git://github.com/dynamo/mime.git", "db84370c53a67a7e58a4d0cfb026f4edc64a9367", []},
   "phoenix": {:git, "git://github.com/phoenixframework/phoenix.git", "4d36754e3239bf85ebaa7184f7fb08ae3f8c89f8", []},
-  "plug": {:package, "0.4.2"},
+  "plug": {:git, "git://github.com/elixir-lang/plug.git", "e7e26951e0966aaf8d4b23ff8cac8a44cc5586f1", []},
   "poolboy": {:package, "1.2.1"},
   "postgrex": {:git, "git://github.com/ericmj/postgrex.git", "3a1259373168d2bd5c8f9b827268504486e793f4", []},
   "qdate": {:git, "git://github.com/choptastic/qdate.git", "58a92482d1fdb81955fc54cdc40a0ec0913c90bf", []},

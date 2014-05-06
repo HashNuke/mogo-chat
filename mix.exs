@@ -20,6 +20,7 @@ defmodule MogoChat.Mixfile do
 
   defp deps do
     [
+      {:plug,     github: "elixir-lang/plug", override: true},
       {:phoenix,  github: "phoenixframework/phoenix"},
       {:ecto,     github: "elixir-lang/ecto"},
       {:postgrex, github: "ericmj/postgrex"},
