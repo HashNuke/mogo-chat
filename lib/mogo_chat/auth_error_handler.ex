@@ -1,7 +1,7 @@
 defmodule MogoChat.AuthErrorHandler do
   @behaviour Plug.Wrapper
 
-  import Plug.Connection
+  import Plug.Conn
   import Phoenix.Controller
   import MogoChat.ControllerUtils
 
