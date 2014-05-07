@@ -11,9 +11,11 @@ end
 defmodule MogoChat.Config.Dev do
   use MogoChat.Config
 
-  config :router, port: System.get_env("PORT") || 4000
+  config :router, port: System.get_env("PORT") || 4000,
+    consider_all_requests_local: true
+
   config :plugs, code_reload: false
-  config :logger, level: :error
+  config :logger, level: :debug
 end
 
 # Test
