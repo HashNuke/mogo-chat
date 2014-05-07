@@ -24,7 +24,7 @@ defmodule MogoChat.Mixfile do
       {:phoenix,  github: "phoenixframework/phoenix"},
       {:ecto,     "~> 0.1.0" },
       {:postgrex, "~> 0.5.0" },
-      {:jsex,     github: "talentdeficit/jsex"},
+      {:jsex,     github: "talentdeficit/jsex", branch: "develop"},
       {:qdate,    github: "choptastic/qdate" },
       {:bcrypt,   github: "irccloud/erlang-bcrypt"},
       {:uuid,     github: "okeuday/uuid"}
