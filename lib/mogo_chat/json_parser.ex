@@ -12,7 +12,7 @@ defmodule MogoChat.JsonParser do
 
 
   defp read_body(conn, limit) do
-    case HexWeb.Plug.read_body(conn, limit) do
+    case MogoChat.Util.read_body(conn, limit) do
       { :too_large, conn } ->
         { :too_large, conn }
       { :ok, "", conn } ->
