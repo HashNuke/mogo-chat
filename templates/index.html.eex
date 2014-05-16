@@ -145,7 +145,7 @@
 <script type="text/x-handlebars" id="_me">
   <div class="message">
     <div class="content">
-      <span class="user" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
+      <span class="user-me" {{bind-attr style="message.user.fontColor"}}>{{message.user.name}}</span>
       {{#if message.user.archived}}(*deleted user*){{/if}}
       <span class="me-body">{{{message.formattedBody}}}</span>
     </div>
