@@ -32,6 +32,6 @@ App.plugins.register "link", /(https?\:\S+)/g, (content, messageType, history)->
 
 App.plugins.register "me", /^\/me /g, (content, messageType, history)->  
   if ["me"].indexOf(messageType) != -1
-    content.replace("/me ", "")
+    emojify.replace(content.replace("/me ", ""))
   else          
     content    

@@ -17,6 +17,7 @@
 //= require_tree "./pollers"
 //= require "plugins"
 //= require "notifications"
+//= require "emojify"
 
 
 window.App = Em.Application.create({LOG_TRANSITIONS: true});
@@ -25,6 +26,7 @@ App.ApplicationAdapter    = DS.ActiveModelAdapter.reopen({namespace: "api"});
 App.ApplicationView       = Em.View.extend({classNames: ["container"]});
 App.paintBox = new MogoChat.PaintBox();
 App.plugins  = new MogoChat.PluginRegistry();
+
 
 
 App.Router.map(function() {
@@ -53,3 +55,5 @@ App.Router.map(function() {
   });
 
 });
+
+
