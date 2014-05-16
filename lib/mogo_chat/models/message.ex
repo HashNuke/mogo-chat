@@ -19,7 +19,7 @@ defmodule Message do
       # matches = Regex.named_captures(~r/\/play (?<sound>\w+)/, record.body) ->
       #   record.type("sound").body(matches[:sound])
       matches = Regex.named_captures(~r/^\/me (?<announcement>.+)/, record.body) ->
-        record.type("me").body(matches[:announcement])
+        record.type("me").body(matches["announcement"])
       true ->
         record = record.body
           |> String.strip()
