@@ -12,7 +12,7 @@ defmodule MogoChat.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: [:jazz, :phoenix, :bcrypt, :qdate, :jsex, :uuid],
+      applications: [:jazz, :phoenix, :bcrypt, :qdate, :uuid],
       mod: { MogoChat, []}
     ]
   end

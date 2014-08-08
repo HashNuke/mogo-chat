@@ -16,9 +16,9 @@ config :phoenix, :logger, level: :error
 
 case Mix.env do
   :test ->
-    config :firebrick, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_test"]
+    config :mogo_chat, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_test"]
   :prod ->
-    config :firebrick, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_production"]
+    config :mogo_chat, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_production"]
   _ ->
-    config :firebrick, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_development"]
+    config :mogo_chat, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_development"]
 end
