@@ -16,7 +16,11 @@ defmodule Plugs.Session.Adapters.Ets do
   end
 
 
-  def put(sid, data, tries \\ 0) when tries < @max_tries do
+  def put(sid, data) do
+    put(sid, data, 0)
+  end
+
+  def put(sid, data, tries) when tries < @max_tries do
     # check_table
     if :ets.insert(@table, {sid, data}) do
       :ok
@@ -24,6 +28,7 @@ defmodule Plugs.Session.Adapters.Ets do
       put sid, data, tries + 1
     end
   end
+
   def put(sid, _data ,tries) do
     {:error, "Unable to save data for '#{sid}' after #{tries} attempts."}
   end
