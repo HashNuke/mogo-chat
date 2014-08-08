@@ -9,11 +9,11 @@ defmodule MogoChat.Controllers.MessagesApi do
     user_id = conn.assigns[:current_user].id
     before_message_id = conn.params["before"]
     after_message_id  = conn.params["after"]
-    room = Repo.get Room, binary_to_integer(conn.params["room_id"])
+    room = Repo.get Room, String.to_integer(conn.params["room_id"])
 
     query = cond do
       before_message_id ->
-        before_message_id = binary_to_integer(before_message_id)
+        before_message_id = String.to_integer(before_message_id)
         from m in Message,
           order_by: [desc: m.created_at],
           limit: 20,
@@ -21,7 +21,7 @@ defmodule MogoChat.Controllers.MessagesApi do
           where: m.room_id == ^room.id and m.id < ^before_message_id
 
       after_message_id ->
-        after_message_id = binary_to_integer(after_message_id)
+        after_message_id = String.to_integer(after_message_id)
         from m in Message,
           order_by: [desc: m.created_at],
           limit: 20,
@@ -44,7 +44,7 @@ defmodule MogoChat.Controllers.MessagesApi do
     room_state.update([last_pinged_at: current_timestamp()])
     |> Repo.update()
 
-    messages_attributes = lc message inlist Repo.all(query) do
+    messages_attributes = Enum.map Repo.all(query), fn(message)->
       Dict.merge Message.public_attributes(message), [user: User.public_attributes(message.user.get)]
     end
 
@@ -52,7 +52,7 @@ defmodule MogoChat.Controllers.MessagesApi do
       messages_attributes = Enum.reverse(messages_attributes)
     end
 
-    json_resp conn, [messages: messages_attributes]
+    json conn, [messages: messages_attributes]
   end
 
 
@@ -75,9 +75,9 @@ defmodule MogoChat.Controllers.MessagesApi do
     case Message.validate(message) do
       [] ->
         saved_message = Repo.create(message)
-        json_resp conn, [message: Message.public_attributes(saved_message)]
+        json conn, [message: Message.public_attributes(saved_message)]
       errors ->
-        json_resp conn, [errors: errors]
+        json conn, [errors: errors]
     end
   end
 

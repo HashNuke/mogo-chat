@@ -30,13 +30,13 @@ defmodule MogoChat.Controllers.RoomUserStatesApi do
       end
     end
 
-    json_resp conn, [room_user_states: room_user_states_attributes]
+    json conn, [room_user_states: room_user_states_attributes]
   end
 
 
   def update(conn) do
     conn = authenticate_user!(conn)
-    room_user_state_id = binary_to_integer(conn.params["room_user_state_id"])
+    room_user_state_id = String.to_integer(conn.params["room_user_state_id"])
     user_id = conn.assigns[:current_user].id
     params = conn.params
 
@@ -50,9 +50,9 @@ defmodule MogoChat.Controllers.RoomUserStatesApi do
     case RoomUserState.validate(new_room_user_state) do
       [] ->
         :ok = Repo.update(new_room_user_state)
-        json_resp conn, [user: RoomUserState.public_attributes(new_room_user_state)]
+        json conn, [user: RoomUserState.public_attributes(new_room_user_state)]
       errors ->
-        json_resp conn, [errors: errors], 422
+        json conn, [errors: errors], 422
     end
   end
 

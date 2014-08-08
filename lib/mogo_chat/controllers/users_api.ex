@@ -9,10 +9,10 @@ defmodule MogoChat.Controllers.UsersApi do
     authorize_roles!(conn, ["admin"])
 
     users = Repo.all(from u in User, where: u.archived == ^false)
-    users_attributes = lc user inlist users do
+    users_attributes = Enum.map users, fn(user)->
       User.attributes(user, ["id", "name", "role", "email", "auth_token"])
     end
-    json_resp conn, [users: users_attributes]
+    json conn, [users: users_attributes]
   end
 
 
@@ -30,9 +30,9 @@ defmodule MogoChat.Controllers.UsersApi do
     case User.validate(user) do
       [] ->
         saved_user = Repo.create(user)
-        json_resp conn, [user: User.public_attributes(saved_user)]
+        json conn, [user: User.public_attributes(saved_user)]
       errors ->
-        json_resp conn, [errors: errors], 422
+        json conn, [errors: errors], 422
     end
   end
 
@@ -40,7 +40,7 @@ defmodule MogoChat.Controllers.UsersApi do
   def show(conn) do
     conn = authenticate_user!(conn)
     authorize_if! conn, fn(conn, user)->
-      user_id = binary_to_integer(conn.params["user_id"])
+      user_id = String.to_integer(conn.params["user_id"])
 
       cond do
         user.id == user_id || user.role == "admin" ->
@@ -54,14 +54,14 @@ defmodule MogoChat.Controllers.UsersApi do
     # TODO user query to not return archived users
     user = Repo.get User, user_id
     user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token", "archived"])
-    json_resp conn, [user: user_attributes]
+    json conn, [user: user_attributes]
   end
 
 
   def update(conn) do
     conn = authenticate_user!(conn)
     authorize_if! conn, fn(conn, user)->
-      user_id = binary_to_integer(conn.params["user_id"])
+      user_id = String.to_integer(conn.params["user_id"])
 
       cond do
         user.id == user_id || user.role == "admin" ->
@@ -87,9 +87,9 @@ defmodule MogoChat.Controllers.UsersApi do
     case User.validate(user) do
       [] ->
         :ok = Repo.update(user)
-        json_resp conn, [user: User.public_attributes(user)]
+        json conn, [user: User.public_attributes(user)]
       errors ->
-        json_resp conn, [errors: errors], 422
+        json conn, [errors: errors], 422
     end
   end
 
@@ -98,7 +98,7 @@ defmodule MogoChat.Controllers.UsersApi do
     conn = authenticate_user!(conn)
     authorize_roles!(conn, ["admin"])
 
-    user_id = binary_to_integer(conn.params["user_id"])
+    user_id = String.to_integer(conn.params["user_id"])
     current_user_id = conn.assigns[:current_user].id
     if current_user_id != user_id do
       new_attrs = [archived: true, email: nil, auth_token: nil, encrypted_password: nil]
@@ -107,7 +107,7 @@ defmodule MogoChat.Controllers.UsersApi do
 
       Repo.delete_all(from rus in RoomUserState, where: rus.user_id == ^user_id)
     end
-    json_resp conn, ""
+    json conn, ""
   end
 
 end

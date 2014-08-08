@@ -6,8 +6,8 @@ defmodule MogoChat.Controllers.RoomMessages do
 
   def show(conn) do
     conn = authenticate_user!(conn)
-    message_id = binary_to_integer(conn.params["message_id"])
-    room_id = binary_to_integer(conn.params["room_id"])
+    message_id = String.to_integer(conn.params["message_id"])
+    room_id = String.to_integer(conn.params["room_id"])
     query   = from m in Message,
       where: m.id == ^message_id and m.room_id == ^room_id,
       preload: :user

@@ -7,7 +7,7 @@ defmodule MogoChat.Controllers.RoomsApi do
   def active_users(conn) do
     authenticate_user!(conn)
 
-    room_id = binary_to_integer(conn.params["room_id"])
+    room_id = String.to_integer(conn.params["room_id"])
     room = Repo.get Room, room_id
     now  = current_timestamp()
     seconds_ago = now.sec(now.sec - 7)
@@ -16,11 +16,11 @@ defmodule MogoChat.Controllers.RoomsApi do
       order_by: s.id,
       preload: :user
 
-    users_attributes = lc room_user_state inlist Repo.all(query) do
+    users_attributes = Enum.map Repo.all(query), fn(room_user_state)->
       User.public_attributes(room_user_state.user.get)
     end
 
-    json_resp conn, [users: users_attributes]
+    json conn, [users: users_attributes]
   end
 
 
@@ -28,10 +28,10 @@ defmodule MogoChat.Controllers.RoomsApi do
     authenticate_user!(conn)
 
     rooms = Repo.all Room
-    rooms_attributes = lc room inlist rooms do
+    rooms_attributes = Enum.map rooms, fn(room)->
       Room.public_attributes(room)
       end
-    json_resp conn, [rooms: rooms_attributes]
+    json conn, [rooms: rooms_attributes]
   end
 
 
@@ -41,7 +41,7 @@ defmodule MogoChat.Controllers.RoomsApi do
     room_id = conn.params["room_id"]
     room = Repo.get Room, room_id
 
-    json_resp conn, [room: Room.public_attributes(room)]
+    json conn, [room: Room.public_attributes(room)]
   end
 
 
@@ -57,9 +57,9 @@ defmodule MogoChat.Controllers.RoomsApi do
     case Room.validate(room) do
       [] ->
         room = Repo.create(room)
-        json_resp conn, [room: Room.public_attributes(room)]
+        json conn, [room: Room.public_attributes(room)]
       errors ->
-        json_resp conn, [errors: errors], 422
+        json conn, [errors: errors], 422
     end
   end
 
@@ -77,9 +77,9 @@ defmodule MogoChat.Controllers.RoomsApi do
     case Room.validate(room) do
       [] ->
         :ok = Repo.update(room)
-        json_resp conn, [user: Room.public_attributes(room)]
+        json conn, [user: Room.public_attributes(room)]
       errors ->
-        json_resp conn, [errors: errors], 422
+        json conn, [errors: errors], 422
     end
   end
 
@@ -88,7 +88,7 @@ defmodule MogoChat.Controllers.RoomsApi do
     conn = authenticate_user!(conn)
     authorize_roles!(conn, ["admin"])
 
-    room_id = binary_to_integer(conn.params["room_id"])
+    room_id = String.to_integer(conn.params["room_id"])
 
     # Note instead of fetching it and deleting it
     # just create a new record and delete it
@@ -101,7 +101,7 @@ defmodule MogoChat.Controllers.RoomsApi do
     # Delete the room user states
     Repo.delete_all(from rus in RoomUserState, where: rus.room_id == ^room_id)
 
-    json_resp conn, ""
+    json conn, ""
   end
 
 end
