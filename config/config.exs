@@ -1,3 +1,5 @@
+use Mix.Config
+
 case Mix.env do
   :test ->
     config :firebrick, [db_url: "ecto://postgres_username:password@localhost/mogo_chat_test"]
