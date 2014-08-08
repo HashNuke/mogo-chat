@@ -2,7 +2,7 @@ defmodule Message do
   use Ecto.Model
   use MogoChat.ModelUtils
 
-  queryable "messages" do
+  schema "messages" do
     field :body,       :string
     field :type,       :string
     field :created_at, :datetime

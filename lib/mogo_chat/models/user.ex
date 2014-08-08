@@ -2,7 +2,7 @@ defmodule User do
   use Ecto.Model
   use MogoChat.ModelUtils
 
-  queryable "users" do
+  schema "users" do
     field :email,      :string
     field :encrypted_password, :string
     field :role,       :string
