@@ -7,3 +7,4 @@ erl_crash.dump
 _build
 .#*
 config/database.json
+.mix
