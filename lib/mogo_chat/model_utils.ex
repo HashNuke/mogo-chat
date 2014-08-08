@@ -3,7 +3,7 @@ defmodule MogoChat.ModelUtils do
   defmacro __using__(_) do
     quote do
       def attributes(record, fields) do
-        lc field inlist fields do
+        Enum.map fields, fn(field)->
           { "#{field}", apply(record, :"#{field}", []) }
         end
       end
