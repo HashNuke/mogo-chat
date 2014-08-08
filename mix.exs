@@ -12,7 +12,7 @@ defmodule MogoChat.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: [:phoenix, :bcrypt, :qdate, :jsex, :uuid],
+      applications: [:jazz, :phoenix, :bcrypt, :qdate, :jsex, :uuid],
       mod: { MogoChat, []}
     ]
   end
@@ -24,6 +24,7 @@ defmodule MogoChat.Mixfile do
       {:phoenix,  github: "phoenixframework/phoenix"},
       {:ecto,     "~> 0.2.3" },
       {:postgrex, "~> 0.5.0" },
+      {:jazz, "0.2.0"},
       {:qdate,    github: "choptastic/qdate" },
       {:bcrypt,   github: "irccloud/erlang-bcrypt"},
       {:uuid,     github: "okeuday/uuid"}
