@@ -4,20 +4,21 @@ defmodule MogoChat.ControllerUtils do
   import Ecto.Query
 
   def json_decode(json) do
-    {:ok, data} = JSEX.decode(json)
+    {:ok, data} = JSON.decode(json)
     data
   end
 
 
   def json_resp(conn, data, status \\ 200) do
-    json conn, status, json_encode(data)
+    json_resp conn, status, json_encode(data)
   end
 
 
   def json_encode(data) do
-    {:ok, json} = JSEX.encode(data)
+    {:ok, json} = JSON.encode(data)
     json
   end
+
 
 
   def current_timestamp() do
