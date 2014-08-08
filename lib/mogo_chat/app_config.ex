@@ -11,7 +11,7 @@ defmodule AppConfig do
 
       File.exists?("config/database.json")->
         {:ok, config_json} = File.read "config/database.json"
-        {:ok, config} = JSEX.decode config_json
+        {:ok, config} = JSON.decode config_json
         database_url = config["#{Mix.env}"]
 
         quote do
