@@ -5,7 +5,7 @@ defmodule MogoChat.Mixfile do
     [ app: :mogo_chat,
       version: "0.0.1",
       build_per_environment: true,
-      elixir: "~> 0.13.1",
+      elixir: "~> 0.15.0",
       deps: deps ]
   end
 
@@ -20,9 +20,9 @@ defmodule MogoChat.Mixfile do
 
   defp deps do
     [
-      {:cowboy,   github: "extend/cowboy"},
+      {:cowboy,   "~> 1.0.0"},
       {:phoenix,  github: "phoenixframework/phoenix"},
-      {:ecto,     "~> 0.1.0" },
+      {:ecto,     "~> 0.2.3" },
       {:postgrex, "~> 0.5.0" },
       {:jsex,     github: "talentdeficit/jsex", branch: "develop"},
       {:qdate,    github: "choptastic/qdate" },
