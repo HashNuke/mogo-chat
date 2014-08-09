@@ -19,7 +19,7 @@ defmodule RoomUserState do
   def public_attributes(record) do
     attrs = attributes(record, ["id", "room_id", "user_id", "joined"])
     if record.last_pinged_at do
-      attrs ++ [last_pinged_at: timestamp(record.last_pinged_at)]
+      Map.put attrs, :last_pinged_at, timestamp(record.last_pinged_at)
     else
       attrs
     end

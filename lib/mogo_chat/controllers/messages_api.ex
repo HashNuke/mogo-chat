@@ -52,7 +52,7 @@ defmodule MogoChat.Controllers.MessagesApi do
       messages_attributes = Enum.reverse(messages_attributes)
     end
 
-    json conn, [messages: messages_attributes]
+    json_resp conn, %{messages: messages_attributes}
   end
 
 
@@ -75,9 +75,9 @@ defmodule MogoChat.Controllers.MessagesApi do
     case Message.validate(message) do
       [] ->
         saved_message = Repo.create(message)
-        json conn, [message: Message.public_attributes(saved_message)]
+        json_resp conn, %{message: Message.public_attributes(saved_message)}
       errors ->
-        json conn, [errors: errors]
+        json_resp conn, %{errors: errors}
     end
   end
 

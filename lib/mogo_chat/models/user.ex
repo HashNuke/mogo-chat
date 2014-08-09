@@ -25,9 +25,9 @@ defmodule User do
 
   def validate_password(user) do
     if !user.encrypted_password || (user.password && String.length(user.password) < 6) do
-      [{ :password, "should be 6 characters or more" }]
+      %{password: "should be 6 characters or more"}
     else
-      []
+      %{}
     end
   end
 

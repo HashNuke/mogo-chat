@@ -2,6 +2,7 @@ defmodule MogoChat.ModelUtils do
 
   defmacro __using__(_) do
     quote do
+      #TODO update to use map
       def attributes(record, fields) do
         Enum.map fields, fn(field)->
           { "#{field}", apply(record, :"#{field}", []) }

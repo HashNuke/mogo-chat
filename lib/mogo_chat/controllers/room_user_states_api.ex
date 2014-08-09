@@ -23,14 +23,16 @@ defmodule MogoChat.Controllers.RoomUserStatesApi do
 
         [room_user_state] = Repo.all get_query
 
-        RoomUserState.public_attributes(room_user_state) ++ [room: Room.public_attributes(room)] ++ [user: User.public_attributes(room_user_state.user.get)]
+        Map.merge(RoomUserState.public_attributes(room_user_state), %{room: Room.public_attributes(room)})
+        |> Map.merge( %{user: User.public_attributes(room_user_state.user.get)} )
       else
         [room_user_state|_] = result
-        RoomUserState.public_attributes(room_user_state) ++ [room: Room.public_attributes(room)] ++ [user: User.public_attributes(room_user_state.user.get)]
+        Map.merge(RoomUserState.public_attributes(room_user_state), %{room: Room.public_attributes(room)})
+        |> Map.merge( %{user: User.public_attributes(room_user_state.user.get)} )
       end
     end
 
-    json conn, [room_user_states: room_user_states_attributes]
+    json_resp conn, %{room_user_states: room_user_states_attributes}
   end
 
 
@@ -50,9 +52,9 @@ defmodule MogoChat.Controllers.RoomUserStatesApi do
     case RoomUserState.validate(new_room_user_state) do
       [] ->
         :ok = Repo.update(new_room_user_state)
-        json conn, [user: RoomUserState.public_attributes(new_room_user_state)]
+        json_resp conn, %{user: RoomUserState.public_attributes(new_room_user_state)}
       errors ->
-        json conn, [errors: errors], 422
+        json_resp conn, 422, %{errors: errors}
     end
   end
 

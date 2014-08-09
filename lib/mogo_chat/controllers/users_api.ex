@@ -12,7 +12,7 @@ defmodule MogoChat.Controllers.UsersApi do
     users_attributes = Enum.map users, fn(user)->
       User.attributes(user, ["id", "name", "role", "email", "auth_token"])
     end
-    json conn, [users: users_attributes]
+    json_resp conn, %{users: users_attributes}
   end
 
 
@@ -30,9 +30,9 @@ defmodule MogoChat.Controllers.UsersApi do
     case User.validate(user) do
       [] ->
         saved_user = Repo.create(user)
-        json conn, [user: User.public_attributes(saved_user)]
+        json_resp conn, %{user: User.public_attributes(saved_user)}
       errors ->
-        json conn, [errors: errors], 422
+        json_resp conn, 422, %{errors: errors}
     end
   end
 
@@ -54,7 +54,7 @@ defmodule MogoChat.Controllers.UsersApi do
     # TODO user query to not return archived users
     user = Repo.get User, user_id
     user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token", "archived"])
-    json conn, [user: user_attributes]
+    json_resp conn, %{user: user_attributes}
   end
 
 
@@ -87,9 +87,9 @@ defmodule MogoChat.Controllers.UsersApi do
     case User.validate(user) do
       [] ->
         :ok = Repo.update(user)
-        json conn, [user: User.public_attributes(user)]
+        json_resp conn, %{user: User.public_attributes(user)}
       errors ->
-        json conn, [errors: errors], 422
+        json_resp conn, 422, %{errors: errors}
     end
   end
 

@@ -9,9 +9,9 @@ defmodule MogoChat.Controllers.SessionsApi do
     if user_id do
       user = Repo.get(User, user_id)
       attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token"])
-      json conn, [user: attributes]
+      json_resp conn, %{user: attributes}
     else
-      json conn, [error: "no session"]
+      json_resp conn, %{error: "no session"}
     end
   end
 
@@ -23,12 +23,12 @@ defmodule MogoChat.Controllers.SessionsApi do
 
 
   def destroy(conn) do
-    json destroy_session(conn), [ok: "logged out"]
+    json_resp destroy_session(conn), %{ok: "logged out"}
   end
 
 
   defp login(conn, email, password) when email == nil or password == nil do
-    json conn, [error: "Please check your login credentials."], 401
+    json_resp conn, 401, %{error: "Please check your login credentials."}
   end
 
 
@@ -42,12 +42,12 @@ defmodule MogoChat.Controllers.SessionsApi do
         if User.valid_password?(user, password) do
           conn = put_session(conn, user.id)
           user_attributes = User.attributes(user, ["id", "name", "role", "email", "auth_token"])
-          json conn, [user: user_attributes]
+          json_resp conn, %{user: user_attributes}
         else
-          json conn, [error: "Please check your login credentials."], 401
+          json_resp conn, 401, %{error: "Please check your login credentials."}
         end
       false ->
-        json conn, [error: "Maybe you don't have an account?"], 401
+        json conn, 401, %{error: "Maybe you don't have an account?"}
     end
   end
 

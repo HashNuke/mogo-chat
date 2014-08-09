@@ -1,6 +1,6 @@
 defmodule MogoChat.ControllerUtils do
   import Plug.Conn
-  import Phoenix.Controller
+  import Phoenix.Controller.Connection
   import Ecto.Query
 
   def json_decode(json) do
@@ -9,8 +9,13 @@ defmodule MogoChat.ControllerUtils do
   end
 
 
-  def json_resp(conn, data, status \\ 200) do
-    json_resp conn, status, json_encode(data)
+  def json_resp(conn, data) do
+    json conn, json_encode(data)
+  end
+
+
+  def json_resp(conn, status, data) do
+    json conn, status, json_encode(data)
   end
 
 

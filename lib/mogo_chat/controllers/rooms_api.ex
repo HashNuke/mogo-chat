@@ -20,7 +20,7 @@ defmodule MogoChat.Controllers.RoomsApi do
       User.public_attributes(room_user_state.user.get)
     end
 
-    json conn, [users: users_attributes]
+    json_resp conn, %{users: users_attributes}
   end
 
 
@@ -31,7 +31,7 @@ defmodule MogoChat.Controllers.RoomsApi do
     rooms_attributes = Enum.map rooms, fn(room)->
       Room.public_attributes(room)
       end
-    json conn, [rooms: rooms_attributes]
+    json_resp conn, %{rooms: rooms_attributes}
   end
 
 
@@ -41,7 +41,7 @@ defmodule MogoChat.Controllers.RoomsApi do
     room_id = conn.params["room_id"]
     room = Repo.get Room, room_id
 
-    json conn, [room: Room.public_attributes(room)]
+    json_resp conn, %{room: Room.public_attributes(room)}
   end
 
 
@@ -57,9 +57,9 @@ defmodule MogoChat.Controllers.RoomsApi do
     case Room.validate(room) do
       [] ->
         room = Repo.create(room)
-        json conn, [room: Room.public_attributes(room)]
+        json_resp conn, %{room: Room.public_attributes(room)}
       errors ->
-        json conn, [errors: errors], 422
+        json_resp conn, 422, %{errors: errors}
     end
   end
 
@@ -77,9 +77,9 @@ defmodule MogoChat.Controllers.RoomsApi do
     case Room.validate(room) do
       [] ->
         :ok = Repo.update(room)
-        json conn, [user: Room.public_attributes(room)]
+        json_resp conn, %{user: Room.public_attributes(room)}
       errors ->
-        json conn, [errors: errors], 422
+        json_resp conn, 422, %{errors: errors}
     end
   end
 
