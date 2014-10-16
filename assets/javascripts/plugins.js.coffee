@@ -24,8 +24,14 @@
 # It does it only for "me" and "text" messages
 # and only returns the body for "paste" messages.
 
-App.plugins.register "link", /(https?\:\S+)/g, (content, messageType, history)->
+App.plugins.register "link", /(https?\:\S+)/g, (content, messageType, history)->  
   if ["me", "text"].indexOf(messageType) != -1
     content.replace(/(https?\:\S+)/g, "<a target='_blank' href='$1'>$1</a>")
-  else
+  else          
     content
+
+App.plugins.register "me", /^\/me /g, (content, messageType, history)->  
+  if ["me"].indexOf(messageType) != -1
+    emojify.replace(content.replace("/me ", ""))
+  else          
+    content    
